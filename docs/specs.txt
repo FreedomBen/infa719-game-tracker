@@ -1,0 +1,93 @@
+Online Madden Tournament tracker
+
+Must be a web application
+
+You can choose the language
+
+You can choose the storage mechanism (database, XML, nosql, etc…)
+
+Must be accessible for me to grade as your progress
+
+Both the source code and the running application
+
+Let me know if you need a development environment and I’ll get one set up for you in the IA Lab – most likely a .NET/SQL server environment if you have me do it
+
+Consider using github for version control and publishing
+
+Make sure you include directions for configuration/installation/use
+
+Comments are your friends! 
+
+You will have TONS of supporting documentation. (Yes, there’s much more to programming than writing code!)
+
+User creates a profile to log in with
+
+Name (first & last)
+
+Username (DSU email)
+
+Twitter handle (optional)
+
+Profile picture (optional)
+
+Anything else you’d like to include
+
+Administrator accounts can do everything (create, edit, delete) in the application.
+
+There can be several tournaments going at once
+
+The app should assign a tournament ID that can be used to reference the tournament in email and twitter updates
+
+A user can pick what tournament to sign up for
+
+Each tournament should have certain properties
+
+Quarter length in minutes (5, 10, or 15)
+
+Difficulty level (pro, all-pro, etc..)
+
+Etc..
+
+Each tournament should have defined dates for sign-up (date/time for open & close of sign-up)
+
+Each tournament should have defined dates for each round of play (date/time for round open & round close)
+
+All un-played tournament games should have a winner randomly picked between the two teams.
+
+Make sure to indicate the game was simulated
+
+Make sure to update the bracket accordingly
+
+Before starting tournament play:
+
+Each user should be assigned a random NFL team
+
+Each user should be assigned a random spot on the bracket
+
+If not all teams are claimed, the computer should be assigned to the open teams
+
+The application should send out email and twitter updates to all players when:
+
+Tournament is available to sign up for
+
+Tournament is full of teams
+
+Current round is open for play
+
+Current round is over in 24 hours
+
+Tournament is done (results)
+
+Must handle tournament play
+
+Single elimination
+
+Create and populate a bracket like the one below where there are 4 “regions” that all progress towards the middle of the bracket.
+
+You don’t need to name the regions – the idea here is for the appearance and functionality of the bracket.
+
+After each game, the team on the top of the matchup must enter the score.
+
+When playing the computer, the human player needs to enter the score.
+
+The high scoring team advances to the next round of the tournament.
