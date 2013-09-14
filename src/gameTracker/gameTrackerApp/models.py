@@ -80,6 +80,19 @@ TEAMS_TO_CONFERENCES = (
     ( 'TEN' 'NS' )
     ( 'WAS' 'NE' )
 )
+
+
+#TODO
+def teamToConference( nflTeam ):
+    "Receives an NFL team abbreviation and returns conference abbreviation"
+    pass
+
+#TODO
+def conferenceToTeams( conference ):
+    "Receives conference abbreviation and return tuple of team abbreviations"
+    pass
+
+
 class Tournament( models.Model ):
     DIFFICULTY_LEVELS (
         ( 'RK' 'Rookie'     )
