@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 NFL_TEAMS = (
     ( 'ARI' 'Arizona Cardinals' )
@@ -84,12 +85,12 @@ TEAMS_TO_CONFERENCES = (
 
 #TODO
 def teamToConference( nflTeam ):
-    "Receives an NFL team abbreviation and returns conference abbreviation"
+    "Receives an NFL team abbreviation and returns a conference abbreviation"
     pass
 
 #TODO
 def conferenceToTeams( conference ):
-    "Receives conference abbreviation and return tuple of team abbreviations"
+    "Receives conference abbreviation and returns a tuple of team abbreviations"
     pass
 
 
@@ -105,36 +106,37 @@ class Tournament( models.Model ):
     signup_close_datetime = models.DateTimeField()
     round_open_datetime   = models.DateTimeField()
     round_close_datetime  = models.DateTimeField()
-    quarter_length = # mins
-    difficulty_level = 
+    quarter_length        = models.IntegerField() # in minutes
+    difficulty_level      = models.CharFiel( max_length=2, choices=DIFFICULTY_LEVELS )
+    games                 = models.ManyToManyField( Game )
 
-    # Has games
-    # Property - Quarter length in minutes
-    # Difficulty Level
-    # Defined Dates for sign-up (date/time for open & close of sign-up)
-    # Defined Dates for each round of play (date/time for round open & round close)
-    # Since un-played games have random winner picked, store whether was simulated or not
 
 class Game( models.Model ):
     was_simulated = models.BooleanField()
-    winner = 
-    team_one = NFLteam
-    team_two = NFLteam
-    # Belong to a tournament
-    # Has two teams
+    winner        = models.IntegerField()
+    team_one      = models.ForeignKey( NFLteam )
+    team_two      = models.ForeignKey( NFLteam )
+    tournament    = models.ForeignKey( Tournament )
 
     def simulateGame( self ):
         # randomly select a winner and set the flag
+        winner = random.randint( 0,1 )
         self.was_simulated = true
-        pass
         
+    def winningTeam( self ):
+        if( self.winner == 1 ): 
+            return self.team_one
+        else:
+            return self.team_two
     
 
 class NFLteam( models.Model ):
-    team = models.CharField( max_length=3, choices=NFL_TEAMS )
-    conference = models.CharField
+    team_name  = models.CharField( max_length=3, choices=NFL_TEAMS )
+    conference = models.CharField( max_length=2, choices=CONFERENCES )
+
 
 class Bracket( models.Model ):
     # 4 regions
+    pass
 
 
