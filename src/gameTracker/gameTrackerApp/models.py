@@ -82,7 +82,6 @@ TEAMS_TO_CONFERENCES = (
     ( 'WAS' 'NE' )
 )
 
-
 #TODO
 def teamToConference( nflTeam ):
     "Receives an NFL team abbreviation and returns a conference abbreviation"
@@ -107,16 +106,25 @@ class Tournament( models.Model ):
     round_open_datetime   = models.DateTimeField()
     round_close_datetime  = models.DateTimeField()
     quarter_length        = models.IntegerField() # in minutes
-    difficulty_level      = models.CharFiel( max_length=2, choices=DIFFICULTY_LEVELS )
-    games                 = models.ManyToManyField( Game )
+    difficulty_level      = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
+    bracket               = models.ForeignKey( Bracket )
 
 
 class Game( models.Model ):
+    GAME_LEVELS (
+        ( 'RO', 'Round One' )
+        ( 'DC', 'Division Champ' )
+        ( 'SF', 'Semi-Finals' )
+        ( 'CC', 'Conference Champ' )
+        ( 'CH', 'Championship' )
+    )
+
     was_simulated = models.BooleanField()
     winner        = models.IntegerField()
     team_one      = models.ForeignKey( NFLteam )
     team_two      = models.ForeignKey( NFLteam )
     tournament    = models.ForeignKey( Tournament )
+    level         = models.CharField( max_length=2, choices=GAME_LEVELS )
 
     def simulateGame( self ):
         # randomly select a winner and set the flag
@@ -130,13 +138,30 @@ class Game( models.Model ):
             return self.team_two
     
 
+class Conference( models.Model ):
+    conference_name = models.CharField( max_length=2, choices=CONFERENCES )
+    team_one   = models.ForeignKey( NFLteam )
+    team_two   = models.ForeignKey( NFLteam )
+    team_three = models.ForeignKey( NFLteam )
+    team_four  = models.ForeignKey( NFLteam )
+
+
 class NFLteam( models.Model ):
     team_name  = models.CharField( max_length=3, choices=NFL_TEAMS )
-    conference = models.CharField( max_length=2, choices=CONFERENCES )
+    conference = models.ForeignKey( Conference )
 
 
 class Bracket( models.Model ):
-    # 4 regions
-    pass
+    # 8 conferences, 4 teams in each conference
+    afc_north = models.ForeignKey( Conference )
+    afc_east  = models.ForeignKey( Conference )
+    afc_south = models.ForeignKey( Conference )
+    afc_west  = models.ForeignKey( Conference )
+    nfc_north = models.ForeignKey( Conference )
+    nfc_east  = models.ForeignKey( Conference )
+    nfc_south = models.ForeignKey( Conference )
+    nfc_west  = models.ForeignKey( Conference )
+
+    games = models.ManyToManyField( Game )
 
 
