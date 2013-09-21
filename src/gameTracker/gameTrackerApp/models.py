@@ -125,6 +125,7 @@ class Game( models.Model ):
     team_two      = models.ForeignKey( NFLteam )
     tournament    = models.ForeignKey( Tournament )
     level         = models.CharField( max_length=2, choices=GAME_LEVELS )
+    bracket_round = models.IntegerField()
 
     def simulateGame( self ):
         # randomly select a winner and set the flag
@@ -151,17 +152,18 @@ class NFLteam( models.Model ):
     conference = models.ForeignKey( Conference )
 
 
-class Bracket( models.Model ):
-    # 8 conferences, 4 teams in each conference
-    afc_north = models.ForeignKey( Conference )
-    afc_east  = models.ForeignKey( Conference )
-    afc_south = models.ForeignKey( Conference )
-    afc_west  = models.ForeignKey( Conference )
-    nfc_north = models.ForeignKey( Conference )
-    nfc_east  = models.ForeignKey( Conference )
-    nfc_south = models.ForeignKey( Conference )
-    nfc_west  = models.ForeignKey( Conference )
+class Bracket():
+    "Brackets are not part of the model themselves but are constructed from information in the model"
+    ROUNDS = (
+        ( 1, "ROUND_ONE" )
+        ( 2, "CONFERENCE_CHAMPION" )
+        # TODO make match bracket outline
+    )
 
-    games = models.ManyToManyField( Game )
+    def games( roundNumber=1 ):
+        "Return list of the games that make up requested round of the bracket. " \
+                "If roundNumber is 0, all games are returned"
+        pass
+
 
 
