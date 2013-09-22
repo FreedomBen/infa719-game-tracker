@@ -109,10 +109,10 @@ def conferenceToTeams( conference ):
 
 class Tournament( models.Model ):
     DIFFICULTY_LEVELS = (
-        ( 'RK' 'Rookie'     ),
-        ( 'PR' 'Pro'        ),
-        ( 'AP' 'All-Pro'    ),
-        ( 'AM' 'All-Madden' )
+        ( 'RK', 'Rookie'     ),
+        ( 'PR', 'Pro'        ),
+        ( 'AP', 'All-Pro'    ),
+        ( 'AM', 'All-Madden' ),
     )
 
     signup_open_datetime  = models.DateTimeField()
