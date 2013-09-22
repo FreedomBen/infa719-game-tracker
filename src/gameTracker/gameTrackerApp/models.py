@@ -94,7 +94,7 @@ def conferenceToTeams( conference ):
 
 
 class Tournament( models.Model ):
-    DIFFICULTY_LEVELS (
+    DIFFICULTY_LEVELS = (
         ( 'RK' 'Rookie'     ),
         ( 'PR' 'Pro'        ),
         ( 'AP' 'All-Pro'    ),
@@ -110,7 +110,7 @@ class Tournament( models.Model ):
 
 
 class Game( models.Model ):
-    GAME_LEVELS (
+    GAME_LEVELS = (
         ( 'RO', 'Round One' ),
         ( 'DC', 'Division Champ' ),
         ( 'SF', 'Semi-Finals' ),
