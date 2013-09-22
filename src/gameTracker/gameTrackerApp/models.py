@@ -107,7 +107,6 @@ class Tournament( models.Model ):
     round_close_datetime  = models.DateTimeField()
     quarter_length        = models.IntegerField() # in minutes
     difficulty_level      = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
-    bracket               = models.ForeignKey( Bracket )
 
 
 class Game( models.Model ):
