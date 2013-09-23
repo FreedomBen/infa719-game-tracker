@@ -83,17 +83,13 @@ TEAMS_TO_CONFERENCES = (
 )
 
 
-class NFLteam( models.Model ):
-    team_name  = models.CharField( max_length=3, choices=NFL_TEAMS )
-    conference = models.ForeignKey( 'Conference' )
-
-
 class Conference( models.Model ):
     conference_name = models.CharField( max_length=2, choices=CONFERENCES )
-    team_one   = models.ForeignKey( NFLteam )
-    team_two   = models.ForeignKey( NFLteam )
-    team_three = models.ForeignKey( NFLteam )
-    team_four  = models.ForeignKey( NFLteam )
+
+
+class NFLteam( models.Model ):
+    team_name  = models.CharField( max_length=3, choices=NFL_TEAMS )
+    # conference = models.ForeignKey( 'Conference' )
 
 
 #TODO
