@@ -85,12 +85,17 @@ TEAMS_TO_CONFERENCES = (
 
 class Conference( models.Model ):
     conference_name = models.CharField( max_length=2, choices=CONFERENCES )
+    
+    def __unicode__( self ):
+        return self.conference_name
 
 
 class NFLteam( models.Model ):
     team_name  = models.CharField( max_length=3, choices=NFL_TEAMS )
     # conference = models.ForeignKey( 'Conference' )
 
+    def __unicode__( self ):
+        return self.team_name
 
 #TODO
 def teamToConference( nflTeam ):
@@ -118,6 +123,8 @@ class Tournament( models.Model ):
     quarter_length        = models.IntegerField() # in minutes
     difficulty_level      = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
 
+    def __unicode__( self ):
+        return 'Tournament: ' + str( self.name )
 
 class Game( models.Model ):
     GAME_LEVELS = (
@@ -147,6 +154,9 @@ class Game( models.Model ):
         else:
             return self.team_two
     
+    def __unicode__( self ):
+        return str( self.team_one ) + " v. " + str( self.team_two )
+
 
 class Bracket():
     "Brackets are not part of the model themselves but are constructed from information in the model"
@@ -160,6 +170,5 @@ class Bracket():
         "Return list of the games that make up requested round of the bracket. " \
                 "If roundNumber is 0, all games are returned"
         pass
-
 
 
