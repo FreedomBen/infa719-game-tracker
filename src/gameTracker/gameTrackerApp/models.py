@@ -116,6 +116,7 @@ class Tournament( models.Model ):
         ( 'AM', 'All-Madden' ),
     )
 
+    tournament_name       = models.CharField( max_length=25 )
     signup_open_datetime  = models.DateTimeField()
     signup_close_datetime = models.DateTimeField()
     round_open_datetime   = models.DateTimeField()
