@@ -4,6 +4,7 @@ To decide:
         A. I suspect we will be modifying it slightly once we start writing application logic.
         B. I debated not having the NFLteam and Conference be a DB table but rather just be regular classes, but I ultimately decided to make them DB tables so that a foreign key link could be used in the games.  This will make the API more consistent and add another layer of validation on our input.
     2. What views do we want for the application?
+    3. What should we call the application?  I named it Purple Hat temporarily as kind of a knock-off of RedHat Linux, but also because I was looking at my daughter's purple hat when I was thinking of a name.
 
 To complete:
 
