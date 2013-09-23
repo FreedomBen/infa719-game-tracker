@@ -134,8 +134,8 @@ class Game( models.Model ):
 
     was_simulated = models.BooleanField()
     winner        = models.IntegerField()
-    team_one      = models.ForeignKey( NFLteam )
-    team_two      = models.ForeignKey( NFLteam )
+    team_one      = models.ForeignKey( NFLteam, related_name='teamOneAsNFLteam' )
+    team_two      = models.ForeignKey( NFLteam, related_name='teamTwoAsNFLteam' )
     tournament    = models.ForeignKey( Tournament )
     level         = models.CharField( max_length=2, choices=GAME_LEVELS )
     bracket_round = models.IntegerField()
@@ -151,7 +151,6 @@ class Game( models.Model ):
         else:
             return self.team_two
     
-
 
 class Bracket():
     "Brackets are not part of the model themselves but are constructed from information in the model"
