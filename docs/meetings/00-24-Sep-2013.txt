@@ -1,0 +1,13 @@
+To decide:
+
+    1. Are we all in agreement over the model?
+        A. I suspect we will be modifying it slightly once we start writing application logic.
+        B. I debated not having the NFLteam and Conference be a DB table but rather just be regular classes, but I ultimately decided to make them DB tables so that a foreign key link could be used in the games.  This will make the API more consistent and add another layer of validation on our input.
+    2. What views do we want for the application?
+
+To complete:
+
+    1. Need to write python functions that will verify, and clean out the NFLTeams and Conferences tables and repopulate them using the constantly defined data.
+        A. It is important that this function not delete existing records unless they are erroneous.  If it does, it could corrupt the entire database by invalidating the foreign key references of any existing games.  Ideally this script should only be ran once to initially populate the DB tables.  We can do this by hand if we think it is safer, but it will be a lot of work if we have to do it again because the DB got corrupted.
+    2. Need to fill-in model functions with #TODO on them.
+        A. These functions are basically convenience mappers but they'll be really nice to have when we start writing app logic
