@@ -1,4 +1,7 @@
 Questions to talk to about with Josh:
 
-1.  Why did we lose points on Lab 02?
+1.  Are in-code comments considered good documentation?
+2.  If we have a lot of in-code comments that cover security considerations and design details, can we go more higher level with design docs?
+3.  Would it be helpful to include comments addressing security concerns that we determined were not applicable but we wanted to indicate to you that we thought about it?
+4.  If our chosen framework (in our case Django) includes security features built-in (like CSRF token generation), will we "get credit" for using them as long as we indicate that we did it intentioanlly for security purposes?
 
