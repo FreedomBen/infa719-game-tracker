@@ -1,6 +1,18 @@
 from django.db import models
 import random
 
+
+#------------------------------------------------------------
+# Security feature and code error catcher
+# This class, when used a parent class for a model object,
+# will prevent additional items from being saved to the table
+#------------------------------------------------------------
+class NonUpdateAbleModelMixin():
+    """When used as a parent class, prevents a table from being inadvertently modified"""
+    def save(self, *args, **kwargs):
+        pass
+
+ 
 # A sequence of NFL team abbreviations to team names
 # This can be used to regenerate the tables in the DB if necessary
 # and we aren't worried about corruption
