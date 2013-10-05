@@ -46,6 +46,9 @@ def teamNameToNFLteam( teamName ):
     return None
 
 
+#----------------------------------------------------------------------
+# recieves an NFL team name and returns the corresponding abbreviation
+#----------------------------------------------------------------------
 def teamNameToAbbreviation( teamName ):
     for team in NFL_TEAMS:
         if( team[1] == teamName ):
@@ -53,6 +56,9 @@ def teamNameToAbbreviation( teamName ):
     return None
 
 
+#----------------------------------------------------------------------
+# recieves a Conference name and returns the corresponding abbreviation
+#----------------------------------------------------------------------
 def confNameToAbbreviation( confName ):
     for conf in CONFERENCES:
         if( conf[1] == confName ):
