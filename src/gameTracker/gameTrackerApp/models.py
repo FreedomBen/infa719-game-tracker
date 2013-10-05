@@ -1,6 +1,9 @@
 from django.db import models
 import random
 
+# A sequence of NFL team abbreviations to team names
+# This can be used to regenerate the tables in the DB if necessary
+# and we aren't worried about corruption
 NFL_TEAMS = (
     ( 'ARI', 'Arizona Cardinals' ),
     ( 'ATL', 'Atlanta Falcons' ),
@@ -36,6 +39,7 @@ NFL_TEAMS = (
     ( 'WAS', 'Washington Redskins' ),
 )
 
+# Conference abbreviations with full names
 CONFERENCES = (
     ( 'AE', 'AFC East' ),
     ( 'AN', 'AFC North' ),
@@ -47,6 +51,7 @@ CONFERENCES = (
     ( 'NW', 'NFC West' ),
 )
 
+# team abbreviations mapped to respective conference
 TEAMS_TO_CONFERENCES = (
     ( 'ARI', 'NW' ),
     ( 'ATL', 'NS' ),
@@ -83,21 +88,38 @@ TEAMS_TO_CONFERENCES = (
 )
 
 
+#---------------------------------------------------------------------------------------------
+# Represent a conference in the NFL
+# Exists as a table in the DB so that we can use a Conference as a foreign key in other tables
+#---------------------------------------------------------------------------------------------
 class Conference( models.Model ):
+    """Represents a conference in the NFL"""
     conference_name = models.CharField( max_length=2, choices=CONFERENCES )
     
     def __unicode__( self ):
         return self.conference_name
 
 
+#---------------------------------------------------------------------------------------------
+# Represent an NFL team in the NFL
+# Exists as a table in the DB so that we can use an NFL team as a foreign key in other tables
+#---------------------------------------------------------------------------------------------
 class NFLteam( models.Model ):
+    """Represents an NFL team in the NFL"""
     team_name  = models.CharField( max_length=3, choices=NFL_TEAMS )
 
     def __unicode__( self ):
         return self.team_name
 
 
+#---------------------------------------------------------------------------------------------
+# Represents a Madden tournament
+# All characteristics that we need to track are in this table
+# The Bracket class uses this table and the Game table in the DB to generate itself
+# Every Game belongs to a Tournament, tracked by foreign key
+#---------------------------------------------------------------------------------------------
 class Tournament( models.Model ):
+    """Represents a Madden tournamennt"""
     DIFFICULTY_LEVELS = (
         ( 'RK', 'Rookie'     ),
         ( 'PR', 'Pro'        ),
@@ -116,7 +138,14 @@ class Tournament( models.Model ):
     def __unicode__( self ):
         return 'Tournament: ' + str( self.name )
 
+#---------------------------------------------------------------------------------------------
+# Represent a Madden game
+# All characteristics that we need to track are in this table
+# The Bracket class uses this table and the Tournament table in the DB to generate itself
+# Every Game belongs to a Tournament, tracked by foreign key
+#---------------------------------------------------------------------------------------------
 class Game( models.Model ):
+    """Represents a Madden game that has been or will be played"""
     GAME_LEVELS = (
         ( 'RO', 'Round One' ),
         ( 'DC', 'Division Champ' ),
