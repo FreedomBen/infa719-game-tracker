@@ -106,9 +106,24 @@ def teamToConference( nflTeam ):
     return None
 
 
-# recieved an NFL team abbreviation or an NFLteam object and 
-# returns the Conference object 
+#-----------------------------------------------------------
+# recieves a Conference object or abbreviation and 
+# returns the teams that belong
+#-----------------------------------------------------------
 def conferenceToTeams( conference ):
     """Receives Conference object or abbreviation and returns a list of NFLteam"""
-    pass
 
+    # Check to see if this is a Conference object or just a String.  
+    # Objects have a conference_name attribute
+    if( hasattr( conference, 'conference_name' ) ):
+        conf = conference.team_name   
+    else:
+        conf = conference
+
+    retval = []
+    for ttc in TEAMS_TO_CONFERENCES:
+        if( ttc[1] == conf ):
+            retval.append( teamAbbrToNFLteam( ttc[0] ) )
+
+    # return results
+    return retval
