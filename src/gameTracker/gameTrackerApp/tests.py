@@ -52,6 +52,16 @@ class ModelHelperTest( TestCase ):
         self.assertEqual( teamToConference( "SEA" ).conference_name, "NW" )
         self.assertEqual( teamToConference( "MIA" ).conference_name, "AE" )
 
+        
+        self.assertTrue( teamAbbrToNFLteam( "BAL" ) in conferenceToTeams( "AN" ) )
+        self.assertTrue( teamAbbrToNFLteam( "CIN" ) in conferenceToTeams( "AN" ) )
+        self.assertTrue( teamAbbrToNFLteam( "CLE" ) in conferenceToTeams( "AN" ) )
+        self.assertTrue( teamAbbrToNFLteam( "PIT" ) in conferenceToTeams( "AN" ) )
+
+        self.assertTrue( teamAbbrToNFLteam( "SEA" ) in conferenceToTeams( "NW" ) )
+        self.assertTrue( teamAbbrToNFLteam( "SF" ) in conferenceToTeams( "NW" ) )
+        self.assertTrue( teamAbbrToNFLteam( "STL" ) in conferenceToTeams( "NW" ) )
+        self.assertTrue( teamAbbrToNFLteam( "ARI" ) in conferenceToTeams( "NW" ) )
 
 
     def test_2( self ):
