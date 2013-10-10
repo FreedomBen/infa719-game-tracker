@@ -1,0 +1,43 @@
+
+.inputBoxes
+{
+	position:absolute;
+	left:70;
+	
+}
+
+#register
+{
+	top:40;
+	left:140;
+}
+
+
+.inputText
+{
+	line-height:170%
+}
+#logo
+{
+	display:block;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.inputArea
+{
+	position:relative;
+	left:50;
+}
+
+body
+{
+	margin:0;
+	padding:0;
+}
+
+/*div
+{
+	color:red;
+}
+*/
