@@ -139,6 +139,8 @@ class Tournament( models.Model ):
         ( 'AM', 'All-Madden' ),
     )
 
+    owner_id              = models.IntegerField()
+    is_public             = models.BooleanField()
     tournament_name       = models.CharField( max_length=25 )
     signup_open_datetime  = models.DateTimeField()
     signup_close_datetime = models.DateTimeField()
