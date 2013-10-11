@@ -152,6 +152,15 @@ class Tournament( models.Model ):
     def __unicode__( self ):
         return 'Tournament: ' + str( self.name )
 
+
+#---------------------------------------------------------------------------------------------
+# Keeps track of which users have been authorized to view a tournament by the tournament owner
+#---------------------------------------------------------------------------------------------
+class TournamentMembers( models.Model ):
+    user_id = models.IntegerField()
+    tournament = models.ForeignKey( Tournament )
+
+
 #---------------------------------------------------------------------------------------------
 # Represent a Madden game
 # All characteristics that we need to track are in this table
