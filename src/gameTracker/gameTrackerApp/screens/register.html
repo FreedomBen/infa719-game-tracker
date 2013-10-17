@@ -1,33 +1,26 @@
 <html>
 <link rel="stylesheet" type="text/css" href="layout.css"/>
 <body>
+<div class="content">
 	<div>
 		<img src="logo.jpg" id="logo"/>
 	</div>
-	<div class="inputArea">
+	<div class="top_menu"><a href ="#">Home<a> - <a href ="#">Page 2<a> - <a href ="#">Page 3<a> - <a href ="#">Page 4<a></div>
+	<h1>Register</h1>
+	<form action="" method="POST" enctype="multipart/form-data">
 		*indicates required field 	
-		<div class="inputBoxes" id="register">
-			<input type="text" name="first"/>
-			</p><input type="text" name="last"/>
-			</p><input type="text" name="last"/>
-			</p><input type="text" name="password"/>
-			</p><input type="text" name="confirm"/>
-			</p><input type="text" name="twitter"/>
-			</p><input type="text" name="picture"/>
-		</div>
-		<div class="inputText">
-			</p>First Name:* 
-			</p>Last Name:*
-			</p>Email Address:*
-			</p>Password:*
-			</p>Confirm Password:*
-			</p>Twitter ID:
-			</p>Profile Picture:
-		</div>
-		</p><input type="submit" value="Register"/>
-	</div>
-	
-
+		
+		
+		<p>First Name:* <input type="text" name="first"/></p>
+		<p>Last Name:* <input type="text" name="last"/> </p>
+		<p>Email Address:* <input type="text" name="last"/> </p>
+		<p>Password:* <input type="text" name="password"/></p>
+		<p>Confirm Password:* <input type="text" name="confirm"/> </p>
+		<p>Twitter ID: <input type="text" name="twitter"/> </p>
+		<p>Profile Picture: <input type="file" name="picture"/> </p>
+		
+		<input type="submit" value="Register"/>
+	</form>
+</div>
 </body>
-
 </html>
