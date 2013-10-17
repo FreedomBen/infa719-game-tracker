@@ -1,3 +1,25 @@
+body {
+	margin:25px 0px; 
+	padding:0px;
+	text-align:center;
+}
+	
+.Content {
+	width:970px;
+	margin:0px auto;
+	text-align:left;
+	padding:15px;
+	border:1px dashed #333;
+	background-color:#eee;
+}
+
+.top_menu
+{
+margin:5px;
+padding:5px;
+border: 1px solid black;
+
+}
 
 .inputBoxes
 {
@@ -30,11 +52,6 @@
 	left:50;
 }
 
-body
-{
-	margin:0;
-	padding:0;
-}
 
 /*div
 {
