@@ -9,3 +9,5 @@ def login( request ):
 def register( request ):
     return render_to_response( "register.html", { } )
 
+def default( request ):
+    return render_to_response( "default.html", { } )
