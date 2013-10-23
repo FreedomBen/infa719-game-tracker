@@ -25,13 +25,18 @@ def register_user( request ):
     password = validatePassword( request.POST['password'] )
     twitter  = validateTwitter( request.POST['twitter'] )
 
-    if not first or not last or not email or not password or not twitter:
+    passwordCheck = ""
+    if( request.POST['password'] != request.POST['passwordCheck'] )
+        passwordCheck = "Passwords must match"
+
+    if not first or not last or not email or not password or not twitter or not passwordCheck:
         return render_to_response( 'register.html', {
-            'first'    : first
-            'last'     : last
-            'email'    : email
-            'password' : password
-            'twitter'  : twitter
+            'first'         : first
+            'last'          : last
+            'email'         : email
+            'password'      : password
+            'twitter'       : twitter
+            'passwordCheck' : passwordCheck
         }, context_instance=RequestContext( request ) )
 
     else:
