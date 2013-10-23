@@ -1,37 +1,35 @@
 <html>
 <link rel="stylesheet" type="text/css" href="layout.css"/>
 <body>
-	<div>
-		<img src="logo.jpg" id="logo"/>
-	</div>
-	<div class="inputArea">
-		*indicates required field 	
-            <form action="/register/createuser" method="post">
-                <!-- To prevent CSRF attacks -->
-                {% csrf_token %}
-		<div class="inputBoxes" id="register">
-                    <input type="text" name="firstName"/> {{ firstName }}
-                    </p><input type="text" name="lastName"/> {{ lastName }}
-                    </p><input type="text" name="emailAddress"/> {{ emailAddress }}
-                    </p><input type="text" name="password"/> {{ password }}
-                    </p><input type="text" name="confirmPassword"/> {{ firstName }}
-                    </p><input type="text" name="twitter"/> {{ twitter }}
-                    </p><input type="text" name="picture"/> {{ picture }}
-		</div>
-		<div class="inputText">
-			</p>First Name:* 
-			</p>Last Name:*
-			</p>Email Address:*
-			</p>Password:*
-			</p>Confirm Password:*
-			</p>Twitter ID:
-			</p>Profile Picture:
-		</div>
-		</p><input type="submit" value="Register"/>
-            </form>
-	</div>
-	
-
+    <div>
+            <img src="logo.jpg" id="logo"/>
+    </div>
+    <div class="inputArea">
+            *indicates required field 	
+        <form action="/register/createuser" method="post">
+            <!-- To prevent CSRF attacks -->
+            {% csrf_token %}
+            <div class="inputBoxes" id="register">
+                <p><input type="text" name="firstName"/> {{ firstName }}
+                </p><input type="text" name="lastName"/> name: {{ lastName }}
+                </p><input type="text" name="emailAddress"/> {{ emailAddress }}
+                </p><input type="text" name="password"/> {{ password }}
+                </p><input type="text" name="passwordCheck"/>
+                </p><input type="text" name="twitter"/> {{ twitter }}
+                </p><input type="text" name="picture"/> 
+            </div>
+            <div class="inputText">
+                </p>First Name:* 
+                </p>Last Name:*
+                </p>Email Address:*
+                </p>Password:*
+                </p>Confirm Password:*
+                </p>Twitter ID:
+                </p>Profile Picture:
+            </div>
+            </p><input type="submit" value="Register"/>
+        </form>
+    </div>
 </body>
 
 </html>
