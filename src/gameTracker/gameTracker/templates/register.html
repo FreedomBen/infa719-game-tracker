@@ -7,6 +7,8 @@
 	<div class="inputArea">
 		*indicates required field 	
             <form action="/register/createuser" method="post">
+                <!-- To prevent CSRF attacks -->
+                {% csrf_token %}
 		<div class="inputBoxes" id="register">
 			<input type="text" name="first"/>
 			</p><input type="text" name="last"/>
