@@ -26,16 +26,16 @@ def register_user( request ):
     twitter  = validateTwitter( request.POST['twitter'] )
 
     passwordCheck = ""
-    if( request.POST['password'] != request.POST['passwordCheck'] )
+    if( request.POST['password'] != request.POST['passwordCheck'] ):
         passwordCheck = "Passwords must match"
 
     if not first or not last or not email or not password or not twitter or not passwordCheck:
         return render_to_response( 'register.html', {
-            'first'         : first
-            'last'          : last
-            'email'         : email
-            'password'      : password
-            'twitter'       : twitter
+            'first'         : first,
+            'last'          : last,
+            'email'         : email,
+            'password'      : password,
+            'twitter'       : twitter,
             'passwordCheck' : passwordCheck
         }, context_instance=RequestContext( request ) )
 
@@ -45,10 +45,10 @@ def register_user( request ):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return render_to_response( 'register_success.html', {
-            'first'    : request.POST['firstName']
-            'last'     : request.POST['lastName']
-            'email'    : request.POST['email']
-            'password' : request.POST['password']
+            'first'    : request.POST['firstName'],
+            'last'     : request.POST['lastName'],
+            'email'    : request.POST['email'],
+            'password' : request.POST['password'],
             'twitter'  : request.POST['twitter']
         }, context_instance=RequestContext( request ) ) 
 
