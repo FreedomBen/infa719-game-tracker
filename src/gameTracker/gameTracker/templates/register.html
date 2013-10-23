@@ -10,13 +10,13 @@
                 <!-- To prevent CSRF attacks -->
                 {% csrf_token %}
 		<div class="inputBoxes" id="register">
-			<input type="text" name="firstName"/>
-			</p><input type="text" name="lastName"/>
-			</p><input type="text" name="emailAddress"/>
-			</p><input type="text" name="password"/>
-			</p><input type="text" name="confirmPassword"/>
-			</p><input type="text" name="twitter"/>
-			</p><input type="text" name="picture"/>
+                    <input type="text" name="firstName"/> {{ firstName }}
+                    </p><input type="text" name="lastName"/> {{ lastName }}
+                    </p><input type="text" name="emailAddress"/> {{ emailAddress }}
+                    </p><input type="text" name="password"/> {{ password }}
+                    </p><input type="text" name="confirmPassword"/> {{ firstName }}
+                    </p><input type="text" name="twitter"/> {{ twitter }}
+                    </p><input type="text" name="picture"/> {{ picture }}
 		</div>
 		<div class="inputText">
 			</p>First Name:* 
