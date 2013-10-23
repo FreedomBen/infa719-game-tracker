@@ -19,24 +19,22 @@ def register( request ):
 # This view processes the registration request
 def register_user( request ):
     # validate our data server side before processing it
-    first    = validateName( request.POST['firstName'] )
-    last     = validateName( request.POST['lastName'] )
-    email    = validateEmail( request.POST['emailAddress'] )
-    password = validatePassword( request.POST['password'] )
-    twitter  = validateTwitter( request.POST['twitter'] )
+    first    = validate.validateName( request.POST['firstName'] )
+    last     = validate.validateName( request.POST['lastName'] )
+    email    = validate.validateEmail( request.POST['emailAddress'] )
+    password = validate.validatePassword( request.POST['password'] )
+    twitter  = validate.validateTwitter( request.POST['twitter'] )
 
-    passwordCheck = ""
     if( request.POST['password'] != request.POST['passwordCheck'] ):
-        passwordCheck = "Passwords must match"
+        password = "Passwords must match"
 
     if not first or not last or not email or not password or not twitter or not passwordCheck:
         return render_to_response( 'register.html', {
-            'first'         : first,
-            'last'          : last,
-            'email'         : email,
-            'password'      : password,
-            'twitter'       : twitter,
-            'passwordCheck' : passwordCheck
+            'firstName'    : first,
+            'lastName'     : last,
+            'emailAddress' : email,
+            'password'     : password,
+            'twitter'      : twitter
         }, context_instance=RequestContext( request ) )
 
     else:
@@ -45,11 +43,11 @@ def register_user( request ):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return render_to_response( 'register_success.html', {
-            'first'    : request.POST['firstName'],
-            'last'     : request.POST['lastName'],
-            'email'    : request.POST['email'],
-            'password' : request.POST['password'],
-            'twitter'  : request.POST['twitter']
+            'firstName'    : request.POST['firstName'],
+            'lastName'     : request.POST['lastName'],
+            'emailAddress' : request.POST['email'],
+            'password'     : request.POST['password'],
+            'twitter'      : request.POST['twitter']
         }, context_instance=RequestContext( request ) ) 
 
 
