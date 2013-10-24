@@ -1,24 +1,30 @@
 <html>
 <link rel="stylesheet" type="text/css" href="layout.css"/>
 <body>
-	<div>
+<div class="content">
+	{% block logo %}
+	<!-- <div>
 		<img src="logo.jpg" id="logo"/>
-	</div>
-	<div class="inputArea">
-		<div class="inputBoxes">
-			<input type="text" name="username"/>
-			</p>
-			<input type="text" name="password"/>
-		</div>
-		<div class="inputText">
-			</p>username:  
-			</p>password:
-		</div>
-		</p><input type="submit" value="login"/>
-		</p><a href="register.html">Register new account</a>
-	</div>
-	
+	</div> -->
+	{% endblock logo%}
+	{% block header %}
+	<div class="top_menu"><a href ="#">Home<a> - <a href ="#">Page 2<a> - <a href ="#">Page 3<a> - <a href ="#">Page 4<a></div>
+	{% endblock header %}
+	{% block main %}
+	<div>
+	<h1>Login</h1>
+		<form action="" method="POST">
+			<div>
+				<p>Username: <input type="text" name="username"/></p>
+				<p>Password: <input type="text" name="password"/></p>
+			</div>
 
+			<input type="submit" value="login"/>
+		</form>
+		<a href="register.html">Register new account</a> | <a href="#">Forgot my Password</a>
+	</div>
+	{% endblock main %}
+</div>
 </body>
 
 </html>
