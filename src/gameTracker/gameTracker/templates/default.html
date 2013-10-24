@@ -1,0 +1,44 @@
+<html>
+<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
+<body>
+	<div>
+		{% block logo%}
+		<img src="/static/logo.jpg" class="logo"/>
+		</p>
+			<text value="hello" id="userID" readonly>old text</text>
+		{% endblock logo%}
+	</div>
+	<div class="header">
+		{% block header %}
+		<a href="create.html">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<a href="join.html">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<a href="previous.html">View Previous Tournaments</a>
+		{% endblock header%}
+	</div>
+	
+	<div>
+		{% block main %}
+		<table id="homeTable">
+			<tr>
+				<td>Tournaments Played</td>
+				<td><input type="label" id="tPlayed" value="xx" disabled /></td>
+			</tr>
+			<tr>
+				<td>Tournaments Won</td>
+				<td><input type="label" id="tWon" value="xx" disabled /></td>
+			</tr>
+			<tr>
+				<td>Next Round Starts At</td>
+				<td><input type="label" id="tStart" value="Not currently registered for upcoming tournament" disabled /></td>
+			</tr>
+			<tr>
+				<td>Tournaments Registered</td>
+				<td><input type="textbox" id="tRegistered" value="" disabled /></td>
+			</tr>
+		</table>
+		{% endblock main%}
+	</div>
+	
+	
+</body>
+</html>
