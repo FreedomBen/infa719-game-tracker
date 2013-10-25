@@ -19,12 +19,12 @@
 		*indicates required field 	
 		
 		
-                <p>First Name:* <input type="text" name="firstName"/> {{ firstName }}</p>
-                <p>Last Name:* <input type="text" name="lastName"/> {{ lastName }}</p>
-                <p>Email Address:* <input type="text" name="emailAddress"/> {{ emailAddress }}</p>
-                <p>Password:* <input type="password" name="password"/> {{ password }}</p>
+                <p>First Name:* <input type="text" name="firstName"/> <span class="errorMsg">{{ firstName }}</span></p>
+                <p>Last Name:* <input type="text" name="lastName"/> <span class="errorMsg">{{ lastName }}</span></p>
+                <p>Email Address:* <input type="text" name="emailAddress"/> <span class="errorMsg">{{ emailAddress }}</span></p>
+                <p>Password:* <input type="password" name="password"/> <span class="errorMsg">{{ password }}</span></p>
 		<p>Confirm Password:* <input type="password" name="passwordCheck"/> </p>
-                <p>Twitter ID: <input type="text" name="twitter"/> {{ twitter }}</p>
+                <p>Twitter ID: <input type="text" name="twitter"/> <span class="errorMsg">{{ twitter }}</span></p>
 		<p>Profile Picture: <input type="file" name="picture"/> </p>
 		
 		<input type="submit" value="Register"/>

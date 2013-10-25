@@ -14,6 +14,11 @@ body {
 	background-color:#eee;
 }
 
+.errorMsg
+{
+	color:red;
+}
+
 .top_menu
 {
 margin:5px;
