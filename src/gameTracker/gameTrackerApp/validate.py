@@ -1,5 +1,7 @@
 # provides functions views can use to validate data
 
+import re
+
 from django.forms import EmailField
 from django.core.exceptions import ValidationError
 
