@@ -36,7 +36,7 @@ def validateEmail( email ):
 def validatePassword( password ):
     # Make sure password is at least 15 characters
     # This makes a rainbow table attack against the password hashes unfeasible
-    if len( password ) < 15:
+    if len( password ) < 12:
         return "Password must be at least 12 characters"
     if not re.compile( '\d' ).search( password ):
         return "Password must contain at least one number"
