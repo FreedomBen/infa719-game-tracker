@@ -56,6 +56,9 @@ def register( request ):
                 'twitter'      : request.POST['twitter']
             }, context_instance=RequestContext( request ) ) 
 
+# This view is for testing the default template
+def home( request ):
+    return render_to_response( "home.html", { } )
 
 # This view is for testing the default template
 def default( request ):
