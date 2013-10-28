@@ -51,7 +51,7 @@ def register( request ):
             return render_to_response( 'register_success.html', {
                 'firstName'    : request.POST['firstName'],
                 'lastName'     : request.POST['lastName'],
-                'emailAddress' : request.POST['email'],
+                'emailAddress' : request.POST['emailAddress'],
                 'password'     : request.POST['password'],
                 'twitter'      : request.POST['twitter']
             }, context_instance=RequestContext( request ) ) 
