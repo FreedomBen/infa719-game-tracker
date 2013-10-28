@@ -29,7 +29,7 @@ def register( request ):
         if( request.POST['password'] != request.POST['passwordCheck'] ):
             password = "Passwords must match"
 
-        if not first or not last or not email or not password or not passwordCheck:
+        if len( first ) > 0 or len( last ) > 0  or len( email ) > 0 or len( password ) > 0:
             return render_to_response( 'register.html', {
                 'firstName'         : first,
                 'lastName'          : last,
