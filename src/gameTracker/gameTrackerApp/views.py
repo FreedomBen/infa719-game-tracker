@@ -25,18 +25,22 @@ def register( request ):
         last     = validate.validateName( request.POST['lastName'] )
         email    = validate.validateEmail( request.POST['emailAddress'] )
         password = validate.validatePassword( request.POST['password'] )
-        twitter  = validate.validateTwitter( request.POST['twitter'] )
 
         if( request.POST['password'] != request.POST['passwordCheck'] ):
             password = "Passwords must match"
 
-        if not first or not last or not email or not password or not twitter or not passwordCheck:
+        if not first or not last or not email or not password or not passwordCheck:
             return render_to_response( 'register.html', {
-                'firstName'    : first,
-                'lastName'     : last,
-                'emailAddress' : email,
-                'password'     : password,
-                'twitter'      : twitter
+                'firstName'         : first,
+                'lastName'          : last,
+                'emailAddress'      : email,
+                'password'          : password,
+                'prevFirstName'     : request.POST['firstName'],
+                'prevLastName'      : request.POST['lastName'],
+                'prevEmailAddress'  : request.POST['emailAddress'],
+                'prevPassword'      : request.POST['password'],
+                'prevPasswordCheck' : request.POST['passwordCheck'],
+                'prevTwitter'       : request.POST['twitter']
             }, context_instance=RequestContext( request ) )
 
         else:
