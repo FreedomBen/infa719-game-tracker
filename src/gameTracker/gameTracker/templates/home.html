@@ -1,19 +1,19 @@
 <html>
-<link rel="stylesheet" type="text/css" href="layout.css"/>
+<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 <body>
 <div class="content">
 	{% block logo %}
-<!-- 	<div>
-		<img src="logo.jpg" class="logo"/> -->
+ 	<div>
+		<img src="/static/logo.jpg" class="logo"/> 
 	{% endblock logo %}
 		</p>
 			<text value="hello" id="userID" readonly>old text</text>
 	<!-- </div> -->
 	{% block header %}
 	<div class="header">
-		<a href="create.html">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="join.html">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="previous.html">View Previous Tournaments</a>
+		<a href="/tournament/create/">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<a href="/tournament/join/">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<a href="/tournament/previous/">View Previous Tournaments</a>
 	</div>
 	{% endblock header %}
 	
