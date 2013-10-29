@@ -1,16 +1,10 @@
 
 <html>
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
+{% extends "default.html" %}
 <body>
 <div class="content">
-	{% block logo %}
- 	<div>
-		<img src="/static/logo.jpg" id="logo"/>
-	</div> 
-	{% endblock logo %}
-	{% block header %}
-	<div class="top_menu"><a href ="#">Home</a> - <a href ="#">Page 2</a> - <a href ="#">Page 3</a> - <a href ="#">Page 4</a></div>
-	{% endblock header %}
+	{% block header %}{% endblock header %}
 	{% block main %}
 	<h1>Register</h1>
 	<form action="/register/" method="post" enctype="multipart/form-data">
@@ -29,7 +23,7 @@
 		
 		<input type="submit" value="Register"/>
 	</form>
-	{% endblock main %}
+	{% endblock %}
 </div>
 </body>
 </html>
