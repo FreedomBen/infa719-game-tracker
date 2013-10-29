@@ -1,19 +1,18 @@
 <html>
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 <body>
+	{% block logo %}
 	<div>
-		{% block logo%}
 		<img src="/static/logo.jpg" class="logo"/>
-		</p>
-			<text value="hello" id="userID" readonly>old text</text>
-		{% endblock logo%}
 	</div>
+	{% endblock logo %}
+	{% block header %}
 	<div class="header">
-		{% block header %}
+		<a href="home.html">Main Page</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 		<a href="create.html">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 		<a href="join.html">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 		<a href="previous.html">View Previous Tournaments</a>
-		{% endblock header%}
+	{% endblock header %}
 	</div>
 	
 	<div>
@@ -36,7 +35,7 @@
 				<td><input type="textbox" id="tRegistered" value="" disabled /></td>
 			</tr>
 		</table>
-		{% endblock main%}
+		{% endblock %}
 	</div>
 	
 	
