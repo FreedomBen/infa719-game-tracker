@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns( '',
     url( r'^$', 'gameTrackerApp.views.home' ),
+    url( r'^home/$', 'gameTrackerApp.views.home' ),
     url( r'^login/$', 'gameTrackerApp.views.login' ),
     url( r'^register/createuser/$', 'gameTrackerApp.views.register_user' ),
     url( r'^register/$', 'gameTrackerApp.views.register' ),
