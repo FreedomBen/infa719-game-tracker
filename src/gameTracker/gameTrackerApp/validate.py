@@ -52,3 +52,29 @@ def validatePassword( password ):
 # or a string describing the error if it doesn't
 def validateTwitter( twitter ):
     pass
+
+	
+	
+def validateStartDate(date):
+	date.split()
+	return ""
+		
+def validateStartTime(time):
+	time.split(":")
+	return ""
+		
+def validateDifficulty(difficulty):
+	return ""
+			
+def validateQuarterLength(length):
+	pass
+		
+def validateNextRound(nextRound):
+	pass
+		
+def validateRandomBy(randomBy):
+	pass
+		
+def validateTeam(team):
+	pass
+	

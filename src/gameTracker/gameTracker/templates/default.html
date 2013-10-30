@@ -6,36 +6,25 @@
 		<img src="/static/logo.jpg" class="logo"/>
 	</div>
 	{% endblock logo %}
+	
+	{% block user %}
+	<text>Welcome {{username}}, we hope you enjoy your experience</text>
+	{% endblock user %}
+	
 	{% block header %}
 	<div class="header">
 		<a href="/home/">Main Page</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="create.html">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="join.html">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="previous.html">View Previous Tournaments</a>
+		<a href="/create/">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<a href="/join/">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<a href="/prevTourn/">View Previous Tournaments</a>
 	{% endblock header %}
 	</div>
 	
 	<div>
 		{% block main %}
-		<table id="homeTable">
-			<tr>
-				<td>Tournaments Played</td>
-				<td><input type="label" id="tPlayed" value="xx" disabled /></td>
-			</tr>
-			<tr>
-				<td>Tournaments Won</td>
-				<td><input type="label" id="tWon" value="xx" disabled /></td>
-			</tr>
-			<tr>
-				<td>Next Round Starts At</td>
-				<td><input type="label" id="tStart" value="Not currently registered for upcoming tournament" disabled /></td>
-			</tr>
-			<tr>
-				<td>Tournaments Registered</td>
-				<td><input type="textbox" id="tRegistered" value="" disabled /></td>
-			</tr>
-		</table>
-		{% endblock %}
+		<p/>
+		<span>No main has been set up for this page at this time</span>
+		{% endblock main%}
 	</div>
 	
 	

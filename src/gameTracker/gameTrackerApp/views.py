@@ -59,14 +59,80 @@ def register( request ):
 
 
 def home( request ):
-    request.session['SESfirstName']="Zach"
-    request.session['SESlastName']="hahahaha"
-    return render_to_response( "home.html", {
-	'firstName'		: request.session['SESfirstName'],
-		'lastName'	: request.session['SESlastName'],
-	},context_instance=RequestContext( request )
-	)
+	#direct user to login page if username session is not set
+	if 'SESusername' not in request.session:
+		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+	
+	else:
+		request.session.modified = True
+		return render_to_response( "home.html", {
+		'username'		: request.session['SESusername'],
+		},context_instance=RequestContext( request )
+		)
 
 # This view is for testing the default template
 def default( request ):
     return render_to_response( "default.html", { } )
+
+	
+def login( request ):
+    if request.method == 'GET':
+		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+	
+    request.session['SESusername']=request.POST['user']
+    request.session['SESpassword']=request.POST['password']
+    request.session.modified = True
+    return render_to_response( "home.html", {
+	'username'		: request.session['SESusername'],
+	},context_instance=RequestContext( request )
+	)
+	
+def prevTourn( request ):
+	#direct user to login page if username session is not set
+	if 'SESusername' not in request.session:
+		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+	
+	else:
+		return render_to_response( "prevTourn.html", {
+		'username'		: request.session['SESusername'],
+		},context_instance=RequestContext( request )
+		)
+		
+def create( request ):
+	#direct user to login page if username session is not set
+	if 'SESusername' not in request.session:
+		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+	
+	#return blank form for GET request
+	if request.method == 'GET':
+		return render_to_response( "create.html", {
+		'username'		: request.session['SESusername'],
+		},context_instance=RequestContext( request )
+		)
+	#process input data before responding back
+	else:
+		startDate       = validate.validateStartDate( request.POST['startDate'] )
+        startTime       = validate.validateStartTime( request.POST['startTime'] )
+        difficulty      = validate.validateDifficulty( request.POST['difficulty'] )
+        quarterLength   = validate.validateQuarterLength( request.POST['quarterLength'] )
+        nextRound       = validate.validateNextRound( request.POST['startTime'] )
+        randomBy        = validate.validateRandomBy( request.POST['randomBy'] )
+        team            = validate.validateTeam( request.POST['team'] )
+
+	return render_to_response( "home.html", {
+	'username'		: request.session['SESusername'],
+	'message'       : "Tournament Successfully Created",
+	},context_instance=RequestContext( request )
+	)
+
+def join( request ):
+	#direct user to login page if username session is not set
+	if 'SESusername' not in request.session:
+		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+	
+	else:
+		return render_to_response( "join.html", {
+		'username'		: request.session['SESusername'],
+		},context_instance=RequestContext( request )
+		)
+

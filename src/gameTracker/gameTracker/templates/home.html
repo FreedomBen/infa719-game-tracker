@@ -2,13 +2,10 @@
 <html>
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 <body>
-<div class="content">
-	{% block logo %} {{block.super}}
-	<text>{{firstName}} {{lastName}}</text>
-	{% endblock logo %}
-	
+<div class="content">	
 	{% block main %}
 	<div class="main">
+	<p/><text>{{ message }}</text>
 		<table id="homeTable">
 			<tr>
 				<td>Tournaments Played</td>

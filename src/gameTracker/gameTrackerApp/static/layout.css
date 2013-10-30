@@ -1,10 +1,5 @@
 
-body {
-	margin:25px 0px; 
-	padding:0px;
-	text-align:center;
-}
-	
+
 .Content {
 	width:970px;
 	margin:0px auto;
@@ -34,23 +29,9 @@ border: 1px solid black;
 	
 }
 
-#register
-{
-	top:40;
-	left:140;
-}
-
-
 .inputText
 {
 	line-height:170%
-}
-#logo
-{
-	display:block;
-	margin-right:auto;
-	margin-left:auto;
-	
 }
 
 .inputArea
@@ -59,6 +40,57 @@ border: 1px solid black;
 	left:50;
 }
 
+.tableCenter
+{
+	margin:0 auto;
+}
+
+.divCenter
+{
+	position:absolute;
+	left:0;
+	right:0;
+	margin-left:0;
+	margin-right:0;
+}
+
+.tableBorder
+{
+	margin:0 auto;
+	text-align:center;
+	border-collapse:collapse;
+}
+
+#logo
+{
+	display:block;
+	margin-right:auto;
+	margin-left:auto;
+	
+}
+
+#register
+{
+	top:40;
+	left:140;
+}
+
+body {
+	margin:25px 0px; 
+	padding:0px;
+	text-align:center;
+	width:100%;
+}
+
+tr
+{
+	border:1px solid black;
+}
+
+td
+{
+	padding:3px;
+}
 
 /*div
 {

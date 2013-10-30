@@ -2,19 +2,22 @@
 <html>
 <link rel="stylesheet" type="text/css" href="layout.css"/>
 <body>
+	{% block user %}{% endblock user %}
 	{% block header %}{% endblock header %}
 	{% block main %}
 	<div>
 	<h1>Login</h1>
-		<form action="" method="POST">
-			<div>
-				<p>Username: <input type="text" name="username"/></p>
+	
+	
+		<form action="/login/" method="POST">{% csrf_token %}
+			<!--<div>-->
+				<p>Username: <input type="text" name="user"/></p>
 				<p>Password: <input type="text" name="password"/></p>
-			</div>
+			<!--</div>-->
 
 			<input type="submit" value="login"/>
 		</form>
-		<a href="register.html">Register new account</a> | <a href="#">Forgot my Password</a>
+		<a href="/register/">Register new account</a> | <a href="#">Forgot my Password</a>
 	</div>
 	{% endblock main %}
 </div>

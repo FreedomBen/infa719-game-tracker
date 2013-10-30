@@ -1,15 +1,18 @@
+{% extends "default.html" %}
 <html>
 <link rel="stylesheet" type="text/css" href="layout.css"/>
 <body>
-	<div>
-		<img src="logo.jpg" id="logo"/>
-	</div>
+	{% block user %}
 	<div class="inputArea">
 
             Success!  You registered the user {{ firstName }} {{ lastName }}, with email {{ emailAddress }}!
+			<p/>
+			<a href="/login/">Click here to continue to login</a>
 
 	</div>
-	
+	{% endbock user %}
+	{% block header %}{% endblock header %}
+	{% block main %}{% endblock main %}
 
 </body>
 
