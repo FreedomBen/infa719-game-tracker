@@ -4,22 +4,58 @@
 {% extends "default.html" %}
 <body>
 <div class="content">
+	{% block user %}{% endblock user %}
 	{% block header %}{% endblock header %}
 	{% block main %}
 	<h1>Register</h1>
+	
+	
 	<form action="/register/" method="post" enctype="multipart/form-data">
             <!-- To prevent CSRF attacks -->
             {% csrf_token %}
 		*indicates required field 	
 		
+	<table class="tableCenter">
+		<tr>
+			<td>First Name:*</td>
+			<td><input type="text" name="firstName" value="{{ prevFirstName }}" /></td>
+			<td><span class="errorMsg">{{ firstName }}</span></td>
+		</tr>
+		<tr>
+            <td>Last Name:*</td>
+			<td><input type="text" name="lastName" value="{{ prevLastName }}" /></td>
+			<td><span class="errorMsg">{{ lastName }}</span></td>
+		</tr>
+		<tr>
+			<td>Email Address:*</td>
+			<td><input type="text" name="emailAddress" value="{{ prevEmailAddress }}" /></td>
+			<td><span class="errorMsg">{{ emailAddress }}</span></td>
+		</tr>
+		<tr>
+			<td>Username*</td>
+			<td><input type="text" name="username" value="{{prevUsername}}"/></td>
+			<td><span class="errorMsg">{{username}}</span></td>
+		</tr>
+		<tr>
+            <td>Password:*</td>
+			<td><input type="password" name="password" value="{{ prevPassword }}" /></td>
+			<td><span class="errorMsg">{{ password }}</span></td>
+		</tr>
+		<tr>
+            <td>Confirm Password:*</td>
+			<td><input type="password" name="passwordCheck" value="{{ prevPasswordCheck }}" /></td>
+		</tr>
+		<tr>
+            <td>Twitter ID:</td>
+			<td><input type="text" name="twitter" value="{{ prevTwitter }}" /></td>
+			<span class="errorMsg">{{ twitter }}</span></td>
+		</tr>
+		<tr>
+			<td>Profile Picture:</td>
+			<td><input type="file" name="picture"/></td>
+		</tr>
 		
-                <p>First Name:* <input type="text" name="firstName" value="{{ prevFirstName }}" /> <span class="errorMsg">{{ firstName }}</span></p>
-                <p>Last Name:* <input type="text" name="lastName" value="{{ prevLastName }}" /> <span class="errorMsg">{{ lastName }}</span></p>
-                <p>Email Address:* <input type="text" name="emailAddress" value="{{ prevEmailAddress }}" /> <span class="errorMsg">{{ emailAddress }}</span></p>
-                <p>Password:* <input type="password" name="password" value="{{ prevPassword }}" /> <span class="errorMsg">{{ password }}</span></p>
-                <p>Confirm Password:* <input type="password" name="passwordCheck" value="{{ prevPasswordCheck }}" /> </p>
-                <p>Twitter ID: <input type="text" name="twitter" value="{{ prevTwitter }}" /> <span class="errorMsg">{{ twitter }}</span></p>
-		<p>Profile Picture: <input type="file" name="picture"/> </p>
+	</table>
 		
 		<input type="submit" value="Register"/>
 	</form>
