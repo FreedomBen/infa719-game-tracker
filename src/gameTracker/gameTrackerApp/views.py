@@ -13,7 +13,8 @@ def login( request ):
     return render_to_response( 'login.html', { } )
 
 
-# This view processes the registration request
+# This view processes the registration request and handles displaying the register page
+# If registration succeeds the user is served to a success page
 def register( request ):
     # if this is a GET then just return the normal page
     if request.method == 'GET':
