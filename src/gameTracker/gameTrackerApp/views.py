@@ -57,7 +57,7 @@ def register( request ):
                 'twitter'      : request.POST['twitter']
             }, context_instance=RequestContext( request ) ) 
 
-
+# This view serves the home page
 def home( request ):
 	#direct user to login page if username session is not set
 	if 'SESusername' not in request.session:
