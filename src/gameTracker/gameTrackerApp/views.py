@@ -58,7 +58,13 @@ def register( request ):
 
 
 def home( request ):
-    return render_to_response( "home.html", { } )
+    request.session['SESfirstName']="Zach"
+    request.session['SESlastName']="hahahaha"
+    return render_to_response( "home.html", {
+	'firstName'		: request.session['SESfirstName'],
+		'lastName'	: request.session['SESlastName'],
+	},context_instance=RequestContext( request )
+	)
 
 # This view is for testing the default template
 def default( request ):

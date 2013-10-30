@@ -1,21 +1,11 @@
+{% extends "default.html" %}
 <html>
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 <body>
 <div class="content">
-	{% block logo %}
- 	<div>
-		<img src="/static/logo.jpg" class="logo"/> 
+	{% block logo %} {{block.super}}
+	<text>{{firstName}} {{lastName}}</text>
 	{% endblock logo %}
-		</p>
-			<text value="hello" id="userID" readonly>old text</text>
-	<!-- </div> -->
-	{% block header %}
-	<div class="header">
-		<a href="/tournament/create/">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="/tournament/join/">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<a href="/tournament/previous/">View Previous Tournaments</a>
-	</div>
-	{% endblock header %}
 	
 	{% block main %}
 	<div class="main">
