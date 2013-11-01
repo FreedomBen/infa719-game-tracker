@@ -1,0 +1,58 @@
+<html>
+<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
+{% extends "default.html" %}
+<body>
+<div class="content">
+
+	{% block main %}
+	<p/>
+	<form action="/create/" method="post" enctype="multipart/form-data">
+            <!-- To prevent CSRF attacks -->
+            {% csrf_token %}
+		*indicates required field 	
+	<table class="tableCenter">
+		<tr>
+			<td>Start Date:*</td>
+			<td><input type="text" name="startDate" value="{{ prevStartDate }}" /></td>
+			<td><span class="errorMsg">{{ startDate }}</span></td>
+		</tr>
+		<tr>
+            <td>Start Time:*</td>
+			<td><input type="text" name="startTime" value="{{ prevStartTime }}" /></td>
+			<td><span class="errorMsg">{{ startTime }}</span></td>
+		</tr>
+		<tr>
+			<td>Difficulty:*</td>
+			<td><input type="text" name="difficulty" value="{{ prevDifficulty }}" /></td>
+			<td><span class="errorMsg">{{ difficulty }}</span></td>
+		</tr>
+		<tr>
+			<td>Quarter Length*</td>
+			<td><input type="text" name="quarterLength" value="{{prevQuarterLength}}"/></td>
+			<td><span class="errorMsg">{{quarterLength}}</span></td>
+		</tr>
+		<tr>
+            <td>Next Round Starts:*</td>
+			<td><input type="text" name="nextRound" value="{{ prevNextRound }}" /></td>
+			<td><span class="errorMsg">{{ nextRound }}</span></td>
+		</tr>
+		<tr>
+            <td>Random By:*</td>
+			<td><input type="text" name="randomBy" value="{{ prevRandomBy }}" /></td>
+			<td><span class="errorMsg">{{randomBy}}</span></td>
+		</tr>
+		<tr>
+            <td>Your Team:</td>
+			<td><input type="text" name="team" value="{{ prevteam }}" /></td>
+			<span class="errorMsg">{{ team }}</span></td>
+		</tr>
+		
+	</table>
+	
+	<input type="submit" value="Create"/>
+	
+	</form>
+	{% endblock main %}
+</div>
+</body>
+</html>
