@@ -1,0 +1,46 @@
+{% extends "default.html" %}
+
+<html>
+<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
+
+<body>
+<div class="content">
+	{% block main %}
+	<p/>
+	<table id="tablePrev">
+		<tr>
+			<td>Tournament ID</td>
+			<td>Tournament Date</td>
+			<td>Finished in Round</td>
+			<td>Finished in Place</td>
+		</tr>
+		<tr>
+			<td>13255B74L</td>
+			<td>September 20, 2013</td>
+			<td>1</td>
+			<td>20</td>
+		</tr>
+		<tr>
+			<td>NNNNNXNNX</td>
+			<td>September 15, 2013</td>
+			<td>2</td>
+			<td>10</td>
+		</tr>
+		<tr>
+			<td>NNNNNXNNX</td>
+			<td>September 9, 2013</td>
+			<td>3</td>
+			<td>6</td>
+		</tr>
+		<tr>
+			<td>NNNNNXNNX</td>
+			<td>September 6, 2013</td>
+			<td>5</td>
+			<td>1</td>
+		</tr>
+	</table>
+	{% endblock main %}
+
+</div>
+</body>
+</html>

@@ -8,7 +8,7 @@
 	{% endblock logo %}
 	
 	{% block user %}
-	<text>Welcome {{username}}, we hope you enjoy your experience</text>
+	<text>Welcome {{username}}, we hope you enjoy your experience!</text>
 	{% endblock user %}
 	
 	{% block header %}
@@ -17,6 +17,7 @@
 		<a href="/create/">Create Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 		<a href="/join/">Join Tournament</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 		<a href="/prevTourn/">View Previous Tournaments</a>
+		<p/>{{ message }}
 	{% endblock header %}
 	</div>
 	
