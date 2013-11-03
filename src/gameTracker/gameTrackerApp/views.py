@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.db import IntegrityError
+from django.contrib.auth.models import User
 from gameTrackerApp.models import *
 
 import validate
@@ -49,13 +51,32 @@ def register( request ):
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
-            return render_to_response( 'register_success.html', {
-                'firstName'    : request.POST['firstName'],
-                'lastName'     : request.POST['lastName'],
-                'emailAddress' : request.POST['emailAddress'],
-                'password'     : request.POST['password'],
-                'twitter'      : request.POST['twitter']
-            }, context_instance=RequestContext( request ) ) 
+            try:
+                new_user = User.objects.create_user( request.POST['username'], request.POST['emailAddress'], request.POST['password'] ) 
+            except IntegrityError:
+                # user already exists
+                return render_to_response( 'register.html', {
+                    'username'          : 'User already exists',
+                    'prevFirstName'     : request.POST['firstName'],
+                    'prevLastName'      : request.POST['lastName'],
+                    'prevEmailAddress'  : request.POST['emailAddress'],
+                    'prevPassword'      : request.POST['password'],
+                    'prevPasswordCheck' : request.POST['passwordCheck'],
+                    'prevTwitter'       : request.POST['twitter']
+                }, context_instance=RequestContext( request ) )
+            else:
+                new_user.first_name = request.POST['firstName']
+                new_user.last_name  = request.POST['lastName']
+                new_user.email      = request.POST['emailAddress']
+                new_user.password   = request.POST['password']
+                # User table does not have a twitter member
+
+                return render_to_response( 'register_success.html', {
+                    'firstName'    : new_user.first_name,
+                    'lastName'     : new_user.last_name,
+                    'emailAddress' : new_user.email,
+                    # 'twitter'      : new_user.first_name,
+                }, context_instance=RequestContext( request ) ) 
 
 # This view serves the home page
 def home( request ):
