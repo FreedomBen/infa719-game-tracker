@@ -97,7 +97,7 @@ def default( request ):
     return render_to_response( "default.html", { } )
 
 	
-def login( request ):
+def loginView( request ):
     if request.method == 'GET':
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
 	
