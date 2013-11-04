@@ -99,15 +99,25 @@ def default( request ):
 	
 def login( request ):
     if request.method == 'GET':
-		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+        return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
 	
-    request.session['SESusername']=request.POST['user']
-    request.session['SESpassword']=request.POST['password']
-    request.session.modified = True
-    return render_to_response( "home.html", {
-	'username'		: request.session['SESusername'],
-	},context_instance=RequestContext( request )
-	)
+    user = authenticate( username=request.POST['username'], password=request.POST['password'] )
+
+    if user is not None and user.is_active:
+            login( request, user )
+            # success
+            request.session['SESusername']=user.username
+            request.session.modified = True
+            return render_to_response( "home.html", {
+                    'username'		: user.username,
+                },context_instance=RequestContext( request )
+            )
+    else:
+        # Not authenticated
+        return render_to_response( "login.html", { 
+            'error' : 'Your information was invalid.  Please try again' 
+        }, context_instance=RequestContext( request ) )
+
 	
 def prevTourn( request ):
 	#direct user to login page if username session is not set
