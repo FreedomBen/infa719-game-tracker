@@ -5,14 +5,11 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from gameTrackerApp.models import *
 
 import validate
-
-# This view serves the login page
-def login( request ):
-    return render_to_response( 'login.html', { } )
 
 
 # This view processes the registration request and handles displaying the register page
