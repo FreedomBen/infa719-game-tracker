@@ -23,20 +23,23 @@ def register( request ):
         # validate our data server side before processing it
         first    = validate.validateName( request.POST['firstName'] )
         last     = validate.validateName( request.POST['lastName'] )
+        username = validate.validateName( request.POST['username'] )
         email    = validate.validateEmail( request.POST['emailAddress'] )
         password = validate.validatePassword( request.POST['password'] )
 
         if( request.POST['password'] != request.POST['passwordCheck'] ):
             password = "Passwords must match"
 
-        if len( first ) > 0 or len( last ) > 0  or len( email ) > 0 or len( password ) > 0:
+        if len( first ) > 0 or len( last ) > 0  or len( username ) > 0 or len( email ) > 0 or len( password ) > 0:
             return render_to_response( 'register.html', {
                 'firstName'         : first,
                 'lastName'          : last,
+                'username'          : username,
                 'emailAddress'      : email,
                 'password'          : password,
                 'prevFirstName'     : request.POST['firstName'],
                 'prevLastName'      : request.POST['lastName'],
+                'prevUsername'      : request.POST['username'],
                 'prevEmailAddress'  : request.POST['emailAddress'],
                 'prevPassword'      : request.POST['password'],
                 'prevPasswordCheck' : request.POST['passwordCheck'],
