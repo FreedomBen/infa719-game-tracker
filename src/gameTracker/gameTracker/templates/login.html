@@ -1,6 +1,6 @@
 {% extends "default.html" %}
 <html>
-<link rel="stylesheet" type="text/css" href="layout.css"/>
+<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 <body>
 	{% block user %}{% endblock user %}
 	{% block header %}{% endblock header %}
@@ -9,7 +9,7 @@
 	<h1>Login</h1>
 
         {% if error %}
-            <p>{{ error }}</p>
+            <p><span class="errorMsg">{{ error }}</span></p>
         {% endif %}
 	
 		<form action="/login/" method="POST">{% csrf_token %}
