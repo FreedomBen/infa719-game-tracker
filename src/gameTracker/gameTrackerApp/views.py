@@ -96,6 +96,12 @@ def home( request ):
 def default( request ):
     return render_to_response( "default.html", { } )
 
+
+def logoutView(request):
+    return render_to_response( "login.html", { 
+            'message' : 'Successfully logged out' 
+        }, context_instance=RequestContext( request ) )
+	
 	
 def loginView( request ):
     if request.method == 'GET':
