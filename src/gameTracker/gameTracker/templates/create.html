@@ -1,6 +1,7 @@
 <html>
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 {% extends "default.html" %}
+
 <body>
 <div class="content">
 
@@ -13,38 +14,62 @@
 	<table class="tableCenter">
 		<tr>
 			<td>Start Date:*</td>
-			<td><input type="text" name="startDate" value="{{ prevStartDate }}" /></td>
+			<td><input type="text" name="startDate"/></td>
 			<td><span class="errorMsg">{{ startDate }}</span></td>
 		</tr>
 		<tr>
             <td>Start Time:*</td>
-			<td><input type="text" name="startTime" value="{{ prevStartTime }}" /></td>
+			<td><select name="startTime">
+				{% for item in prevStartTime %}
+					<option	value="{{ item }}">{{ item }}</option>
+				{% endfor %}
+			</select></td>
 			<td><span class="errorMsg">{{ startTime }}</span></td>
 		</tr>
 		<tr>
 			<td>Difficulty:*</td>
-			<td><input type="text" name="difficulty" value="{{ prevDifficulty }}" /></td>
+			<td><select name="difficulty">
+				{% for item in prevDifficulty %}
+					<option value="{{ item.0 }}">{{ item.1 }}</option>
+				{% endfor %}
+				</select></td>
 			<td><span class="errorMsg">{{ difficulty }}</span></td>
 		</tr>
 		<tr>
 			<td>Quarter Length*</td>
-			<td><input type="text" name="quarterLength" value="{{prevQuarterLength}}"/></td>
+			<td><select name="quarterLength">
+				{% for item in prevQuarterLength %}
+					<option value="{{item}}">{{ item }} </option>
+				{% endfor %}
+			</select></td>
 			<td><span class="errorMsg">{{quarterLength}}</span></td>
 		</tr>
 		<tr>
             <td>Next Round Starts:*</td>
-			<td><input type="text" name="nextRound" value="{{ prevNextRound }}" /></td>
+			<td><select name="nextRound">
+				{% for item in prevNextRound %}
+					<option value="{{ item }}">{{ item }}</option>
+				{% endfor %}
+			</select></td>
 			<td><span class="errorMsg">{{ nextRound }}</span></td>
 		</tr>
 		<tr>
             <td>Random By:*</td>
-			<td><input type="text" name="randomBy" value="{{ prevRandomBy }}" /></td>
-			<td><span class="errorMsg">{{randomBy}}</span></td>
+			<td><select name="randomBy">
+				{% for item in prevRandomBy %}
+					<option	value="{{ item }}">{{ item }}</option>
+				{% endfor %}
+			</select></td>
+			<td><span class="errorMsg">{{ randomBy }}</span></td>
 		</tr>
 		<tr>
-            <td>Your Team:</td>
-			<td><input type="text" name="team" value="{{ prevteam }}" /></td>
-			<span class="errorMsg">{{ team }}</span></td>
+            <td>Your Team:*</td>
+			<td><select name="team">
+				{% for item in prevteam %}
+					<option value="{{ item.0 }}">{{ item.1 }}</option>
+				{% endfor %}
+				</select></td>
+			<td><span class="errorMsg">{{ team }}</span></td>
 		</tr>
 		
 	</table>
