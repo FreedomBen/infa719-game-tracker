@@ -68,7 +68,6 @@ def register( request ):
                 new_user.last_name  = request.POST['lastName']
                 new_user.email      = request.POST['emailAddress']
                 new_user.password   = request.POST['password']
-                # new_user.save()
                 # User table does not have a twitter member
 
                 return render_to_response( 'register_success.html', {
