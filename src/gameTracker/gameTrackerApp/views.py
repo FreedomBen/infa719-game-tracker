@@ -8,7 +8,6 @@ from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from gameTrackerApp.models import *
-
 import validate
 
 
@@ -145,24 +144,90 @@ def create( request ):
 	#return blank form for GET request
 	if request.method == 'GET':
 		return render_to_response( "create.html", {
-		'username'		: request.session['SESusername'],
+		'username'			: request.session['SESusername'],
+		'prevteam'			: NFL_TEAMS,
+		'prevDifficulty'	: Tournament.DIFFICULTY_LEVELS,
+		'prevQuarterLength'	: QUARTER_LENGTH,
+		'prevRandomBy'		: RANDOM_BY,
+		'prevStartTime'		: START_TIME,
+		'prevNextRound'		: NEXT_ROUND,
 		},context_instance=RequestContext( request )
 		)
+		
 	#process input data before responding back
 	else:
 		startDate       = validate.validateStartDate( request.POST['startDate'] )
         startTime       = validate.validateStartTime( request.POST['startTime'] )
         difficulty      = validate.validateDifficulty( request.POST['difficulty'] )
         quarterLength   = validate.validateQuarterLength( request.POST['quarterLength'] )
-        nextRound       = validate.validateNextRound( request.POST['startTime'] )
+        nextRound       = validate.validateNextRound( request.POST['nextRound'] )
         randomBy        = validate.validateRandomBy( request.POST['randomBy'] )
         team            = validate.validateTeam( request.POST['team'] )
+		
+	if len(team) > 0 or len(difficulty) > 0 or len(quarterLength) >0 or len(randomBy) > 0 or len(startTime) > 0 or len(nextRound) > 0 or len(startDate) > 0:
+		#invalid info input, do not create tournament
+		return render_to_response( "create.html", {
+		'username'		: request.session['SESusername'],
+		'prevRandomBy'	: RANDOM_BY,
+		'randomBy'		: randomBy,
+		'prevQuarterLength': QUARTER_LENGTH,
+		'quarterLength'	: quarterLength,
+		'prevteam'		: NFL_TEAMS,
+		'team'			: team,
+		'prevDifficulty'	: Tournament.DIFFICULTY_LEVELS,
+		'difficulty'	: difficulty,
+		'prevStartTime'	: START_TIME,
+		'startTime'		: startTime,
+		'prevNextRound'	: NEXT_ROUND,
+		'nextRound'		: nextRound,
+		'startDate'		: startDate,
+		},context_instance=RequestContext( request )
+		)
 
-	return render_to_response( "home.html", {
-	'username'		: request.session['SESusername'],
-	'message'       : "Tournament Successfully Created",
-	},context_instance=RequestContext( request )
-	)
+	else:
+		#create the tournament in the database
+		
+		try:
+			#newTourny = Tournament(
+			#owner_id='1', 
+			#tournament_name = 'first', 
+			#quarter_length = request.POST['quarterLength'],
+			#quarter_length = '5',
+			#difficulty_level = request.POST['difficulty']
+			#)
+			
+			
+			
+			# s = gameTrackerApp_tournament(
+				# id				= 1,
+				#is_public				= True,
+				# tournament_name			= 'grrr',
+				# signup_open_datetime	= '05-28-1984',
+				# signup_close_datetime	= '05-28-1984',
+				# round_open_datetime		= '05-28-1984',
+				# round_close_datetime	= '05-28-1984',
+				# quarter_length			= 7,
+				# difficulty_level		= 'PR',
+			# )
+			# s.save()
+		except:
+			return render_to_response( "create.html", {
+			'username'			: request.session['SESusername'],
+			'prevteam'			: NFL_TEAMS,
+			'prevDifficulty'	: Tournament.DIFFICULTY_LEVELS,
+			'prevQuarterLength'	: QUARTER_LENGTH,
+			'prevRandomBy'		: RANDOM_BY,
+			'prevStartTime'		: START_TIME,
+			'prevNextRound'		: NEXT_ROUND,
+			'message'			: "failed to create tournament"
+			},context_instance=RequestContext( request )
+			)
+		
+		return render_to_response( "home.html", {
+		'username'		: request.session['SESusername'],
+		'message'       : "Tournament successfully created",
+		},context_instance=RequestContext( request )
+		)
 
 def join( request ):
 	#direct user to login page if username session is not set

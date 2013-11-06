@@ -4,6 +4,8 @@ import re
 
 from django.forms import EmailField
 from django.core.exceptions import ValidationError
+from gameTrackerApp.models import *
+import datetime
 
 
 # validate name and return empty string if passes
@@ -51,30 +53,42 @@ def validatePassword( password ):
 # validate twitter and return empty string if passes
 # or a string describing the error if it doesn't
 def validateTwitter( twitter ):
-    pass
-
-	
+    pass	
 	
 def validateStartDate(date):
-	date.split()
+	try:
+		datetime.datetime.strptime(date, '%m-%d-%Y')
+	except ValueError:
+		return "invalid start date"
 	return ""
 		
 def validateStartTime(time):
-	time.split(":")
+	if time not in START_TIME:
+		return "Invalid start time"
 	return ""
 		
 def validateDifficulty(difficulty):
+	if difficulty not in Tournament.DIFFICULTY_LEVELS[0]:
+		return "Invalid Difficulty"
 	return ""
 			
 def validateQuarterLength(length):
-	pass
+	if length not in QUARTER_LENGTH:
+		return "Invalid quarter length"
+	return ""
 		
 def validateNextRound(nextRound):
-	pass
+	if nextRound not in NEXT_ROUND:
+		return "Invalid next round start time"
+	return ""
 		
 def validateRandomBy(randomBy):
-	pass
+	if randomBy not in RANDOM_BY:
+		return "Invalid random by option"
+	return ""
 		
 def validateTeam(team):
-	pass
+	if team not in NFL_TEAMS[0]:
+		return "Invalid team"
+	return ""
 	
