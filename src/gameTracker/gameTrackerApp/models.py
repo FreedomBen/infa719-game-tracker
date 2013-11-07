@@ -100,21 +100,21 @@ TEAMS_TO_CONFERENCES = (
 )
 
 QUARTER_LENGTH = (
-	('1:00'),
-	('2:00'),
-	('3:00'),
-	('4:00'),
-	('5:00'),
-	('6:00'),
-	('7:00'),
-	('8:00'),
-	('9:00'),
-	('10:00'),
-	('11:00'),
-	('12:00'),
-	('13:00'),
-	('14:00'),
-	('15:00'),
+	('1'),
+	('2'),
+	('3'),
+	('4'),
+	('5'),
+	('6'),
+	('7'),
+	('8'),
+	('9'),
+	('10'),
+	('11'),
+	('12'),
+	('13'),
+	('14'),
+	('15'),
 )
 
 RANDOM_BY = (
@@ -187,7 +187,7 @@ class NFLteam( models.Model ):
 # Every Game belongs to a Tournament, tracked by foreign key
 #---------------------------------------------------------------------------------------------
 class Tournament( models.Model ):
-    """Represents a Madden tournamennt"""
+    """Represents a Madden tournament"""
     DIFFICULTY_LEVELS = (
         ( 'RK', 'Rookie'     ),
         ( 'PR', 'Pro'        ),
@@ -195,8 +195,7 @@ class Tournament( models.Model ):
         ( 'AM', 'All-Madden' ),
     )
 
-    owner_id              = models.IntegerField()
-    is_public             = models.BooleanField()
+    id              	  = models.IntegerField(primary_key=True)
     tournament_name       = models.CharField( max_length=25 )
     signup_open_datetime  = models.DateTimeField()
     signup_close_datetime = models.DateTimeField()
@@ -205,13 +204,9 @@ class Tournament( models.Model ):
     quarter_length        = models.IntegerField() # in minutes
     difficulty_level      = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
 
-    def __unicode__( self ):
-        return 'Tournament: ' + str( self.name )
-
-class testTable(models.Model):
-	first = models.CharField( max_length=10)
-	second= models.CharField( max_length=10)
-		
+    #def __unicode__( self ):
+        #return 'Tournament: ' + str( self.name )
+		#return str(self)
 		
 #---------------------------------------------------------------------------------------------
 # Keeps track of which users have been authorized to view a tournament by the tournament owner
