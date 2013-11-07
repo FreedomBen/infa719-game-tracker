@@ -8,36 +8,13 @@
 	{% block main %}
 	<p/>
 	<table class="tableBorder">
-		<tr>
-			<td>Tournament ID</td>
-			<td>Start Date</td>
-			<td>Start Time</td>
-			<td>Created By</td>
-		</tr>
-		<tr>
-			<td>13255B74L</td>
-			<td>September 20, 2013</td>
-			<td>1</td>
-			<td>20</td>
-		</tr>
-		<tr>
-			<td>NNNNNXNNX</td>
-			<td>September 15, 2013</td>
-			<td>2</td>
-			<td>10</td>
-		</tr>
-		<tr>
-			<td>NNNNNXNNX</td>
-			<td>September 9, 2013</td>
-			<td>3</td>
-			<td>6</td>
-		</tr>
-		<tr>
-			<td>NNNNNXNNX</td>
-			<td>September 6, 2013</td>
-			<td>5</td>
-			<td>1</td>
-		</tr>
+		{% for row in info %}
+			<tr>
+			{% for col in row %}
+				<td>{{ col }}</td>
+			{% endfor %}
+			</tr>
+		{% endfor %}
 	</table>
 	{% endblock main %}
 

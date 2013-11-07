@@ -187,28 +187,17 @@ def create( request ):
 		#create the tournament in the database
 		
 		try:
-			#newTourny = Tournament(
-			#owner_id='1', 
-			#tournament_name = 'first', 
-			#quarter_length = request.POST['quarterLength'],
-			#quarter_length = '5',
-			#difficulty_level = request.POST['difficulty']
-			#)
+			s = Tournament(
+				#id						= 1,
+				tournament_name			= request.session['SESusername'],
+				signup_open_datetime	= '2013-10-10 12:12',
+				signup_close_datetime	= '2013-10-10 12:12',
+				round_open_datetime		= '2013-10-10 12:12',
+				round_close_datetime	= '2013-10-10 12:12',
+				quarter_length			= request.POST['quarterLength'],
+				difficulty_level		= request.POST['difficulty'],
+			)
 			
-			
-			
-			# s = gameTrackerApp_tournament(
-				# id				= 1,
-				#is_public				= True,
-				# tournament_name			= 'grrr',
-				# signup_open_datetime	= '05-28-1984',
-				# signup_close_datetime	= '05-28-1984',
-				# round_open_datetime		= '05-28-1984',
-				# round_close_datetime	= '05-28-1984',
-				# quarter_length			= 7,
-				# difficulty_level		= 'PR',
-			# )
-			# s.save()
 		except:
 			return render_to_response( "create.html", {
 			'username'			: request.session['SESusername'],
@@ -221,6 +210,9 @@ def create( request ):
 			'message'			: "failed to create tournament"
 			},context_instance=RequestContext( request )
 			)
+			
+		else:
+			s.save()
 		
 		return render_to_response( "home.html", {
 		'username'		: request.session['SESusername'],
@@ -234,8 +226,28 @@ def join( request ):
 		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
 	
 	else:
+		c =	['id','tournament_name','signup_open_datetime','quarter_length']
+		d = []
+		
+		d.append(c)
+		
+		b = Tournament.objects.all()
+		for a in b:
+			c = [a.id, a.tournament_name.encode('ascii','ignore'), a.signup_open_datetime.strftime('%Y/%m/%d'), a.quarter_length ]
+			d.append(c)
+			
 		return render_to_response( "join.html", {
 		'username'		: request.session['SESusername'],
+		'info'		: d,
 		},context_instance=RequestContext( request )
 		)
 
+def view(request):
+	if 'SESusername' not in request.session:
+		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+	
+	else:
+		return render_to_response( "view.html", {
+		'username'		: request.session['SESusername'],
+		},context_instance=RequestContext( request )
+		)
