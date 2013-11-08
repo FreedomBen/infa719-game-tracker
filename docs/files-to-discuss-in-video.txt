@@ -34,4 +34,23 @@ These are the .html files that house Django template code.  They are basically H
 
 This file contains all of the Python class definitions that correspond to tables and fields in our database.  The Python definitions allows us to interact with DB objects as though they were regular Python objects.  Aside from the convenience, this is important for security because it separates the appilcaiton logic from the SQL generation.  This reduces the likelihood that user provided text will directly end up in a SQL query, thus reducing the attack surface for SQL injection attacks.
 
+6. "gameTrackerApp/validate.py"
+
+This file contains the python functions that perform validation on user input, particularly when a user is being registered.
+
+7. "gameTrackerApp/modelHelper.py"
+
+This file contains some functions that help with mapping model constants to database items.  
+
+8. "admin.py" 
+
+This file defines characterstics of the admin interface.  We specify how we want it to be displayed in this file
+
+9. "gameTrackerApp/tests.py"
+
+This file contains the unit tests for our python modules.  There are currently tests for the model functions, model helper functions, and validation function.
+
+10. "gameTrackerApp/static/*"
+
+These are static resources that can be directly requested through Django with no rendering.  We put things like CSS files and images here
 
