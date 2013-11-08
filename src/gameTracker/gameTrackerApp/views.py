@@ -226,7 +226,7 @@ def join( request ):
 		return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
 	
 	else:
-		c =	['id','tournament_name','signup_open_datetime','quarter_length']
+		c =	['tournament code','tournament creator','signup starts at','quarter length']
 		d = []
 		
 		d.append(c)
