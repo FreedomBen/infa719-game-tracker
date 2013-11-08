@@ -67,3 +67,21 @@ class ModelHelperTest( TestCase ):
     def test_2( self ):
         # Just a placeholder right now
         pass
+
+class ValidationTester( TestCase ):
+    def setUp( self ):
+        l = []
+        for i in NFL_TEAMS:
+            l.append( NFLteam( team_name=i[0] ) )
+        for i in l:
+            i.save()
+        l=[]
+        for i in CONFERENCES:
+            l.append( Conference( conference_name=i[0] ) )
+        for i in l:
+            i.save()
+
+    def test( self ):
+        self.assertEqual( teamAbbrToNFLteam( "ARI" ).team_name, "ARI" )
+        for team in NFL_TEAMS:
+            self.assertEqual( teamAbbrToNFLteam( team[0] ).team_name, team[0] )
