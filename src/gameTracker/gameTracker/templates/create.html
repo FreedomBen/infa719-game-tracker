@@ -1,7 +1,5 @@
-<html>
-<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 {% extends "default.html" %}
-
+<html>
 <body>
 <div class="content">
 
@@ -11,6 +9,9 @@
             <!-- To prevent CSRF attacks -->
             {% csrf_token %}
 		*indicates required field 	
+		
+	<!-- The following table contains all the options that a user
+		has when creating a new tournament-->
 	<table class="tableCenter">
 		<tr>
 			<td>Start Date:*</td>

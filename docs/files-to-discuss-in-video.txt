@@ -1,0 +1,56 @@
+Meaningful branches
+
+We have two main branches in the repo:
+
+1. master
+2. heroku-deployment
+
+Merge direction:  master ----> heroku-deployment
+
+We have chosen to deploy to Heroku.  Unfortunately our deployment scenario requires different setup than our test environment.  Because of this we maintain an upstream branch from master that applies the necessary patches to switch from test environment to production.
+
+There are three additional branches used for testing.  There is one for each member of the team.  These branches allow for destructive testing that can easily be undone.
+--------------------------------------------------------
+
+Files with meaningful code to discuss:
+
+1. "gameTrackerApp/views.py" and "gameTracker/urls.py"
+
+views.py contains the definition of each function responsible for handling GET and POST requests that come into the app.  The functions in this file are mapped via regular expression from entries in urls.py.  Our convention in this app is to name the view function after the .html page designed to serve that view.  Any action the application should take will be described via POST parameters in the request.  For a GET request, the empty/default view will be served.
+
+2. "gameTracker/sqlite_test_db.db"
+
+This is our test database file.  It is a simple SQLite3 database that is convenient for keeping under version control in our repo.  It is only used when running the application locally.
+
+3. "gameTracker/settings.py"
+
+This file contains python variables that house various settings used throughout the app.  Settings include paths that locate various resources, as well as the activation and inclusion of various Django provided middleware applications.  The file also contains variables and constants used throughout the app.  At this post most of our constants are related to the model so they aren't housed here.
+
+4. "gameTracker/templates/*"
+
+These are the .html files that house Django template code.  They are basically HTML files that contain special tags with meaning to Django.  When the Django rendering engine encounters these tags, it will interpret them and replace them with appropriate HTML code based on the evaluation.  This allows us to pass server variables to the renderer to create dynamic code at runtime that appears static to the user.
+
+5. "gameTrackerApp/models.py"
+
+This file contains all of the Python class definitions that correspond to tables and fields in our database.  The Python definitions allows us to interact with DB objects as though they were regular Python objects.  Aside from the convenience, this is important for security because it separates the appilcaiton logic from the SQL generation.  This reduces the likelihood that user provided text will directly end up in a SQL query, thus reducing the attack surface for SQL injection attacks.
+
+6. "gameTrackerApp/validate.py"
+
+This file contains the python functions that perform validation on user input, particularly when a user is being registered.
+
+7. "gameTrackerApp/modelHelper.py"
+
+This file contains some functions that help with mapping model constants to database items.  
+
+8. "admin.py" 
+
+This file defines characterstics of the admin interface.  We specify how we want it to be displayed in this file
+
+9. "gameTrackerApp/tests.py"
+
+This file contains the unit tests for our python modules.  There are currently tests for the model functions, model helper functions, and validation function.
+
+10. "gameTrackerApp/static/*"
+
+These are static resources that can be directly requested through Django with no rendering.  We put things like CSS files and images here
+
