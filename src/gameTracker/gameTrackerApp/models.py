@@ -1,6 +1,10 @@
 from django.db import models
 import random
 
+# This file contains the structure of the tables, 
+# as well as contains static information that is used 
+# thruought the site
+
 
 #------------------------------------------------------------
 # Security feature and code error catcher
@@ -99,6 +103,7 @@ TEAMS_TO_CONFERENCES = (
     ( 'WAS', 'NE' ),
 )
 
+#allowable quarter lengths
 QUARTER_LENGTH = (
 	('1'),
 	('2'),
@@ -117,12 +122,14 @@ QUARTER_LENGTH = (
 	('15'),
 )
 
+#how the games are randomized
 RANDOM_BY = (
 	('All'),
 	('Conference'),
 	('Division'),
 )
 
+#allowable tournament start times
 START_TIME = (
 	('00:00'),
 	('01:00'),
@@ -149,6 +156,7 @@ START_TIME = (
 	('23:00'),
 )
 
+#time after the first round starts that the next round begins
 NEXT_ROUND = (
 	('1 Hour'),
 	('6 Hours'),

@@ -1,12 +1,11 @@
 {% extends "default.html" %}
-
 <html>
-<link rel="stylesheet" type="text/css" href="/static/layout2.css"/>
-
 <body>
 <div class="content">
 	{% block main %}
 	<p/>
+	<!-- The following table contains all the tournaments that
+	a user is eligable to join-->
 	<table class="tableBorder">
 		{% for row in info %}
 			<tr>

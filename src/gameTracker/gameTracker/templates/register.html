@@ -1,7 +1,5 @@
-
-<html>
-<link rel="stylesheet" type="text/css" href="/static/layout.css"/>
 {% extends "default.html" %}
+<html>
 <body>
 <div class="content">
 	{% block user %}{% endblock user %}
@@ -14,7 +12,8 @@
             <!-- To prevent CSRF attacks -->
             {% csrf_token %}
 		*indicates required field 	
-		
+	<!-- The following table contains all the options that a user
+		has when registering for a new account-->
 	<table class="tableCenter">
 		<tr>
 			<td>First Name:*</td>

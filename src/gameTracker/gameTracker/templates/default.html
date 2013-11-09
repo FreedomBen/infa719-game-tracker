@@ -1,5 +1,12 @@
+<!-- This HTML page is the standard template that is used by the
+	rest of the pages in the site.  Any blocks that are not
+	specified in the other pages have the blocks from this
+	page automatically loaded-->
+
 <html>
+{% block imports %}
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
+{% endblock imports %}
 <body>
 	{% block logo %}
 	<div>

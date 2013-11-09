@@ -54,10 +54,17 @@ def validatePassword( password ):
 # or a string describing the error if it doesn't
 def validateTwitter( twitter ):
     pass	
-	
+
+
+#----------------------------------------------
+# The following functions are to validate the information
+# coming in when a users creates a new tournament
+# If the information is valid a blank string is returned
+# otherwise an error message is returned
+#----------------------------------------------	
 def validateStartDate(date):
 	try:
-		datetime.datetime.strptime(date, '%m-%d-%Y')
+		datetime.datetime.strptime(date, '%Y-%m-%d')
 	except ValueError:
 		return "invalid start date"
 	return ""
@@ -68,9 +75,10 @@ def validateStartTime(time):
 	return ""
 		
 def validateDifficulty(difficulty):
-	if difficulty not in Tournament.DIFFICULTY_LEVELS[0]:
-		return "Invalid Difficulty"
-	return ""
+	for item in Tournament.DIFFICULTY_LEVELS:
+		if difficulty in item[0]:
+			return ""
+	return "Invalid Difficulty"
 			
 def validateQuarterLength(length):
 	if length not in QUARTER_LENGTH:
@@ -88,7 +96,8 @@ def validateRandomBy(randomBy):
 	return ""
 		
 def validateTeam(team):
-	if team not in NFL_TEAMS[0]:
-		return "Invalid team"
-	return ""
+	for item in NFL_TEAMS:
+		if team in item[0]:
+			return ""
+	return "Invalid team"
 	
