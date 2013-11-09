@@ -7,6 +7,7 @@ from gameTrackerApp.models import *
 from gameTrackerApp.modelHelper import *
 
 
+# This tests the Model Helper functions to ensure that they work properly
 class ModelHelperTest( TestCase ):
     def setUp( self ):
         l = []
