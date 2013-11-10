@@ -127,3 +127,12 @@ def conferenceToTeams( conference ):
 
     # return results
     return retval
+#-----------------------------------------------------------
+# recieves a difficulty_level abbreviation and 
+# returns that difficulty_level name
+#-----------------------------------------------------------
+def difAbbrToName(level):
+    for dif in Tournament.DIFFICULTY_LEVELS:
+        if( dif[0] == level ):
+            return dif[1]
+    return None

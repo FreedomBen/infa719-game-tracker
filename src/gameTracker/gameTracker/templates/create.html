@@ -14,20 +14,50 @@
 		has when creating a new tournament-->
 	<table class="tableCenter">
 		<tr>
-			<td>Start Date:*</td>
-			<td><input type="text" name="startDate"/></td>
-			<td><span class="errorMsg">{{ startDate }}</span></td>
-		</tr>
-		<tr>
-            <td>Start Time:*</td>
-			<td><select name="startTime">
-				{% for item in prevStartTime %}
-					<option	value="{{ item }}">{{ item }}</option>
+            <td>Is Private?:*</td>
+			<td><select name="private">
+				{% for item in prevPrivate %}
+					<option value="{{ item }}">{{ item }}</option>
 				{% endfor %}
 			</select></td>
-			<td><span class="errorMsg">{{ startTime }}</span></td>
+			<td><span class="errorMsg">{{ private }}</span></td>
 		</tr>
 		<tr>
+			<td>Signup Start Date/Time:*</td>
+			<td><input type="text" name="signStartDate"/>
+				<br/>{{ dateMsg }}</td>
+			<td><span class="errorMsg">{{ signStartDate }}</span></td>
+		</tr>
+		<tr>
+            <td>Signup Close Date/Time:*</td>
+			<td><input type="text" name="signCloseDate">
+			<br/>{{ dateMsg }}</td>
+			<td><span class="errorMsg">{{ signCloseDate }}</span></td>
+		</tr>
+		<tr>
+            <td>Tournament Open Date/Time:*</td>
+			<td><input type="text" name="tournyOpenDate">
+			<br/>{{ dateMsg }}</td>
+			<td><span class="errorMsg">{{ tournyOpenDate }}</span></td>
+		</tr>
+		<tr>
+		<tr>
+            <td>Round Length (Hours):*</td>
+			<td><select name="roundLength">
+				{% for item in prevRoundLength %}
+					<option value="{{ item }}">{{ item }}</option>
+				{% endfor %}
+			</select></td>
+			<td><span class="errorMsg">{{ roundLength }}</span></td>
+		</tr>
+		<td>Quarter Length (Minutes)*</td>
+			<td><select name="quarterLength">
+				{% for item in prevQuarterLength %}
+					<option value="{{item}}">{{ item }} </option>
+				{% endfor %}
+			</select></td>
+			<td><span class="errorMsg">{{quarterLength}}</span></td>
+		</tr>
 			<td>Difficulty:*</td>
 			<td><select name="difficulty">
 				{% for item in prevDifficulty %}
@@ -37,23 +67,6 @@
 			<td><span class="errorMsg">{{ difficulty }}</span></td>
 		</tr>
 		<tr>
-			<td>Quarter Length*</td>
-			<td><select name="quarterLength">
-				{% for item in prevQuarterLength %}
-					<option value="{{item}}">{{ item }} </option>
-				{% endfor %}
-			</select></td>
-			<td><span class="errorMsg">{{quarterLength}}</span></td>
-		</tr>
-		<tr>
-            <td>Next Round Starts:*</td>
-			<td><select name="nextRound">
-				{% for item in prevNextRound %}
-					<option value="{{ item }}">{{ item }}</option>
-				{% endfor %}
-			</select></td>
-			<td><span class="errorMsg">{{ nextRound }}</span></td>
-		</tr>
 		<tr>
             <td>Random By:*</td>
 			<td><select name="randomBy">

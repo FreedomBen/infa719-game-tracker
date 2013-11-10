@@ -62,34 +62,34 @@ def validateTwitter( twitter ):
 # If the information is valid a blank string is returned
 # otherwise an error message is returned
 #----------------------------------------------	
-def validateStartDate(date):
+def validatePrivate(x):
+	if x not in ['True','False']:
+		return "invalid privacy setting"
+	return ""
+
+def validateDate(date):
 	try:
 		datetime.datetime.strptime(date, '%Y-%m-%d')
 	except ValueError:
 		return "invalid start date"
 	return ""
-		
-def validateStartTime(time):
-	if time not in START_TIME:
-		return "Invalid start time"
-	return ""
-		
+
+def validateRoundLength(nextRound):
+	if nextRound not in NEXT_ROUND:
+		return "Invalid next round start time"
+	return ""	
+
+def validateQuarterLength(length):
+	if length not in QUARTER_LENGTH:
+		return "Invalid quarter length"
+	return ""	
+
 def validateDifficulty(difficulty):
 	for item in Tournament.DIFFICULTY_LEVELS:
 		if difficulty in item[0]:
 			return ""
 	return "Invalid Difficulty"
-			
-def validateQuarterLength(length):
-	if length not in QUARTER_LENGTH:
-		return "Invalid quarter length"
-	return ""
-		
-def validateNextRound(nextRound):
-	if nextRound not in NEXT_ROUND:
-		return "Invalid next round start time"
-	return ""
-		
+	
 def validateRandomBy(randomBy):
 	if randomBy not in RANDOM_BY:
 		return "Invalid random by option"
@@ -100,4 +100,11 @@ def validateTeam(team):
 		if team in item[0]:
 			return ""
 	return "Invalid team"
+
+def getBoolean(is_private):
+	if is_private == 'True':
+		return True
+	return False
 	
+def getLetter():
+	return chr(random.randint(ord('A'), ord('Z'))) + chr(random.randint(ord('A'), ord('Z')))
