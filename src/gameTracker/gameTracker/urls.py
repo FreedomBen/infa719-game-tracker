@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 admin.autodiscover()
 
+# These regular expressions translate a URL request into a python view function.  The view function pointed to is responsible for responding to the request with HTML
 urlpatterns = patterns( '',
     url( r'^$', 'gameTrackerApp.views.home' ),
     url( r'^home/$', 'gameTrackerApp.views.home' ),

@@ -13,14 +13,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# In a local/test environment we are using SQLite
+# The production branch redefines this to be PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': join( PROJECT_DIR, 'sqlite_test_db.db' ), # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', 
+        'NAME': join( PROJECT_DIR, 'sqlite_test_db.db' ), 
     }
 }
 
@@ -31,7 +29,6 @@ ALLOWED_HOSTS = []
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
-# In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
@@ -53,6 +50,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
+# We are not currently accepting user uploads
 MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -74,7 +72,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    # We are currently only one level deep since we're just a small app
 )
 
 # List of finder classes that know how to find static files in
@@ -82,7 +80,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -92,7 +89,6 @@ SECRET_KEY = 'lxqqpmj(r^l3jb55!4j(xyv$^j6=vzp^57spzbl=x^c6d7v4pm'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,8 +97,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Enable simple clickjacking protection:
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'gameTracker.urls'
@@ -110,11 +106,10 @@ ROOT_URLCONF = 'gameTracker.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'gameTracker.wsgi.application'
 
+# Points to where the templates are stored
 TEMPLATE_DIRS = (
      join( PROJECT_DIR, 'templates/' ), 
 )
-
-print( join( PROJECT_DIR, 'templates/' ) )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
