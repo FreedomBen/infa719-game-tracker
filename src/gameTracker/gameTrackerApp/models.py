@@ -158,10 +158,12 @@ START_TIME = (
 
 #time after the first round starts that the next round begins
 NEXT_ROUND = (
-	('1 Hour'),
-	('6 Hours'),
-	('12 Hours'),
-	('24 Hours'),
+	('1'),
+	('2'),
+	('3'),
+	('6'),
+	('12'),
+	('24'),
 )
 
 #---------------------------------------------------------------------------------------------
@@ -203,14 +205,17 @@ class Tournament( models.Model ):
         ( 'AM', 'All-Madden' ),
     )
 
-    id              	  = models.IntegerField(primary_key=True)
-    tournament_name       = models.CharField( max_length=25 )
-    signup_open_datetime  = models.DateTimeField()
-    signup_close_datetime = models.DateTimeField()
-    round_open_datetime   = models.DateTimeField()
-    round_close_datetime  = models.DateTimeField()
-    quarter_length        = models.IntegerField() # in minutes
-    difficulty_level      = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
+    id              	    = models.IntegerField(primary_key=True)
+    is_private				= models.BooleanField()
+    tournament_name         = models.CharField( max_length=25 )
+    created_by				= models.CharField( max_length=25 )
+    date_created			= models.DateTimeField()
+    signup_open_datetime    = models.DateTimeField()
+    signup_close_datetime	= models.DateTimeField()
+    tournament_open_datetime= models.DateTimeField()
+    round_length			= models.IntegerField()
+    quarter_length          = models.IntegerField() # in minutes
+    difficulty_level        = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
 
     #def __unicode__( self ):
         #return 'Tournament: ' + str( self.name )
