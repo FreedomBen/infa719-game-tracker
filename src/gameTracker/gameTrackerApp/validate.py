@@ -53,7 +53,7 @@ def validatePassword( password ):
 # validate twitter and return empty string if passes
 # or a string describing the error if it doesn't
 def validateTwitter( twitter ):
-    pass	
+    pass    
 
 
 #----------------------------------------------
@@ -61,50 +61,50 @@ def validateTwitter( twitter ):
 # coming in when a users creates a new tournament
 # If the information is valid a blank string is returned
 # otherwise an error message is returned
-#----------------------------------------------	
+#---------------------------------------------- 
 def validatePrivate(x):
-	if x not in ['True','False']:
-		return "invalid privacy setting"
-	return ""
+    if x not in ['True','False']:
+        return "invalid privacy setting"
+    return ""
 
 def validateDate(date):
-	try:
-		datetime.datetime.strptime(date, '%Y-%m-%d')
-	except ValueError:
-		return "invalid start date"
-	return ""
+    try:
+        datetime.datetime.strptime(date, '%Y-%m-%d')
+    except ValueError:
+        return "invalid start date"
+    return ""
 
 def validateRoundLength(nextRound):
-	if nextRound not in NEXT_ROUND:
-		return "Invalid next round start time"
-	return ""	
+    if nextRound not in NEXT_ROUND:
+        return "Invalid next round start time"
+    return ""   
 
 def validateQuarterLength(length):
-	if length not in QUARTER_LENGTH:
-		return "Invalid quarter length"
-	return ""	
+    if length not in QUARTER_LENGTH:
+        return "Invalid quarter length"
+    return ""   
 
 def validateDifficulty(difficulty):
-	for item in Tournament.DIFFICULTY_LEVELS:
-		if difficulty in item[0]:
-			return ""
-	return "Invalid Difficulty"
-	
+    for item in Tournament.DIFFICULTY_LEVELS:
+        if difficulty in item[0]:
+            return ""
+    return "Invalid Difficulty"
+    
 def validateRandomBy(randomBy):
-	if randomBy not in RANDOM_BY:
-		return "Invalid random by option"
-	return ""
-		
+    if randomBy not in RANDOM_BY:
+        return "Invalid random by option"
+    return ""
+        
 def validateTeam(team):
-	for item in NFL_TEAMS:
-		if team in item[0]:
-			return ""
-	return "Invalid team"
+    for item in NFL_TEAMS:
+        if team in item[0]:
+            return ""
+    return "Invalid team"
 
 def getBoolean(is_private):
-	if is_private == 'True':
-		return True
-	return False
-	
+    if is_private == 'True':
+        return True
+    return False
+    
 def getLetter():
-	return chr(random.randint(ord('A'), ord('Z'))) + chr(random.randint(ord('A'), ord('Z')))
+    return chr(random.randint(ord('A'), ord('Z'))) + chr(random.randint(ord('A'), ord('Z')))
