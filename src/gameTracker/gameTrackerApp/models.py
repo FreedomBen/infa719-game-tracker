@@ -105,65 +105,65 @@ TEAMS_TO_CONFERENCES = (
 
 #allowable quarter lengths
 QUARTER_LENGTH = (
-	('1'),
-	('2'),
-	('3'),
-	('4'),
-	('5'),
-	('6'),
-	('7'),
-	('8'),
-	('9'),
-	('10'),
-	('11'),
-	('12'),
-	('13'),
-	('14'),
-	('15'),
+    ('1'),
+    ('2'),
+    ('3'),
+    ('4'),
+    ('5'),
+    ('6'),
+    ('7'),
+    ('8'),
+    ('9'),
+    ('10'),
+    ('11'),
+    ('12'),
+    ('13'),
+    ('14'),
+    ('15'),
 )
 
 #how the games are randomized
 RANDOM_BY = (
-	('All'),
-	('Conference'),
-	('Division'),
+    ('All'),
+    ('Conference'),
+    ('Division'),
 )
 
 #allowable tournament start times
 START_TIME = (
-	('00:00'),
-	('01:00'),
-	('02:00'),
-	('03:00'),
-	('04:00'),
-	('05:00'),
-	('06:00'),
-	('07:00'),
-	('08:00'),
-	('09:00'),
-	('10:00'),
-	('11:00'),
-	('12:00'),
-	('13:00'),
-	('14:00'),
-	('16:00'),
-	('17:00'),
-	('18:00'),
-	('19:00'),
-	('20:00'),
-	('21:00'),
-	('22:00'),
-	('23:00'),
+    ('00:00'),
+    ('01:00'),
+    ('02:00'),
+    ('03:00'),
+    ('04:00'),
+    ('05:00'),
+    ('06:00'),
+    ('07:00'),
+    ('08:00'),
+    ('09:00'),
+    ('10:00'),
+    ('11:00'),
+    ('12:00'),
+    ('13:00'),
+    ('14:00'),
+    ('16:00'),
+    ('17:00'),
+    ('18:00'),
+    ('19:00'),
+    ('20:00'),
+    ('21:00'),
+    ('22:00'),
+    ('23:00'),
 )
 
 #time after the first round starts that the next round begins
 NEXT_ROUND = (
-	('1'),
-	('2'),
-	('3'),
-	('6'),
-	('12'),
-	('24'),
+    ('1'),
+    ('2'),
+    ('3'),
+    ('6'),
+    ('12'),
+    ('24'),
 )
 
 #---------------------------------------------------------------------------------------------
@@ -205,22 +205,22 @@ class Tournament( models.Model ):
         ( 'AM', 'All-Madden' ),
     )
 
-    id              	    = models.IntegerField(primary_key=True)
-    is_private				= models.BooleanField()
+    id                      = models.IntegerField(primary_key=True)
+    is_private              = models.BooleanField()
     tournament_name         = models.CharField( max_length=25 )
-    created_by				= models.CharField( max_length=25 )
-    date_created			= models.DateTimeField()
+    created_by              = models.CharField( max_length=25 )
+    date_created            = models.DateTimeField()
     signup_open_datetime    = models.DateTimeField()
-    signup_close_datetime	= models.DateTimeField()
+    signup_close_datetime   = models.DateTimeField()
     tournament_open_datetime= models.DateTimeField()
-    round_length			= models.IntegerField()
+    round_length            = models.IntegerField()
     quarter_length          = models.IntegerField() # in minutes
     difficulty_level        = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
 
     #def __unicode__( self ):
         #return 'Tournament: ' + str( self.name )
-		#return str(self)
-		
+        #return str(self)
+        
 #---------------------------------------------------------------------------------------------
 # Keeps track of which users have been authorized to view a tournament by the tournament owner
 #---------------------------------------------------------------------------------------------
