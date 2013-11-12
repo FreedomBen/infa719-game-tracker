@@ -3,6 +3,7 @@
 <body>
 <div class="content">	
 	{% block main %}
+    <div class="content">
 	<div class="main">
 		<table id="homeTable">
 			<tr>
@@ -19,10 +20,21 @@
 			</tr>
 			<tr>
 				<td>Tournaments Registered</td>
-				<td><input type="textbox" id="tRegistered" value="" disabled /></td>
+				<td>
+                {% if not reg %}
+                    {{ notreg }}
+                {% else %}
+                    {% for tourny in reg %} 
+                        </td></tr><tr><td>
+                        {{ tourny }}
+                        </td>
+                    {% endfor %}
+                {% endif %}
+                </td>
 			</tr>
 		</table>
 	</div>
+    </div>
 	{% endblock main %}
 	
 </div>	

@@ -225,7 +225,7 @@ class Tournament( models.Model ):
 # Keeps track of which users have been authorized to view a tournament by the tournament owner
 #---------------------------------------------------------------------------------------------
 class TournamentMembers( models.Model ):
-    user_id = models.IntegerField()
+    user_id = models.CharField( max_length=25 )
     tournament = models.ForeignKey( Tournament )
 
 
@@ -248,10 +248,13 @@ class Game( models.Model ):
     was_simulated = models.BooleanField()
     winner        = models.IntegerField()
     team_one      = models.ForeignKey( NFLteam, related_name='teamOneAsNFLteam' )
+    team_one_user = models.CharField( max_length=25 )
     team_two      = models.ForeignKey( NFLteam, related_name='teamTwoAsNFLteam' )
+    team_two_user = models.CharField( max_length=25 )
     tournament    = models.ForeignKey( Tournament )
     level         = models.CharField( max_length=2, choices=GAME_LEVELS )
     bracket_round = models.IntegerField()
+    bracket_game  = models.IntegerField()
 
     def simulateGame( self ):
         # randomly select a winner and set the flag
