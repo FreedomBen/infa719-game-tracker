@@ -12,6 +12,7 @@ import validate
 import time
 import datetime
 from gameTrackerApp.modelHelper import *
+import functions
 
 
 # This view processes the registration request and handles displaying the register page
@@ -89,7 +90,26 @@ def home( request ):
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
     
     else:
-        request.session.modified = True
+        
+        b = TournamentMembers.objects.filter(user_id=request.session['SESusername']) 
+        registered=[]
+        
+        for a in b:
+            tourny = Tournament.objects.get(id=a.tournament_id)
+            registered.append(tourny.tournament_name)
+        
+        b = Tournament.objects.filter(is_private=0)
+        for a in b:
+            if a.tournament_name not in registered:
+                registered.append(a.tournament_name)
+        
+        return render_to_response( "home.html", {
+        'username'      : request.session['SESusername'],
+        'reg'           : registered,
+        'notreg'        : ' You are currently not registered for any tournaments',
+        },context_instance=RequestContext( request )
+        )
+        
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
         },context_instance=RequestContext( request )
@@ -151,7 +171,7 @@ def create( request ):
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
     
     curday = time.strftime('%Y-%m-%d')
-    
+
     #return blank form for GET request
     if request.method == 'GET':
         return render_to_response( "create.html", {
@@ -166,7 +186,9 @@ def create( request ):
         'dateMsg'           : "YYYY-MM-DD"
         },context_instance=RequestContext( request )
         )
-        
+    
+    
+    
     #process input data before responding back
     else:
         isPrivate           = validate.validatePrivate(request.POST['private'])
@@ -178,35 +200,9 @@ def create( request ):
         difficulty      = validate.validateDifficulty( request.POST['difficulty'] )
         randomBy        = validate.validateRandomBy( request.POST['randomBy'] )
         team            = validate.validateTeam( request.POST['team'] )
-        
-        # isPrivate         = validate.validatePrivate('asdf')
-        # signStartDate       = validate.validateDate( 'asdf' )
-        # signCloseDate       = validate.validateDate( 'asdf' )
-        # tournyOpenDate        =validate.validateDate('asdf')
-        # roundLength           =validate.validateRoundLength('asdf')
-        # quarterLength   = validate.validateQuarterLength( 'asdf' )
-        # difficulty      = validate.validateDifficulty( 'asdf' )
-        # randomBy        = validate.validateRandomBy( 'asdf')
-        # team            = validate.validateTeam( 'asdf' )
     
-
     if len(team) > 0 or len(difficulty) > 0 or len(quarterLength) >0 or len(randomBy) > 0 or len(signCloseDate) > 0 or len(roundLength) > 0 or len(signStartDate) > 0 or len(tournyOpenDate) > 0 or len(isPrivate) > 0:
-        # if any of the validation methods returned an error, the
-        # error message is displayed on the screen and the 
-        # tournament is not created.
-    # if True:
-    
         
-        # (year, month, day) = curday.split('-')
-        # year = int(year)
-        # month = int(month)
-        # day = int(day)
-        # t = time.mktime((year, month, day, 0, 0, 0, 0, 0, 0))
-        # num = Tournament.objects.filter(date_created = curday).count()
-        # julian = time.gmtime(t)[7]
-        # num = Tournament.objects.filter(date_created = curday).count()
-        # name = str(year) + validate.getLetter() + str(julian) + validate.getLetter() + str(num)
-        # name = validate.getLetter()
         return render_to_response( "create.html", {
         'username'      : request.session['SESusername'],
         'private'       : isPrivate,
@@ -240,9 +236,10 @@ def create( request ):
             num = Tournament.objects.filter(date_created = curday).count()
             julian = time.gmtime(t)[7]
             num = Tournament.objects.filter(date_created = curday).count()
-            name = str(year) + validate.getLetter() + str(julian) + validate.getLetter() + str(num)
-            s = Tournament(
-                is_private              = validate.getBoolean(request.POST['private']),
+            name = str(year) + functions.getLetter() + str(julian) + functions.getLetter() + str(num)
+                
+            newT = Tournament(
+                is_private              = functions.getBoolean(request.POST['private']),
                 tournament_name         = name,
                 created_by              = request.session['SESusername'],
                 date_created            = curday,
@@ -270,11 +267,33 @@ def create( request ):
             
         else:
             # This actually updates the database
-            s.save()
+            newT.save()
+        
+        try:
+            newM=TournamentMembers(
+                user_id      = request.session['SESusername'],
+                tournament  = Tournament.objects.get(tournament_name=name),
+                )
+        except:
+            # This is in case there was an error inserting the member into the database and the member was not created
+            return render_to_response( "create.html", {
+            'username'          : request.session['SESusername'],
+            'prevteam'          : NFL_TEAMS,
+            'prevDifficulty'    : Tournament.DIFFICULTY_LEVELS,
+            'prevQuarterLength' : QUARTER_LENGTH,
+            'prevRandomBy'      : RANDOM_BY,
+            'prevStartTime'     : START_TIME,
+            'prevNextRound'     : NEXT_ROUND,
+            'message'           : "failed to create member"
+            },context_instance=RequestContext( request )
+            )
+        
+        else:
+            newM.save()
         
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
-        'message'       : "Tournament successfully created",
+        'message'       : 'Tournament Successfully Created',
         },context_instance=RequestContext( request )
         )
 
@@ -297,13 +316,13 @@ def join( request ):
         # )
         
         # this creates the header for the table
-        c = ['Tournament','Creator','Tournament Starts at','Quarter Length', 'Difficulty']
+        c = ['Tournament','Creator','Signup Closes at','Tournament Starts at', 'Quarter Length', 'Difficulty']
         d = []
         d.append(c)
         
         # This finds the tournaments the the user is eligable to 
         # join.
-        #b = Tournament.objects.filter(tournament_open_datetime =str(curday))
+        b = Tournament.objects.filter(signup_close_datetime__gt=str(curday)).exclude(is_private=1).exclude(created_by=request.session['SESusername'])
         
         if not b:
             return render_to_response( "join.html", {
@@ -313,12 +332,18 @@ def join( request ):
             )
         
         for a in b:
-            c = [a.tournament_name.encode('ascii','ignore'), a.created_by, a.signup_open_datetime.strftime('%Y/%m/%d'), a.quarter_length, difAbbrToName(a.difficulty_level) ]
+            c = [a.tournament_name.encode('ascii','ignore'), 
+            a.created_by, 
+            a.signup_close_datetime.strftime('%Y-%m-%d'),
+            a.tournament_open_datetime.strftime('%Y-%m-%d'), 
+            a.quarter_length, 
+            difAbbrToName(a.difficulty_level) ]
             d.append(c)
             
         return render_to_response( "join.html", {
         'username'      : request.session['SESusername'],
         'info'      : d,
+        'message'   : curday,
         },context_instance=RequestContext( request )
         )
 
@@ -329,6 +354,8 @@ def view(request):
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
     
     else:
+    
+        
         return render_to_response( "view.html", {
         'username'      : request.session['SESusername'],
         },context_instance=RequestContext( request )
