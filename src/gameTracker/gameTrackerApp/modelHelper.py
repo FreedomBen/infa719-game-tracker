@@ -136,3 +136,9 @@ def difAbbrToName(level):
         if( dif[0] == level ):
             return dif[1]
     return None
+    
+def teamAbbrToTeamName(teamAbbr):
+    for team in NFL_TEAMS:
+        if( team[0] == teamAbbr ):
+            return team[1]
+    return None

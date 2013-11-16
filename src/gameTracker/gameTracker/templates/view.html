@@ -9,7 +9,14 @@
 
 <table class="tableBorder">
 	<tr><!--1-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game1.1 == None %}
+                <a href="/joinack/{{ message }}/{{game1.0}}">
+                {{ game1.0 }}</a> {{ game1.1 }}
+            {% else %}
+                {{ game1.0 }} {{ game1.1 }}
+            {% endif %}
+        </td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -17,21 +24,35 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game9.1 == None %}
+                <a href="/joinack/{{ message }}/{{game9.0}}">
+                {{ game9.0 }}</a> {{ game9.1 }}
+            {% else %}
+                {{ game9.0 }} {{ game9.1 }}
+            {% endif %}
+        </td>
 	</tr>
 	<tr><!--2-->
 		<td class="tdRight">1</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {{ game17.0 }} {{ game17.1 }}</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game21.2 }} {{ game21.3 }}</td>
 		<td class="tdLeft">9</td>
 	</tr>
 	<tr><!--3-->
-		<td class="tdRight">hello</td>
+		<td class="tdRight">
+            {% if game1.3 == None %}
+                <a href="/joinack/{{ message }}/{{game1.2}}">
+                {{ game1.2 }}</a> {{ game1.3 }}
+            {% else %}
+                {{ game1.2 }} {{game1.3}}</td>
+            {%endif%}
 		<td></td>
 		<td class="tdLeft"></td>
 		<td></td>
@@ -39,21 +60,33 @@
 		<td></td>
 		<td class="tdRight"></td>
 		<td></td>
-		<td class="tdLeft">hello</td>
+		<td class="tdLeft">
+            {% if game9.3 == None %}
+                <a href="/joinack/{{ message }}/{{game9.2}}">
+                {{ game9.2 }}</a> {{ game9.3 }}
+            {% else %}
+                {{ game9.2 }} {{ game9.3 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--4-->
 		<td class="tdTop"></td>
 		<td class="tdRight">17</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game25.0 }} {{ game25.1 }}</td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game27.2 }} {{ game27.3 }}</td>
 		<td class="tdLeft">21</td>
 		<td class="tdTop"></td>
 	</tr>
 	<tr><!--5-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game2.1 == None %}
+                <a href="/joinack/{{ message }}/{{game2.0}}">
+                {{ game2.0 }}</a> {{ game2.1 }}
+            {% else %}
+                {{ game2.0 }} {{ game2.1 }}</td>
+            {%endif%}
 		<td></td>
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
@@ -61,21 +94,34 @@
 		<td class="tdRight"></td>
 		<td></td>
 		<td class="tdLeft"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game10.1 == None %}
+                <a href="/joinack/{{ message }}/{{game10.0}}">
+                {{ game10.0 }}</a> {{ game10.1 }}
+            {% else %}
+                {{ game10.0 }} {{ game10.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--6-->
 		<td class="tdRight">2</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {{ game17.2 }} {{ game17.3 }}</td>
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
 		<td></td>
 		<td class="tdRight"></td>
 		<td class="tdRight"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game21.2 }} {{ game21.3 }}</td>
 		<td class="tdLeft">10</td>
 	</tr>
 	<tr><!--7-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game2.3 == None %}
+                <a href="/joinack/{{ message }}/{{game2.2}}">
+                {{ game2.2 }}</a> {{ game2.3 }}
+            {% else %}
+                {{ game2.2 }} {{ game2.3 }}</td>
+            {%endif%}
 		<td class="tdLeft"></td>
 		<td></td>
 		<td class="tdLeft"></td>
@@ -83,21 +129,33 @@
 		<td class="tdRight"></td>
 		<td></td>
 		<td class="tdRight"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game10.3 == None %}
+                <a href="/joinack/{{ message }}/{{game10.2}}">
+                {{ game10.2 }}</a> {{ game10.3 }}
+            {% else %}
+                {{ game10.2 }} {{ game10.3 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--8-->
 		<td></td>
 		<td></td>
 		<td class="tdRight">25</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game29.0 }} {{ game29.1 }}</td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game30.0 }} {{ game30.1 }}</td>
 		<td class="tdLeft">27</td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr><!--9-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game3.1 == None %}
+                <a href="/joinack/{{ message }}/{{game3.0}}">
+                {{ game3.0 }}</a> {{ game3.1 }}
+            {% else %}
+                {{ game3.0 }} {{ game3.1 }}</td>
+            {%endif%}
 		<td></td>
 		<td class="tdRight"></td>
 		<td class="tdRight"></td>
@@ -105,21 +163,33 @@
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game11.1 == None %}
+                <a href="/joinack/{{ message }}/{{game11.0}}">
+                {{ game11.0 }}</a> {{ game11.1 }}
+            {% else %}
+                {{ game11.0 }} {{ game11.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--10-->
 		<td class="tdRight">3</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game18.0 }} {{ game18.1 }}</td>
 		<td class="tdRight"></td>
 		<td class="tdRight"></td>
 		<td></td>
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game22.0 }} {{ game22.1 }}</td>
 		<td class="tdLeft">11</td>
 	</tr>
 	<tr><!--11-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game3.3 == None %}
+                <a href="/joinack/{{ message }}/{{game3.2}}">
+                {{ game3.2 }}</a> {{ game3.3 }}
+            {% else %}
+                {{ game3.2 }} {{ game3.3 }}</td>
+            {%endif%}
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
@@ -127,21 +197,33 @@
 		<td></td>
 		<td class="tdLeft"></td>
 		<td class="tdRight tdLeft"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game11.3 == None %}
+                <a href="/joinack/{{ message }}/{{game11.2}}">
+                {{ game11.2 }}</a> {{ game11.3 }}
+            {% else %}
+                {{ game11.2 }} {{ game11.3 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--12-->
 		<td></td>
 		<td class="tdRight">18</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game25.2 }} {{ game25.3 }}</td>
 		<td class="tdLeft tdRight"></td>
 		<td class="tdRight"></td>
 		<td class="tdRight"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game27.2 }} {{ game27.3 }}</td>
 		<td class="tdLeft">22</td>
 		<td></td>
 	</tr>
 	<tr><!--13-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game4.1 == None %}
+                <a href="/joinack/{{ message }}/{{game4.0}}">
+                {{ game4.0 }}</a> {{ game4.1 }}
+            {% else %}
+                {{ game4.0 }} {{ game4.1 }}</td>
+            {%endif%}
 		<td class="tdRight"></td>
 		<td></td>
 		<td class="tdRight"></td>
@@ -149,21 +231,33 @@
 		<td></td>
 		<td class="tdRight"></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game12.1 == None %}
+                <a href="/joinack/{{ message }}/{{game12.0}}">
+                {{ game12.0 }}</a> {{ game12.1 }}
+            {% else %}
+                {{ game12.0 }} {{ game12.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--14-->
 		<td class="tdRight">4</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game18.2 }} {{ game18.3 }}</td>
 		<td class="tdLeft"></td>
 		<td class="tdRight"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game31.0 }} {{ game31.1 }}</td>
 		<td class="tdLeft"></td>
 		<td class="tdRight"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game22.2 }} {{ game22.3 }}</td>
 		<td class="tdLeft">12</td>
 	</tr>
 	<tr><!--15-->
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">
+            {% if game4.3 == None %}
+                <a href="/joinack/{{ message }}/{{game4.2}}">
+                {{ game4.2 }}</a> {{ game4.3 }}
+            {% else %}
+                {{ game4.2 }} {{ game4.3 }}</td>
+            {%endif%}
 		<td></td>
 		<td></td>
 		<td>29</td>
@@ -171,21 +265,33 @@
 		<td>30</td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">
+            {% if game12.3 == None %}
+                <a href="/joinack/{{ message }}/{{game12.2}}">
+                {{ game12.2 }}</a> {{ game12.3 }}
+            {% else %}
+                {{ game12.2 }} {{ game12.3 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--16-->
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">{{ game31.2 }} {{ game31.3 }}</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr><!--17-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game5.1 == None %}
+                <a href="/joinack/{{ message }}/{{game5.0}}">
+                {{ game5.0 }}</a> {{ game5.1 }}
+            {% else %}
+                {{ game5.0 }} {{ game5.1 }}</td>
+            {%endif%}
 		<td></td>
 		<td></td>
 		<td></td>
@@ -193,21 +299,33 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game13.1 == None %}
+                <a href="/joinack/{{ message }}/{{game13.0}}">
+                {{ game13.0 }}</a> {{ game13.1 }}
+            {% else %}
+                {{ game13.0 }} {{ game13.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--18-->
 		<td>5</td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">{{ game19.2 }} {{ game19.3 }}</td>
 		<td></td>
 		<td></td>
 		<td class="tdRight tdLeft"></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">{{ game23.2 }} {{ game23.3 }}</td>
 		<td>13</td>
 	</tr>
 	<tr><!--19-->
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">
+            {% if game5.3 == None %}
+                <a href="/joinack/{{ message }}/{{game5.2}}">
+                {{ game5.2 }}</a> {{ game5.3 }}
+            {% else %}
+                {{ game5.2 }} {{ game2.3 }}</td>
+            {%endif%}
 		<td class="tdRight"></td>
 		<td></td>
 		<td></td>
@@ -215,21 +333,33 @@
 		<td></td>
 		<td></td>
 		<td class="tdLeft"></td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">
+            {% if game13.3 == None %}
+                <a href="/joinack/{{ message }}/{{game13.2}}">
+                {{ game13.2 }}</a> {{ game13.3 }}
+            {% else %}
+                {{ game13.2 }} {{ game13.3 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--20-->
 		<td></td>
 		<td>19</td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">{{ game26.0 }} {{ game26.1 }}</td>
 		<td></td>
 		<td class="tdLeft tdRight"></td>
 		<td></td>
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">{{ game28.0 }} {{ game28.1 }}</td>
 		<td>23</td>
 		<td></td>
 	</tr>
 	<tr><!--21-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game6.1 == None %}
+                <a href="/joinack/{{ message }}/{{game6.0}}">
+                {{ game6.0 }}</a> {{ game6.1 }}
+            {% else %}
+                {{ game6.0 }} {{ game6.1 }}</td>
+            {%endif%}
 		<td class="tdRight"></td>
 		<td class="tdRight"></td>
 		<td></td>
@@ -237,21 +367,33 @@
 		<td></td>
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game14.1 == None %}
+                <a href="/joinack/{{ message }}/{{game14.0}}">
+                {{ game14.0 }}</a> {{ game14.1 }}
+            {% else %}
+                {{ game14.0 }} {{ game14.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--22-->
 		<td>6</td>
-		<td class="tdBottom tdLeft tdRight">hello</td>
+		<td class="tdBottom tdLeft tdRight">{{ game19.2 }} {{ game19.3 }}</td>
 		<td></td>
 		<td class="tdLeft tdRight"></td>
 		<td></td>
 		<td class="tdRight tdLeft"></td>
 		<td></td>
-		<td class="tdBottom tdLeft tdRight">hello</td>
+		<td class="tdBottom tdLeft tdRight">{{ game23.2 }} {{ game23.3 }}</td>
 		<td>14</td>
 	</tr>
 	<tr><!--23-->
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">
+            {% if game6.3 == None %}
+                <a href="/joinack/{{ message }}/{{game6.2}}">
+                {{ game6.2 }}</a> {{ game6.3 }}
+            {% else %}
+                {{ game6.2 }} {{ game6.3 }}</td>
+            {%endif%}
 		<td></td>
 		<td></td>
 		<td class="tdLeft tdRight"></td>
@@ -259,21 +401,33 @@
 		<td class="tdLeft tdRight"></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">
+            {% if game14.3 == None %}
+                <a href="/joinack/{{ message }}/{{game14.2}}">
+                {{ game14.2 }}</a> {{ game14.3 }}
+            {% else %}
+                {{ game14.2 }} {{ game14.3 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--24-->
 		<td></td>
 		<td></td>
 		<td>26</td>
-		<td class="tdBottom tdLeft tdRight">hello</td>
+		<td class="tdBottom tdLeft tdRight">{{ game29.2 }} {{ game29.3 }}</td>
 		<td></td>
-		<td class="tdBottom tdLeft tdRight">hello</td>
+		<td class="tdBottom tdLeft tdRight">{{ game30.2 }} {{ game30.3 }}</td>
 		<td>28</td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr><!--25-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game7.1 == None %}
+                <a href="/joinack/{{ message }}/{{game7.0}}">
+                {{ game7.0 }}</a> {{ game7.1 }}
+            {% else %}
+                {{ game7.0 }} {{game7.1 }}</td>
+            {%endif%}
 		<td></td>
 		<td class="tdRight"></td>
 		<td></td>
@@ -281,21 +435,33 @@
 		<td></td>
 		<td class="tdLeft"></td>
 		<td></td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game15.1 == None %}
+                <a href="/joinack/{{ message }}/{{game15.0}}">
+                {{ game15.0 }}</a> {{ game15.1 }}
+            {% else %}
+                {{ game15.0 }} {{game15.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--26-->
 		<td>7</td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">{{ game20.0 }} {{game20.1 }}</td>
 		<td class="tdRight"></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td class="tdLeft"></td>
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">{{ game24.0 }} {{game24.1 }}</td>
 		<td>15</td>
 	</tr>
 	<tr><!--27-->
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">
+            {% if game7.3 == None %}
+                <a href="/joinack/{{ message }}/{{game7.2}}">
+                {{ game7.2 }}</a> {{ game7.3 }}
+            {% else %}
+                {{ game7.2 }} {{game7.3 }}</td>
+            {%endif%}
 		<td class="tdRight"></td>
 		<td class="tdRight"></td>
 		<td></td>
@@ -303,21 +469,33 @@
 		<td></td>
 		<td class="tdLeft"></td>
 		<td class="tdLeft"></td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">
+            {% if game15.3 == None %}
+                <a href="/joinack/{{ message }}/{{game15.2}}">
+                {{ game15.2 }}</a> {{ game15.3 }}
+            {% else %}
+                {{ game15.2 }} {{game }}15.3</td>
+            {%endif%}
 	</tr>
 	<tr><!--28-->
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdLeft tdRight">hello</td>
+		<td class="tdBottom tdLeft tdRight">{{ game26.2 }} {{game26.3 }}</td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdRight tdLeft">hello</td>
+		<td class="tdBottom tdRight tdLeft">{{ game28.2 }} {{game28.3 }}</td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr><!--29-->
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game8.1 == None %}
+                <a href="/joinack/{{ message }}/{{game8.0}}">
+                {{ game8.0 }}</a> {{ game8.1 }}
+            {% else %}
+                {{ game8.0 }} {{game8.1 }}</td>
+            {%endif%}
 		<td class="tdRight">20</td>
 		<td></td>
 		<td></td>
@@ -325,21 +503,33 @@
 		<td></td>
 		<td></td>
 		<td class="tdLeft">24</td>
-		<td class="tdBottom">hello</td>
+		<td class="tdBottom">
+            {% if game16.1 == None %}
+                <a href="/joinack/{{ message }}/{{game16.0}}">
+                {{ game16.0 }}</a> {{ game16.1 }}
+            {% else %}
+                {{ game16.0 }} {{game16.1 }}</td>
+            {%endif%}
 	</tr>
 	<tr><!--30-->
 		<td>8</td>
-		<td class="tdBottom tdRight tdLeft">hello</td>
+		<td class="tdBottom tdRight tdLeft">{{ game20.2 }} {{game20.3 }}</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdRight tdLeft">hello</td>
+		<td class="tdBottom tdRight tdLeft">{{ game24.2 }} {{game24.3 }}</td>
 		<td>16</td>
 	</tr>
 	<tr><!--31-->
-		<td class="tdBottom tdRight">hello</td>
+		<td class="tdBottom tdRight">
+            {% if game8.3 == None %}
+                <a href="/joinack/{{ message }}/{{game8.2}}">
+                {{ game8.2 }}</a> {{ game8.3 }}
+            {% else %}
+                {{ game8.2 }} {{game8.3 }}</td>
+            {%endif%}
 		<td></td>
 		<td></td>
 		<td></td>
@@ -347,7 +537,13 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td class="tdBottom tdLeft">hello</td>
+		<td class="tdBottom tdLeft">
+            {% if game16.3 == None %}
+                <a href="/joinack/{{ message }}/{{game16.2}}">
+                {{ game16.2 }}</a> {{ game16.3 }}
+            {% else %}
+                {{ game16.2 }} {{game16.3 }}</td>
+            {%endif%}
 	</tr>
 </table>
 {% endblock main %}

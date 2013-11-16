@@ -245,15 +245,17 @@ class Game( models.Model ):
         ( 'CH', 'Championship' )
     )
 
-    was_simulated = models.BooleanField()
-    winner        = models.IntegerField()
-    team_one      = models.ForeignKey( NFLteam, related_name='teamOneAsNFLteam' )
-    team_one_user = models.CharField( max_length=25 )
-    team_two      = models.ForeignKey( NFLteam, related_name='teamTwoAsNFLteam' )
-    team_two_user = models.CharField( max_length=25 )
     tournament    = models.ForeignKey( Tournament )
+    was_simulated = models.NullBooleanField()
+    winner        = models.IntegerField(null=True)
+    #team_one      = models.ForeignKey( NFLteam, related_name='teamOneAsNFLteam' )
+    team_one        = models.CharField( max_length=3)
+    team_one_user = models.CharField( max_length=25,null=True )
+    #team_two      = models.ForeignKey( NFLteam, related_name='teamTwoAsNFLteam' )
+    team_two      = models.CharField (max_length=3)
+    team_two_user = models.CharField( max_length=25,null=True )
     level         = models.CharField( max_length=2, choices=GAME_LEVELS )
-    bracket_round = models.IntegerField()
+    bracket_round = models.IntegerField(null=True)
     bracket_game  = models.IntegerField()
 
     def simulateGame( self ):
@@ -269,6 +271,4 @@ class Game( models.Model ):
     
     def __unicode__( self ):
         return str( self.team_one ) + " v. " + str( self.team_two )
-
-
 

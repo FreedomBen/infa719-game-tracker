@@ -1,0 +1,18 @@
+{% extends "default.html" %}
+<html>
+<body>
+	{% block main %}
+    <div class="content">
+	<p/>
+	<table class="tableBorder">
+		<p/>
+        Are you sure you wish to join tournament {{tournament}} as the {{team}}?
+        <form action="/joinyes/{{tournament}}/{{team}}" method="POST">{% csrf_token %}
+			<input type="submit" value="Yes"/>
+		</form>
+        <form action="/joinno/" method="POST">{% csrf_token %}
+			<input type="submit" value="No"/>
+		</form>
+    {%endblock main%}
+</body>
+</html>

@@ -91,17 +91,7 @@ def home( request ):
     
     else:
         
-        b = TournamentMembers.objects.filter(user_id=request.session['SESusername']) 
-        registered=[]
-        
-        for a in b:
-            tourny = Tournament.objects.get(id=a.tournament_id)
-            registered.append(tourny.tournament_name)
-        
-        b = Tournament.objects.filter(is_private=0)
-        for a in b:
-            if a.tournament_name not in registered:
-                registered.append(a.tournament_name)
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
         
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
@@ -110,10 +100,6 @@ def home( request ):
         },context_instance=RequestContext( request )
         )
         
-        return render_to_response( "home.html", {
-        'username'      : request.session['SESusername'],
-        },context_instance=RequestContext( request )
-        )
 
 # This view is for testing the default template
 # This page is not accessable to the user, it is the 
@@ -139,11 +125,15 @@ def loginView( request ):
             login( request, user )
             # success
             request.session['SESusername']=user.username
-            request.session.modified = True
+            registered = functions.getJoinedTournaments(request.session['SESusername'])
+        
             return render_to_response( "home.html", {
-                    'username'      : user.username,
-                },context_instance=RequestContext( request )
+            'username'      : request.session['SESusername'],
+            'reg'           : registered,
+            'notreg'        : ' You are currently not registered for any tournaments',
+            },context_instance=RequestContext( request )
             )
+            
     else:
         # Not authenticated
         return render_to_response( "login.html", { 
@@ -291,8 +281,40 @@ def create( request ):
         else:
             newM.save()
         
+        tObject = Tournament.objects.get(tournament_name=name)
+        
+        functions.createGames(tObject,request.POST['difficulty'])
+        
+        try:
+            #check if user selected team is team 1
+            myGame = Game.objects.get(tournament_id=tObject.id,team_one=request.POST['team'])
+            
+            myGame.team_one_user = request.session['SESusername']
+        except:
+            try:
+                #check if user selected team is team 2
+            
+        
+                myGame = Game.objects.get(tournament_id=tObject.id,team_two=request.POST['team'])
+            
+                myGame.team_two_user = request.session['SESusername']
+            
+            except:
+                #user selected team could not be found *error*
+                registered = functions.getJoinedTournaments(request.session['SESusername'])
+                return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'error selecting your team, the tournament was created, but you do not have your selected team',
+                },context_instance=RequestContext( request )
+                )
+        myGame.save()
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
+        'reg'           : registered,
+        'notreg'        : ' You are currently not registered for any tournaments',
         'message'       : 'Tournament Successfully Created',
         },context_instance=RequestContext( request )
         )
@@ -307,14 +329,6 @@ def join( request ):
     else:
         curday = datetime.datetime.now()
         
-        b = Tournament.objects.filter(tournament_open_datetime__gte=curday)
-        
-        # return render_to_response( "join.html", {
-        # 'username'        : request.session['SESusername'],
-        # 'message'     :  curday,
-        # },context_instance=RequestContext( request )
-        # )
-        
         # this creates the header for the table
         c = ['Tournament','Creator','Signup Closes at','Tournament Starts at', 'Quarter Length', 'Difficulty']
         d = []
@@ -322,7 +336,7 @@ def join( request ):
         
         # This finds the tournaments the the user is eligable to 
         # join.
-        b = Tournament.objects.filter(signup_close_datetime__gt=str(curday)).exclude(is_private=1).exclude(created_by=request.session['SESusername'])
+        b = Tournament.objects.filter(signup_close_datetime__gt=str(curday), is_private=0)
         
         if not b:
             return render_to_response( "join.html", {
@@ -343,12 +357,13 @@ def join( request ):
         return render_to_response( "join.html", {
         'username'      : request.session['SESusername'],
         'info'      : d,
-        'message'   : curday,
+        #'message'   : curday,
         },context_instance=RequestContext( request )
         )
 
 # This view allows the user to see the bracket for a selected 
 # tournament
+
 def view(request):
     if 'SESusername' not in request.session:
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
@@ -358,5 +373,217 @@ def view(request):
         
         return render_to_response( "view.html", {
         'username'      : request.session['SESusername'],
+        'message'       : "no tournament selected"
         },context_instance=RequestContext( request )
         )
+              
+def view(request, tourny):
+    if 'SESusername' not in request.session:
+        return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+    
+    else:
+    
+        tObject = Tournament.objects.get(tournament_name=tourny)
+        game1 = functions.getGame(tObject.id,1)
+        game2 = functions.getGame(tObject.id,2)
+        game3 = functions.getGame(tObject.id,3)
+        game4 = functions.getGame(tObject.id,4)
+        game5 = functions.getGame(tObject.id,5)
+        game6 = functions.getGame(tObject.id,6)
+        game7 = functions.getGame(tObject.id,7)
+        game8 = functions.getGame(tObject.id,8)
+        game9 = functions.getGame(tObject.id,9)
+        game10 = functions.getGame(tObject.id,10)
+        game11 = functions.getGame(tObject.id,11)
+        game12 = functions.getGame(tObject.id,12)
+        game13 = functions.getGame(tObject.id,13)
+        game14 = functions.getGame(tObject.id,14)
+        game15 = functions.getGame(tObject.id,15)
+        game16 = functions.getGame(tObject.id,16)
+        game17 = functions.getGame(tObject.id,17)
+        game18 = functions.getGame(tObject.id,18)
+        game19 = functions.getGame(tObject.id,19)
+        game20 = functions.getGame(tObject.id,20)
+        game21 = functions.getGame(tObject.id,21)
+        game22 = functions.getGame(tObject.id,22)
+        game23 = functions.getGame(tObject.id,23)
+        game24 = functions.getGame(tObject.id,24)
+        game25 = functions.getGame(tObject.id,25)
+        game26 = functions.getGame(tObject.id,26)
+        game27 = functions.getGame(tObject.id,27)
+        game28 = functions.getGame(tObject.id,28)
+        game29 = functions.getGame(tObject.id,29)
+        game30 = functions.getGame(tObject.id,30)
+        game31 = functions.getGame(tObject.id,31)
+        return render_to_response( "view.html", {
+        'username'      : request.session['SESusername'],
+        'message'       : tourny,
+        'game1'         : game1,
+        'game2'         : game2,
+        'game3'         : game3,
+        'game4'         : game4,
+        'game5'         : game5,
+        'game6'         : game6,
+        'game7'         : game7,
+        'game8'         : game8,
+        'game9'         : game9,
+        'game10'         : game10,
+        'game11'         : game11,
+        'game12'         : game12,
+        'game13'         : game13,
+        'game14'         : game14,
+        'game15'         : game15,
+        'game16'         : game16,
+        'game17'         : game17,
+        'game18'         : game18,
+        'game19'         : game19,
+        'game20'         : game20,
+        'game21'         : game21,
+        'game22'         : game22,
+        'game23'         : game23,
+        'game24'         : game24,
+        'game25'         : game25,
+        'game26'         : game26,
+        'game27'         : game27,
+        'game28'         : game28,
+        'game29'         : game29,
+        'game30'         : game30,
+        'game31'         : game31,
+        },context_instance=RequestContext( request )
+        )
+
+    
+        
+def joinack(request, tourny, teamName):
+    team = teamNameToAbbreviation(teamName)
+    game = functions.findTeamInGame(tourny,team)
+
+    if game == 1:
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        return render_to_response( "home.html", {
+            'username'      : request.session['SESusername'],
+            'reg'           : registered,
+            'notreg'        : ' You are currently not registered for any tournaments',
+            'message'       : 'error finding the tournament you requested to join',
+            },context_instance=RequestContext( request )
+            )
+    if game == 2:
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        return render_to_response( "home.html", {
+            'username'      : request.session['SESusername'],
+            'reg'           : registered,
+            'notreg'        : ' You are currently not registered for any tournaments',
+            'message'       : 'you are only allowed to be entered in each tournament one time',
+            },context_instance=RequestContext( request )
+            )
+    if game == 3:
+                registered = functions.getJoinedTournaments(request.session['SESusername'])
+                return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'there was an error selecting your team',
+                },context_instance=RequestContext( request )
+                )
+    
+    return render_to_response( "joinack.html", {
+            'username'      : request.session['SESusername'],
+            'tournament'    : tourny,
+            'team'          : teamName,
+            },context_instance=RequestContext( request )
+            )
+            
+def joinyes(request, tourny, teamName):
+    team = teamNameToAbbreviation(teamName)
+    game = functions.findTeamInGame(tourny,team)
+    
+    if game == 1:
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        return render_to_response( "home.html", {
+            'username'      : request.session['SESusername'],
+            'reg'           : registered,
+            'notreg'        : ' You are currently not registered for any tournaments',
+            'message'       : 'error finding the tournament you requested to join',
+            },context_instance=RequestContext( request )
+            )
+    if game == 2:
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        return render_to_response( "home.html", {
+            'username'      : request.session['SESusername'],
+            'reg'           : registered,
+            'notreg'        : ' You are currently not registered for any tournaments',
+            'message'       : 'you are only allowed to be entered in each tournament one time',
+            },context_instance=RequestContext( request )
+            )
+    if game == 3:
+                registered = functions.getJoinedTournaments(request.session['SESusername'])
+                return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'there was an error selecting your team',
+                },context_instance=RequestContext( request )
+                )
+    
+    if game.team_one == team:
+        if game.team_one_user == None:
+            game.team_one_user = request.session['SESusername']
+            game.save()
+        else:
+            registered = functions.getJoinedTournaments(request.session['SESusername'])
+            return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'another user has already selected this team in this tournament team one',
+                },context_instance=RequestContext( request )
+                )
+        
+    else:
+        if game.team_two_user == None:
+            game.team_two_user = request.session['SESusername']
+            game.save()
+        else:
+            registered = functions.getJoinedTournaments(request.session['SESusername'])
+            return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for   any tournaments',
+                'message'       : 'another user has already selected this team in this tournament team two ' + str(game.team_two_user),
+                },context_instance=RequestContext( request )
+                )
+
+    registered = functions.getJoinedTournaments(request.session['SESusername'])
+    return render_to_response( "home.html", {
+        'username'      : request.session['SESusername'],
+        'reg'           : registered,
+        'notreg'        : ' You are currently not registered for any tournaments',
+        'message'       : 'You have successfully joined the tournament',
+        },context_instance=RequestContext( request )
+        )
+    
+    
+def joinno(request):
+    if 'SESusername' not in request.session:
+        return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
+    
+    else:
+        
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        
+        return render_to_response( "home.html", {
+        'username'      : request.session['SESusername'],
+        'reg'           : registered,
+        'notreg'        : ' You are currently not registered for any tournaments',
+        'message'       : 'You have not joined the tournament',
+        },context_instance=RequestContext( request )
+        )
+    
+    
+    
+    
+    
+    
+    
+    
+    

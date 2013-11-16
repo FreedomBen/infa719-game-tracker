@@ -26,8 +26,7 @@
                 {% else %}
                     {% for tourny in reg %} 
                         </td></tr><tr><td>
-                        {{ tourny }}
-                        </td>
+                        <a href="/view/{{ tourny }}">{{ tourny }}</a>
                     {% endfor %}
                 {% endif %}
                 </td>
