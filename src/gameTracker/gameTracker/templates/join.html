@@ -1,8 +1,8 @@
 {% extends "default.html" %}
 <html>
 <body>
-<div class="content">
 	{% block main %}
+    <div class="content">
 	<p/>
 	<!-- The following table contains all the tournaments that
 	a user is eligable to join-->
@@ -10,13 +10,20 @@
 		{% for row in info %}
 			<tr>
 			{% for col in row %}
-				<td>{{ col }}</td>
+				<td>
+                {% if forloop.first and col != "Tournament" %}
+                    <a href="/view/{{ col }}">
+                {% endif %}
+                {{ col }}
+                {% if forloop.first and col != "Tournament" %}
+                    </a>
+                {% endif %}
+                </td>
 			{% endfor %}
 			</tr>
 		{% endfor %}
 	</table>
 	{% endblock main %}
 
-</div>
 </body>
 </html>
