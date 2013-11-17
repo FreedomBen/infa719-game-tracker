@@ -1,9 +1,8 @@
 import random
 from models import *
 from modelHelper import *
-#from django.http import HttpResponse, HttpResponseRedirect
-#from django.shortcuts import render_to_response, get_object_or_404
-#from django.template import RequestContext
+from django.db.models import Q
+
 
 def getBoolean(is_private):
     if is_private == 'True':
@@ -51,22 +50,27 @@ def getGame(tid, num):
 def getJoinedTournaments(usr):
     b = TournamentMembers.objects.filter(user_id=usr) 
     registered=[]
-        
+    
+    if not b:
+        return None
+    
     for a in b:
         tourny = Tournament.objects.get(id=a.tournament_id)
         registered.append(tourny.tournament_name)
         
     return registered
     
-def findTeamInGame(tourny,team):
+def findTeamInGame(tourny,team,usr):
     try:
         #find the tournament from the tournament table
         tObject = Tournament.objects.get(tournament_name=tourny)
     except:
         return 1
-#    if Game.objects.filter(Q(tournament_id=tObject.id,team_one_user=request.session['SESusername']) | (tournament_id=tObject.id,team_two_user=request.session['SESusername'])) != None:
+    
+    reg = TournamentMembers.objects.filter(tournament_id=tObject.id,user_id=usr)
+    if reg:
         #make sure each user is entered only 1 time in each tournament
-        #return 2
+        return 2
     try:
             #check if user selected team is team 1
             myGame = Game.objects.get(tournament_id=tObject.id,team_one=team)
