@@ -336,7 +336,7 @@ def join( request ):
         
         # This finds the tournaments the the user is eligable to 
         # join.
-        b = Tournament.objects.filter(signup_close_datetime__gt=str(curday), is_private=0)
+        b = Tournament.objects.filter(signup_close_datetime__gt=str(curday), is_private=0).exclude(tournamentmembers__user_id__exact=request.session['SESusername'])
         
         if not b:
             return render_to_response( "join.html", {
@@ -357,7 +357,6 @@ def join( request ):
         return render_to_response( "join.html", {
         'username'      : request.session['SESusername'],
         'info'      : d,
-        #'message'   : curday,
         },context_instance=RequestContext( request )
         )
 
@@ -456,7 +455,7 @@ def view(request, tourny):
         
 def joinack(request, tourny, teamName):
     team = teamNameToAbbreviation(teamName)
-    game = functions.findTeamInGame(tourny,team)
+    game = functions.findTeamInGame(tourny,team,request.session['SESusername'])
 
     if game == 1:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
@@ -495,7 +494,7 @@ def joinack(request, tourny, teamName):
             
 def joinyes(request, tourny, teamName):
     team = teamNameToAbbreviation(teamName)
-    game = functions.findTeamInGame(tourny,team)
+    game = functions.findTeamInGame(tourny,team,request.session['SESusername'])
     
     if game == 1:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
@@ -535,7 +534,7 @@ def joinyes(request, tourny, teamName):
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
-                'message'       : 'another user has already selected this team in this tournament team one',
+                'message'       : 'another user has already selected this team in this tournament',
                 },context_instance=RequestContext( request )
                 )
         
@@ -549,10 +548,24 @@ def joinyes(request, tourny, teamName):
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for   any tournaments',
-                'message'       : 'another user has already selected this team in this tournament team two ' + str(game.team_two_user),
+                'message'       : 'another user has already selected this team in this tournament',
                 },context_instance=RequestContext( request )
                 )
-
+    try:
+        newM=TournamentMembers(
+            user_id      = request.session['SESusername'],
+            tournament  = Tournament.objects.get(tournament_name=tourny),
+            )
+    except:
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for   any tournaments',
+                'message'       : 'unable to successfully complete the process of joining you in the tournament, you are registered but this game will be simulated',
+                },context_instance=RequestContext( request )
+                )
+    newM.save()    
     registered = functions.getJoinedTournaments(request.session['SESusername'])
     return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],

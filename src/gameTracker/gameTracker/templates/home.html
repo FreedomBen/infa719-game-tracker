@@ -18,19 +18,20 @@
 				<td>Next Round Starts At</td>
 				<td><input type="label" id="tStart" value="Not currently registered for upcoming tournament" disabled /></td>
 			</tr>
-			<tr>
-				<td>Tournaments Registered</td>
-				<td>
-                {% if not reg %}
-                    {{ notreg }}
+                {% if reg == None %}
+                    <tr>
+                        <td></td><td>{{ notreg }}</td>
+                    </tr>
                 {% else %}
+                    <tr>
+                        <td></td><td>Tournaments Registered</td>
+                    </tr>
                     {% for tourny in reg %} 
-                        </td></tr><tr><td>
+                        <tr><td></td><td>
                         <a href="/view/{{ tourny }}">{{ tourny }}</a>
+                        </td></tr>
                     {% endfor %}
                 {% endif %}
-                </td>
-			</tr>
 		</table>
 	</div>
     </div>
