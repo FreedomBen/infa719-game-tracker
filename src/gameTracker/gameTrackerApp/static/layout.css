@@ -61,6 +61,27 @@ border: 1px solid black;
 	border-collapse:collapse;
 }
 
+.tdBottom
+{
+    border-bottom:3px solid black;
+}
+
+.tdTop
+{
+    border-top:3px solid black;
+}
+
+.tdRight
+{
+    border-right:3px solid black;
+}
+
+.tdLeft
+{
+    border-left:3px solid black;
+}
+
+
 #logo
 {
 	display:block;

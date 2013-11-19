@@ -17,8 +17,10 @@ MANAGERS = ADMINS
 # The production branch redefines this to be PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': join( PROJECT_DIR, 'sqlite_test_db.db' ), 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'django_db',
+        'USER': 'django_login',
+        'PASSWORD': 'password'
     }
 }
 
