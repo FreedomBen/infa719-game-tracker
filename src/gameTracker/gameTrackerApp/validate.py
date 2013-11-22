@@ -15,8 +15,8 @@ def validateName( name ):
     if not name:
         return "Name cannot be empty"
     # Ensure does not contain digits
-    if re.compile( '\d' ).search( name ):
-        return "Name cannot contain digits"
+    if re.compile( '[^A-Za-z]' ).search( name ):
+        return "Name can only contain letters"
 
     return ""
 
