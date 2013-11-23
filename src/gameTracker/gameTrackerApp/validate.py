@@ -50,6 +50,11 @@ def validatePassword( password ):
         return "Password must contain at least one upper case letter"
     return ""
 
+def validateTournyName(name):
+    if not re.compile('\d{4}[A-Z]{2}\d{3}[A-Z]{2}\d+'):
+        return "Invalid tournament name"
+    return ""
+    
 # validate twitter and return empty string if passes
 # or a string describing the error if it doesn't
 def validateTwitter( twitter ):

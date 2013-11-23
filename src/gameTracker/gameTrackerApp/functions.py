@@ -94,7 +94,6 @@ def findTeamInGame(tourny,team,usr):
                 
     return myGame
 
-    
 def nextRound(tourny, start):
     tourny.tournament_open_datetime = start
     round = tourny.current_round = tourny.current_round + 1

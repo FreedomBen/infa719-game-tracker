@@ -6,6 +6,13 @@
 	<p/>
 	<!-- The following table contains all the tournaments that
 	a user is eligable to join-->
+    <form action="/join/" method="post" enctype="multipart/form-data">
+            <!-- To prevent CSRF attacks -->
+            {% csrf_token %}
+        <input type="text" name="tournament" />
+			</br><span class="errorMsg">{{ invalid }}</span>
+            </br><input type="submit" value="Tournament Name"/>
+    </form>
 	<table class="tableBorder">
 		{% for row in info %}
 			<tr>
@@ -23,6 +30,7 @@
 			</tr>
 		{% endfor %}
 	</table>
+    </div>
 	{% endblock main %}
 
 </body>

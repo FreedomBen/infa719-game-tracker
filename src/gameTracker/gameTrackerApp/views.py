@@ -353,23 +353,33 @@ def join( request ):
     
     else:
         curday = datetime.datetime.now()
-        
-        # this creates the header for the table
-        c = ['Tournament','Creator','Signup Closes at','Tournament Starts at', 'Quarter Length', 'Difficulty']
-        d = []
-        d.append(c)
-        
+
         # This finds the tournaments the the user is eligable to 
         # join.
-        b = Tournament.objects.filter(signup_close_datetime__gt=str(curday), is_private=0).exclude(tournamentmembers__user_id__exact=request.session['SESusername'])
         
+        if request.method == 'GET':
+            b = Tournament.objects.filter(signup_close_datetime__gt=str(curday), is_private=0).exclude(tournamentmembers__user_id__exact=request.session['SESusername'])
+        
+        else:
+            name = request.POST['tournament']
+            res = validate.validateTournyName(name)
+            if len(res) > 0:
+                return render_to_response( "join.html", {
+                'username'      : request.session['SESusername'],
+                'invalid'       : "That was an invalid tournament name",
+                },context_instance=RequestContext( request )
+                )
+            b = Tournament.objects.filter(tournament_name=name)
         if not b:
             return render_to_response( "join.html", {
             'username'      : request.session['SESusername'],
             'message'       : "You are not currently eligable to join in any tournaments",
             },context_instance=RequestContext( request )
             )
-        
+        # this creates the header for the table
+        c = ['Tournament','Creator','Signup Closes at','Tournament Starts at', 'Quarter Length', 'Difficulty']
+        d = []
+        d.append(c)
         for a in b:
             c = [a.tournament_name.encode('ascii','ignore'), 
             a.created_by, 
@@ -414,15 +424,24 @@ def view(request, tourny):
         round = tObject.current_round
         
         if round < 6:
-            start = datetime.datetime.strptime(tObject.tournament_open_datetime,'%Y-%m-%d %H:%M')
-            length = tObject.round_length
-            (H,M) = length.split(':')
-            roundEnd = start + datetime.timedelta(hours=int(H))
             curtime = time.strftime('%Y-%m-%d %H:%M')
-            roundEnd = roundEnd.strftime('%Y-%m-%d %H:%M')
+            if round == 0:
+                end = datetime.datetime.strptime(tObject.signup_close_datetime, '%Y-%m-%d %H:%M')
+                end = end.strftime('%Y-%m-%d %H:%M')
+                if curtime > end:
+                    tObject.current_round = -1
+                    tObject.save()
             
-            if curtime > roundEnd:
-                functions.nextRound(tObject,roundEnd)
+            else:
+                start = datetime.datetime.strptime(tObject.tournament_open_datetime,'%Y-%m-%d %H:%M')
+                length = tObject.round_length
+                (H,M) = length.split(':')
+                roundEnd = start + datetime.timedelta(hours=int(H))
+                
+                roundEnd = roundEnd.strftime('%Y-%m-%d %H:%M')
+                
+                if curtime > roundEnd:
+                    functions.nextRound(tObject,roundEnd)
         
         round = tObject.current_round
         game1 = functions.getGame(tObject.id,1)
