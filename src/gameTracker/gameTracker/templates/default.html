@@ -4,8 +4,15 @@
 	page automatically loaded-->
 
 <html>
+<title>Purple Hat: Online NFL Tournament Tracking</title>
 {% block imports %}
 <link rel="stylesheet" type="text/css" href="/static/layout.css"/>
+<link rel="stylesheet" href="/static/datepicker/css/datepicker.css" type="text/css" />
+<script type="text/javascript" src="/static/datepicker/js/jquery.js"></script>
+<script type="text/javascript" src="/static/datepicker/js/datepicker.js"></script>
+<script type="text/javascript" src="/static/datepicker/js/eye.js"></script>
+<script type="text/javascript" src="/static/datepicker/js/utils.js"></script>
+<script type="text/javascript" src="/static/datepicker/js/layout.js?ver=1.0.2"></script>
 {% endblock imports %}
 <body>
 	{% block logo %}
@@ -15,7 +22,7 @@
 	{% endblock logo %}
 	
 	{% block user %}
-	<text>Welcome {{username}}, we hope you enjoy your experience!</text>
+	<p>Welcome <b>{{username}}</b>, we hope you enjoy your experience!</p>
 	{% endblock user %}
 	
 	{% block header %}
