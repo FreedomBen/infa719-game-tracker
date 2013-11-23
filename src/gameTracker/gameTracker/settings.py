@@ -17,8 +17,8 @@ MANAGERS = ADMINS
 # The production branch redefines this to be PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': join( PROJECT_DIR, 'sqlite_test_db.db' ), 
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': join( PROJECT_DIR, 'sqlite_test_db.db' ),
     }
 }
 
@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'gameTracker.wsgi.application'
 
 # Points to where the templates are stored
 TEMPLATE_DIRS = (
-     join( PROJECT_DIR, 'templates/' ), 
+     join( PROJECT_DIR, 'templates/' ),
 )
 
 INSTALLED_APPS = (

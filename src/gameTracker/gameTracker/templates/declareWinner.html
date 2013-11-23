@@ -1,0 +1,25 @@
+{% extends "default.html" %}
+<html>
+<body>
+	{% block main %}
+        <div class="content">
+            <p/>
+            In the game {{team.0}} {{user.0}} vs. {{team.1}} {{user.1}}, who was the winner?
+            <p/>
+            <form action="/declareWinner/{{message}}/{{game}}" method="post" enctype="multipart/form-data">
+                <!-- To prevent CSRF attacks -->
+                {% csrf_token %}
+                <select name="team">
+                    {% for item in team %}
+					<option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Submit"/>
+	
+            </form>
+                
+        </div>
+	{% endblock main %}
+
+</body>
+</html>
