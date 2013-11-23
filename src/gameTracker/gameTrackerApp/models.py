@@ -158,12 +158,12 @@ START_TIME = (
 
 #time after the first round starts that the next round begins
 NEXT_ROUND = (
-    ('1'),
-    ('2'),
-    ('3'),
-    ('6'),
-    ('12'),
-    ('24'),
+    ('1:00'),
+    ('2:00'),
+    ('3:00'),
+    ('6:00'),
+    ('12:00'),
+    ('24:00'),
 )
 
 #---------------------------------------------------------------------------------------------
@@ -210,12 +210,13 @@ class Tournament( models.Model ):
     tournament_name         = models.CharField( max_length=25 )
     created_by              = models.CharField( max_length=25 )
     date_created            = models.DateTimeField()
-    signup_open_datetime    = models.DateTimeField()
-    signup_close_datetime   = models.DateTimeField()
-    tournament_open_datetime= models.DateTimeField()
-    round_length            = models.IntegerField()
+    signup_open_datetime    = models.CharField(max_length=16)
+    signup_close_datetime   = models.CharField(max_length=16)
+    tournament_open_datetime= models.CharField(max_length=16)
+    round_length            = models.CharField(max_length=5)
     quarter_length          = models.IntegerField() # in minutes
     difficulty_level        = models.CharField( max_length=2, choices=DIFFICULTY_LEVELS )
+    current_round           = models.IntegerField()
 
     #def __unicode__( self ):
         #return 'Tournament: ' + str( self.name )
@@ -260,14 +261,20 @@ class Game( models.Model ):
 
     def simulateGame( self ):
         # randomly select a winner and set the flag
-        winner = random.randint( 0,1 )
-        self.was_simulated = true
+        self.winner = random.randint( 0,1 )
+        self.was_simulated = True
         
     def winningTeam( self ):
-        if( self.winner == 1 ): 
+        if( self.winner == 0 ): 
             return self.team_one
         else:
             return self.team_two
+            
+    def winningUser( self ):
+        if( self.winner == 0 ): 
+            return self.team_one_user
+        else:
+            return self.team_two_user
     
     def __unicode__( self ):
         return str( self.team_one ) + " v. " + str( self.team_two )

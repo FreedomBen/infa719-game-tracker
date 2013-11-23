@@ -166,14 +166,15 @@ def create( request ):
     if request.method == 'GET':
         return render_to_response( "create.html", {
         'username'          : request.session['SESusername'],
-        'prevSignStartDate' : curday,
         'prevPrivate'       : ['True','False'],
         'prevRoundLength'   : NEXT_ROUND,
         'prevQuarterLength' : QUARTER_LENGTH,
         'prevDifficulty'    : Tournament.DIFFICULTY_LEVELS,
         'prevRandomBy'      : RANDOM_BY,
         'prevteam'          : NFL_TEAMS,
-        'dateMsg'           : "YYYY-MM-DD"
+        'dateMsg'           : "YYYY-MM-DD",
+        'timeMsg'           : "HH:MM - 24 Hour format, 1PM = 13:00",
+        'message'           : curday,
         },context_instance=RequestContext( request )
         )
     
@@ -183,34 +184,48 @@ def create( request ):
     else:
         isPrivate           = validate.validatePrivate(request.POST['private'])
         signStartDate       = validate.validateDate( request.POST['signStartDate'] )
+        signStartTime       = validate.validateTime(request.POST['signStartTime'])
         signCloseDate       = validate.validateDate( request.POST['signCloseDate'] )
-        tournyOpenDate      =validate.validateDate(request.POST['tournyOpenDate'])
-        roundLength         =validate.validateRoundLength(request.POST['roundLength'])
-        quarterLength   = validate.validateQuarterLength( request.POST['quarterLength'] )
-        difficulty      = validate.validateDifficulty( request.POST['difficulty'] )
-        randomBy        = validate.validateRandomBy( request.POST['randomBy'] )
-        team            = validate.validateTeam( request.POST['team'] )
+        signCloseTime       = validate.validateTime(request.POST['signCloseTime'])
+        tournyOpenDate      = validate.validateDate(request.POST['tournyOpenDate'])
+        tournyOpenTime      = validate.validateTime(request.POST['tournyOpenTime'])
+        roundLength         = validate.validateRoundLength(request.POST['roundLength'])
+        quarterLength       = validate.validateQuarterLength( request.POST['quarterLength'] )
+        difficulty          = validate.validateDifficulty( request.POST['difficulty'] )
+        randomBy            = validate.validateRandomBy( request.POST['randomBy'] )
+        team                = validate.validateTeam( request.POST['team'] )
     
-    if len(team) > 0 or len(difficulty) > 0 or len(quarterLength) >0 or len(randomBy) > 0 or len(signCloseDate) > 0 or len(roundLength) > 0 or len(signStartDate) > 0 or len(tournyOpenDate) > 0 or len(isPrivate) > 0:
+    if len(team) > 0 or len(difficulty) > 0 or len(quarterLength) >0 or len(randomBy) > 0 or len(signCloseDate) > 0 or len(roundLength) > 0 or len(signStartDate) > 0 or len(tournyOpenDate) > 0 or len(isPrivate) > 0 or len(signStartTime) > 0 or len(signCloseTime) > 0 or len(tournyOpenTime) > 0:
         
         return render_to_response( "create.html", {
         'username'      : request.session['SESusername'],
         'private'       : isPrivate,
         'signStartDate' : signStartDate,
+        'signStartTime' : signStartTime,
         'signCloseDate' : signCloseDate,
+        'signCloseTime' : signCloseTime,
         'tournyOpenDate': tournyOpenDate,
+        'tournyOpenTime': tournyOpenTime,
         'roundLength'   : roundLength,
         'quarterLength' : quarterLength,
         'difficulty'    : difficulty,
         'randomBy'      : randomBy,
         'team'          : team,
         'prevPrivate'       : ['True','False'],
-        'prevRoundLength'       : NEXT_ROUND,
+        'prevSignStartDate' : request.POST['signStartDate'],
+        'prevSignStartTime' : request.POST['signStartTime'],
+        'prevSignCloseDate' : request.POST['signCloseDate'],
+        'prevSignCloseTime' : request.POST['signCloseTime'],
+        'prevTournyOpenDate': request.POST['tournyOpenDate'],
+        'prevTournyOpenTime': request.POST['tournyOpenTime'],
+        'prevRoundLength'   : NEXT_ROUND,
         'prevQuarterLength' : QUARTER_LENGTH,
         'prevDifficulty'    : Tournament.DIFFICULTY_LEVELS,
         'prevRandomBy'      : RANDOM_BY,
         'prevteam'          : NFL_TEAMS,
         'message'           : "tournament not created due to error",
+        'dateMsg'           : "YYYY-MM-DD",
+        'timeMsg'           : "HH:MM - 24 Hour format, 1PM = 13:00",
         # 'message'         : name,
         },context_instance=RequestContext( request )
         )
@@ -218,6 +233,7 @@ def create( request ):
     else:
         #create the tournament in the database
         try:
+        #if True:
             (year, month, day) = curday.split('-')
             year = int(year)
             month = int(month)
@@ -228,20 +244,27 @@ def create( request ):
             num = Tournament.objects.filter(date_created = curday).count()
             name = str(year) + functions.getLetter() + str(julian) + functions.getLetter() + str(num)
                 
+            signOpen = functions.convertDate(request.POST['signStartDate'], request.POST['signStartTime'])
+            signClose = functions.convertDate(request.POST['signCloseDate'], request.POST['signCloseTime'])
+            tournyOpen = functions.convertDate(request.POST['tournyOpenDate'], request.POST['tournyOpenTime'])
+            
             newT = Tournament(
                 is_private              = functions.getBoolean(request.POST['private']),
                 tournament_name         = name,
                 created_by              = request.session['SESusername'],
                 date_created            = curday,
-                signup_open_datetime    = request.POST['signStartDate'],
-                signup_close_datetime   = request.POST['signCloseDate'],
-                tournament_open_datetime= request.POST['tournyOpenDate'],
+                #signup_open_date        = str(request.POST['signStartDate']) + ' ' + str(request.POST['signStartTime']),
+                signup_open_datetime        = signOpen,
+                signup_close_datetime       = signClose,
+                tournament_open_datetime    = tournyOpen,
                 round_length            = request.POST['roundLength'],
                 quarter_length          = request.POST['quarterLength'],
                 difficulty_level        = request.POST['difficulty'],
+                current_round           = 0,
             )
             
         except:
+        #if True:
             # This is in case there was an error inserting the tournament into the database and the tournament was not created
             return render_to_response( "create.html", {
             'username'          : request.session['SESusername'],
@@ -252,6 +275,7 @@ def create( request ):
             'prevStartTime'     : START_TIME,
             'prevNextRound'     : NEXT_ROUND,
             'message'           : "failed to create tournament"
+            #'message'           : signOpen
             },context_instance=RequestContext( request )
             )
             
@@ -316,6 +340,7 @@ def create( request ):
         'reg'           : registered,
         'notreg'        : ' You are currently not registered for any tournaments',
         'message'       : 'Tournament Successfully Created',
+        #'message'       : signOpen,           
         },context_instance=RequestContext( request )
         )
 
@@ -348,8 +373,10 @@ def join( request ):
         for a in b:
             c = [a.tournament_name.encode('ascii','ignore'), 
             a.created_by, 
-            a.signup_close_datetime.strftime('%Y-%m-%d'),
-            a.tournament_open_datetime.strftime('%Y-%m-%d'), 
+            #a.signup_close_datetime.strftime('%Y-%m-%d'),
+            a.signup_close_datetime,
+            #a.tournament_open_datetime.strftime('%Y-%m-%d'), 
+            a.tournament_open_datetime, 
             a.quarter_length, 
             difAbbrToName(a.difficulty_level) ]
             d.append(c)
@@ -383,6 +410,21 @@ def view(request, tourny):
     else:
     
         tObject = Tournament.objects.get(tournament_name=tourny)
+        
+        round = tObject.current_round
+        
+        if round < 6:
+            start = datetime.datetime.strptime(tObject.tournament_open_datetime,'%Y-%m-%d %H:%M')
+            length = tObject.round_length
+            (H,M) = length.split(':')
+            roundEnd = start + datetime.timedelta(hours=int(H))
+            curtime = time.strftime('%Y-%m-%d %H:%M')
+            roundEnd = roundEnd.strftime('%Y-%m-%d %H:%M')
+            
+            if curtime > roundEnd:
+                functions.nextRound(tObject,roundEnd)
+        
+        round = tObject.current_round
         game1 = functions.getGame(tObject.id,1)
         game2 = functions.getGame(tObject.id,2)
         game3 = functions.getGame(tObject.id,3)
@@ -417,6 +459,8 @@ def view(request, tourny):
         return render_to_response( "view.html", {
         'username'      : request.session['SESusername'],
         'message'       : tourny,
+        #'message'       : roundEnd,
+        'round'       : round,   
         'game1'         : game1,
         'game2'         : game2,
         'game3'         : game3,
@@ -575,7 +619,55 @@ def joinyes(request, tourny, teamName):
         },context_instance=RequestContext( request )
         )
     
+def declareWinner(request, tourny, game):
+    if 'SESusername' not in request.session:
+        return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
     
+    if request.method == 'GET':
+        team = []
+        user = []
+        tournament = Tournament.objects.get(tournament_name = tourny)
+        challenge = Game.objects.get(tournament_id=tournament.id, bracket_game=game)
+        team.append(challenge.team_one)
+        team.append(challenge.team_two)
+        user.append(challenge.team_one_user)
+        user.append(challenge.team_two_user)
+        return render_to_response( "declareWinner.html", {
+                'username'      : request.session['SESusername'],
+                'team'          : team,
+                'user'          : user,
+                'message'       : tourny,
+                'game'          : game,
+                },context_instance=RequestContext( request )
+                )
+    if request.method == 'POST':
+        tournament = Tournament.objects.get(tournament_name = tourny)
+        challenge = Game.objects.get(tournament_id=tournament.id, bracket_game=game)
+        
+        if request.POST['team'] == challenge.team_one:
+            challenge.winner = 0
+            challenge.was_simulated = False
+        elif request.POST['team'] == challenge.team_two:
+            challenge.winner = 1
+            challenge.was_simulated = False
+        else:
+            registered = functions.getJoinedTournaments(request.session['SESusername'])
+            return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'we could not find your winning team in this matchup',
+                },context_instance=RequestContext( request )
+                )
+        challenge.save()
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'your matchup was saved',
+                },context_instance=RequestContext( request )
+                )
 def joinno(request):
     if 'SESusername' not in request.session:
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )

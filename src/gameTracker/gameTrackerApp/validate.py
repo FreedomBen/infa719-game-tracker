@@ -71,9 +71,16 @@ def validateDate(date):
     try:
         datetime.datetime.strptime(date, '%Y-%m-%d')
     except ValueError:
-        return "invalid start date"
+        return "invalid date"
     return ""
 
+def validateTime(time):
+    try:
+        datetime.datetime.strptime(time,'%H:%M')
+    except:
+        return "invalid time"
+    return ""
+    
 def validateRoundLength(nextRound):
     if nextRound not in NEXT_ROUND:
         return "Invalid next round start time"

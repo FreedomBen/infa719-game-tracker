@@ -2,6 +2,7 @@ import random
 from models import *
 from modelHelper import *
 from django.db.models import Q
+import datetime
 
 
 def getBoolean(is_private):
@@ -32,8 +33,15 @@ def createGames(newT, diff):
         )
         newG.save()
         team += 2
-        
-        
+
+def convertDate(date, time):
+    (H,M) = time.split(':')
+    (year,month,day) = date.split('-')
+    ret = year + '-' + month + '-' + day + ' ' + H + ':' + M
+    #ret = datetime.datetime.strptime(ret,'%Y-%m-%d %H:%M')
+    
+    return ret
+
 def getGame(tid, num):
     obj = []
     try:
@@ -85,3 +93,82 @@ def findTeamInGame(tourny,team,usr):
                 return 3
                 
     return myGame
+
+    
+def nextRound(tourny, start):
+    tourny.tournament_open_datetime = start
+    round = tourny.current_round = tourny.current_round + 1
+    tourny.save()
+    
+    for game in Game.objects.filter(tournament_id = tourny.id):
+        if game.winner == None:
+            game.simulateGame()
+            game.save()
+            
+    if round == 2:
+        last = 1
+        for n in range(17, 25):
+            first = Game.objects.get(tournament_id=tourny.id, bracket_game=last)
+            second = Game.objects.get(tournament_id=tourny.id, bracket_game=last + 1)
+            newG = Game(
+                tournament      = tourny,
+                team_one        = first.winningTeam(),
+                team_two        = second.winningTeam(),
+                team_one_user   = first.winningUser(),
+                team_two_user   = second.winningUser(),
+                level           = tourny.difficulty_level,
+                bracket_game    = n,
+            )
+            last += 2
+            newG.save()
+            
+    if round == 3:
+        last = 17
+        for n in range(25, 29):
+            first = Game.objects.get(tournament_id=tourny.id, bracket_game=last)
+            second = Game.objects.get(tournament_id=tourny.id, bracket_game=last + 1)
+            newG = Game(
+                tournament      = tourny,
+                team_one        = first.winningTeam(),
+                team_two        = second.winningTeam(),
+                team_one_user   = first.winningUser(),
+                team_two_user   = second.winningUser(),
+                level           = tourny.difficulty_level,
+                bracket_game    = n,
+            )
+            last += 2
+            newG.save()
+            
+    if round == 4:
+        last =25
+        for n in range(29, 31):
+            first = Game.objects.get(tournament_id=tourny.id, bracket_game=last)
+            second = Game.objects.get(tournament_id=tourny.id, bracket_game=last + 1)
+            newG = Game(
+                tournament      = tourny,
+                team_one        = first.winningTeam(),
+                team_two        = second.winningTeam(),
+                team_one_user   = first.winningUser(),
+                team_two_user   = second.winningUser(),
+                level           = tourny.difficulty_level,
+                bracket_game    = n,
+            )
+            last += 2
+            newG.save()
+            
+    if round == 5:
+        last = 29
+        for n in range(31, 32):
+            first = Game.objects.get(tournament_id=tourny.id, bracket_game=last)
+            second = Game.objects.get(tournament_id=tourny.id, bracket_game=last + 1)
+            newG = Game(
+                tournament      = tourny,
+                team_one        = first.winningTeam(),
+                team_two        = second.winningTeam(),
+                team_one_user   = first.winningUser(),
+                team_two_user   = second.winningUser(),
+                level           = tourny.difficulty_level,
+                bracket_game    = n,
+            )
+            last += 2
+            newG.save()

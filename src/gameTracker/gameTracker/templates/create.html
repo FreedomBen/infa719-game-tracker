@@ -1,18 +1,19 @@
 {% extends "default.html" %}
 <html>
 <body>
-<div class="content">
 
 	{% block main %}
+    <div class="content">
 	<p/>
 	<form action="/create/" method="post" enctype="multipart/form-data">
             <!-- To prevent CSRF attacks -->
             {% csrf_token %}
-		*indicates required field 	
+			
 		
 	<!-- The following table contains all the options that a user
 		has when creating a new tournament-->
 	<table class="tableCenter">
+        <tr><td/><td>*indicates required field</td>
 		<tr>
             <td>Is Private?:*</td>
 			<td><select name="private">
@@ -23,24 +24,43 @@
 			<td><span class="errorMsg">{{ private }}</span></td>
 		</tr>
 		<tr>
-			<td>Signup Start Date/Time:*</td>
-			<td><input type="text" name="signStartDate"/>
+			<td>Signup Start Date:*</td>
+			<td><input type="text" name="signStartDate" value="{{prevSignStartDate}}"/>
 				<br/>{{ dateMsg }}</td>
 			<td><span class="errorMsg">{{ signStartDate }}</span></td>
 		</tr>
+        <tr>
+            <td>Signup Start Time</td>
+            <td><input type="text" name="signStartTime" value="{{prevSignStartTime}}"/>
+                <br/>{{ timeMsg }}</td>
+            <td><span class="errorMsg">{{ signStartTime }}</span></td>
+        </tr>
 		<tr>
-            <td>Signup Close Date/Time:*</td>
-			<td><input type="text" name="signCloseDate">
+            <td>Signup Close Date:*</td>
+			<td><input type="text" name="signCloseDate" value="{{prevSignCloseDate}}">
 			<br/>{{ dateMsg }}</td>
 			<td><span class="errorMsg">{{ signCloseDate }}</span></td>
 		</tr>
+        <tr>
+            <td>Signup Close Time</td>
+            <td><input type="text" name="signCloseTime" value="{{prevSignCloseTime}}"/>
+                <br/>{{ timeMsg }}
+            </td>
+            <td><span class="errorMsg">{{ signCloseTime }}</span></td>
+        </tr>
 		<tr>
-            <td>Tournament Open Date/Time:*</td>
-			<td><input type="text" name="tournyOpenDate">
+            <td>Tournament Open Date:*</td>
+			<td><input type="text" name="tournyOpenDate" value="{{prevTournyOpenDate}}">
 			<br/>{{ dateMsg }}</td>
 			<td><span class="errorMsg">{{ tournyOpenDate }}</span></td>
 		</tr>
 		<tr>
+            <td>Tournament Open Time</td>
+            <td><input type="text" name="tournyOpenTime" value="{{prevTournyOpenTime}}"/>
+                <br/>{{ timeMsg }}
+            </td>
+            <td><span class="errorMsg">{{ tournyOpenTime }}</span></td>
+        </tr>
 		<tr>
             <td>Round Length (Hours):*</td>
 			<td><select name="roundLength">
@@ -91,7 +111,7 @@
 	<input type="submit" value="Create"/>
 	
 	</form>
+    </div>
 	{% endblock main %}
-</div>
 </body>
 </html>
