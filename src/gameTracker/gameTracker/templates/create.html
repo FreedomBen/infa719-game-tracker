@@ -25,7 +25,7 @@
 		</tr>
 		<tr>
 			<td>Signup Start Date:*</td>
-			<td><input class="inputDate" type="text" id="inputDate" name="signStartDate" value="2013-11-22"/><label id="closeOnSelect"><input type="checkbox" /> Close on selection</label>
+			<td><input class="inputDate" type="text" id="inputDate" name="signStartDate" value="{{message}}"/><label id="closeOnSelect"><input type="checkbox" checked /> Close on selection</label>
 				<br/>{{ dateMsg }}</td>
 			<td><span class="errorMsg">{{ signStartDate }}</span></td>
 		</tr>
@@ -37,7 +37,7 @@
         </tr>
 		<tr>
             <td>Signup Close Date:*</td>
-			<td><input class="inputDate" type="text" id="inputDate" name="signCloseDate" value="2013-11-22"/><label id="closeOnSelect"><input type="checkbox" /> Close on selection</label>
+			<td><input class="inputDate" type="text" id="inputDateTwo" name="signCloseDate" value="{{message}}"/><label id="closeOnSelect"><input type="checkbox" checked /> Close on selection</label>
 			<br/>{{ dateMsg }}</td>
 			<td><span class="errorMsg">{{ signCloseDate }}</span></td>
 		</tr>
@@ -50,7 +50,7 @@
         </tr>
 		<tr>
             <td>Tournament Open Date:*</td>
-			<td><input class="inputDate" type="text" id="inputDate" name="tournyOpenDate" value="2013-11-22"/><label id="closeOnSelect"><input type="checkbox" /> Close on selection</label>
+			<td><input class="inputDate" type="text" id="inputDateThree" name="tournyOpenDate" value="{{message}}"/><label id="closeOnSelect"><input type="checkbox" checked /> Close on selection</label>
 			<br/>{{ dateMsg }}</td>
 			<td><span class="errorMsg">{{ tournyOpenDate }}</span></td>
 		</tr>

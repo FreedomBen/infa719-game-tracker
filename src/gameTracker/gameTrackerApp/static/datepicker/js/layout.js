@@ -66,6 +66,38 @@
 				}
 			}
 		});
+		$('.inputDateTwo').DatePicker({
+			format:'Y-m-d',
+			date: $('#inputDateTwo').val(),
+			current: $('#inputDateTwo').val(),
+			starts: 1,
+			position: 'right',
+			onBeforeShow: function(){
+				$('#inputDateTwo').DatePickerSetDate($('#inputDateTwo').val(), true);
+			},
+			onChange: function(formated, dates){
+				$('#inputDateTwo').val(formated);
+				if ($('#closeOnSelect input').attr('checked')) {
+					$('#inputDateTwo').DatePickerHide();
+				}
+			}
+		});
+		$('.inputDateThree').DatePicker({
+			format:'Y-m-d',
+			date: $('#inputDateThree').val(),
+			current: $('#inputDateThree').val(),
+			starts: 1,
+			position: 'right',
+			onBeforeShow: function(){
+				$('#inputDateThree').DatePickerSetDate($('#inputDateThree').val(), true);
+			},
+			onChange: function(formated, dates){
+				$('#inputDateThree').val(formated);
+				if ($('#closeOnSelect input').attr('checked')) {
+					$('#inputDateThree').DatePickerHide();
+				}
+			}
+		});
 		var now3 = new Date();
 		now3.addDays(-4);
 		var now4 = new Date()
