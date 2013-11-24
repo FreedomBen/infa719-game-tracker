@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from gameTrackerApp.models import *
 import datetime
 
+MAX_LENGTH = 25
 
 # validate name and return empty string if passes
 # or a string describing the error if it doesn't
@@ -15,14 +16,18 @@ def validateName( name ):
     if not name:
         return "Name cannot be empty"
     # Ensure does not contain digits
-    if re.compile( '\d' ).search( name ):
-        return "Name cannot contain digits"
+    if re.compile( '[^A-Za-z]' ).search( name ):
+        return "Name can only contain letters"
+    if len( name ) > MAX_LENGTH:
+        return "Must be less than " + str( MAX_LENGTH ) + " characters"
 
     return ""
 
 # validate email and return empty string if passes
 # or a string describing the error if it doesn't
 def validateEmail( email ):
+    if len( email ) > MAX_LENGTH:
+        return "Must be less than " + str( MAX_LENGTH ) + " characters"
     try:
         EmailField().clean( email )
         return ""
@@ -32,13 +37,13 @@ def validateEmail( email ):
 # validate password and return empty string if passes
 # or a string describing the error if it doesn't
 # Password requirements are:
-#     1. At least 15 characters
+#     1. At least 12 characters
 #     2. At least one number
 #     3. At least one upper case letter
 #     4. At least one lower case letter
 # This will make rainbow table attacks unfeasible and makes it harder (though not impossible) for the user to use a dictionary word 
 def validatePassword( password ):
-    # Make sure password is at least 15 characters
+    # Make sure password is at least 12 characters
     # This makes a rainbow table attack against the password hashes unfeasible
     if len( password ) < 12:
         return "Password must be at least 12 characters"
@@ -48,6 +53,8 @@ def validatePassword( password ):
         return "Password must contain at least one lower case letter"
     if not re.compile( '[A-Z]' ).search( password ):
         return "Password must contain at least one upper case letter"
+    if len( password ) > MAX_LENGTH:
+        return "Must be less than " + str( MAX_LENGTH ) + " characters"
     return ""
 
 def validateTournyName(name):

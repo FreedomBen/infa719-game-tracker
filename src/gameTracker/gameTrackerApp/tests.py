@@ -5,6 +5,16 @@ These tests should pass when you run "manage.py test".
 from django.test import TestCase
 from gameTrackerApp.models import *
 from gameTrackerApp.modelHelper import *
+from gameTrackerApp.validate import *
+
+
+# Test util functions
+def fileToTestCase( filename ):
+    retval = {}
+    with open( filename, 'r' ) as inp:
+        for line in inp:
+            retval[ line[2:].rstrip( '\n' ) ] = line[:1] == '1'
+    return retval
 
 
 # This tests the Model Helper functions to ensure that they work properly
@@ -70,19 +80,19 @@ class ModelHelperTest( TestCase ):
         pass
 
 class ValidationTester( TestCase ):
-    def setUp( self ):
-        l = []
-        for i in NFL_TEAMS:
-            l.append( NFLteam( team_name=i[0] ) )
-        for i in l:
-            i.save()
-        l=[]
-        for i in CONFERENCES:
-            l.append( Conference( conference_name=i[0] ) )
-        for i in l:
-            i.save()
+    def testValidateName( self ):
+        for key, value in fileToTestCase( "gameTrackerApp/testNames.txt" ).iteritems():
+            self.assertEqual( validateName( key ) == '', value )
 
-    def test( self ):
-        self.assertEqual( teamAbbrToNFLteam( "ARI" ).team_name, "ARI" )
-        for team in NFL_TEAMS:
-            self.assertEqual( teamAbbrToNFLteam( team[0] ).team_name, team[0] )
+    def testValidateEmail( self ):
+        for key, value in fileToTestCase( "gameTrackerApp/testEmails.txt" ).iteritems():
+            self.assertEqual( validateEmail( key ) == '', value )
+
+    def testValidatePassword( self ):
+        for key, value in fileToTestCase( "gameTrackerApp/testPasswords.txt" ).iteritems():
+            self.assertEqual( validatePassword( key ) == '', value )
+
+    def testValidateTournyName( self ):
+        for key, value in fileToTestCase( "gameTrackerApp/testTournyNames.txt" ).iteritems():
+            self.assertEqual( validateTournyName( key ) == '', value )
+
