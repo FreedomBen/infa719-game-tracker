@@ -1,6 +1,6 @@
-1 test@fakemail.com
-0 invalid
-0 invalid@
-0 @.com
-0 -
-0 -@0
+True test@fakemail.com
+False invalid
+False invalid@
+False @.com
+False -
+False -@False
