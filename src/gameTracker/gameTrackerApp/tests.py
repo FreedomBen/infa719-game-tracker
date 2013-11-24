@@ -7,6 +7,15 @@ from gameTrackerApp.models import *
 from gameTrackerApp.modelHelper import *
 
 
+# Test util functions
+def fileToTestCase( filename ):
+    retval = {}
+    with open( filename, 'r' ) as inp:
+        for line in inp:
+            retval[ line[2:].rstrip( '\n' ) ] = line[:1] == '1'
+    return retval
+
+
 # This tests the Model Helper functions to ensure that they work properly
 class ModelHelperTest( TestCase ):
     def setUp( self ):
