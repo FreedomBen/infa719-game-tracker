@@ -82,17 +82,17 @@ class ModelHelperTest( TestCase ):
 class ValidationTester( TestCase ):
     def testValidateName( self ):
         for key, value in fileToTestCase( "gameTrackerApp/testNames.txt" ).iteritems():
-            print( validateName( key ) )
             self.assertEqual( validateName( key ) == '', value )
 
     def testValidateEmail( self ):
         for key, value in fileToTestCase( "gameTrackerApp/testEmails.txt" ).iteritems():
-            print( validateName( key ) )
             self.assertEqual( validateEmail( key ) == '', value )
 
     def testValidatePassword( self ):
         for key, value in fileToTestCase( "gameTrackerApp/testPasswords.txt" ).iteritems():
-            print( validateName( key ) )
             self.assertEqual( validatePassword( key ) == '', value )
 
+    def testValidateTournyName( self ):
+        for key, value in fileToTestCase( "gameTrackerApp/testTournyNames.txt" ).iteritems():
+            self.assertEqual( validateTournyName( key ) == '', value )
 
