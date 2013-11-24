@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from gameTrackerApp.models import *
 import datetime
 
+MAX_LENGTH = 25
 
 # validate name and return empty string if passes
 # or a string describing the error if it doesn't
@@ -17,12 +18,16 @@ def validateName( name ):
     # Ensure does not contain digits
     if re.compile( '[^A-Za-z]' ).search( name ):
         return "Name can only contain letters"
+    if len( name ) > MAX_LENGTH:
+        return "Must be less than " + str( MAX_LENGTH ) + " characters"
 
     return ""
 
 # validate email and return empty string if passes
 # or a string describing the error if it doesn't
 def validateEmail( email ):
+    if len( email ) > MAX_LENGTH:
+        return "Must be less than " + str( MAX_LENGTH ) + " characters"
     try:
         EmailField().clean( email )
         return ""
@@ -48,6 +53,8 @@ def validatePassword( password ):
         return "Password must contain at least one lower case letter"
     if not re.compile( '[A-Z]' ).search( password ):
         return "Password must contain at least one upper case letter"
+    if len( password ) > MAX_LENGTH:
+        return "Must be less than " + str( MAX_LENGTH ) + " characters"
     return ""
 
 def validateTournyName(name):
