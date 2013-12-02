@@ -186,9 +186,19 @@ def resetpassword( request ):
 
         elif ( request.POST[ 'q1' ] == q.answer_one ) and ( request.POST[ 'q2' ] == q.answer_two ) and ( request.POST[ 'q3' ] == q.answer_three ): 
             # valid username correct question answers, apply the change and return change success
+            if len( validatePassword( request.POST[ 'newpassword' ] ) ) > 0:
+                return render_to_response( "reset_password.html", {
+                    'error' : validatePassword( request.POST[ 'newpassword' ] )
+                }, context_instance=RequestContext( request ) )
+            else:
+                user.set_password( request.POST[ 'newpassword' ] )
+                user.save()
 
         elif:
             # valid username wrong question answers
+            return render_to_response( "reset_password.html", {
+                'error' : 'Incorrect Answers.  Try again.' )
+            }, context_instance=RequestContext( request ) )
 
 
 
