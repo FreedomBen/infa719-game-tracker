@@ -3,7 +3,7 @@ import random
 
 # This file contains the structure of the tables, 
 # as well as contains static information that is used 
-# thruought the site
+# throughout the site
 
 
 #------------------------------------------------------------
@@ -278,4 +278,21 @@ class Game( models.Model ):
     
     def __unicode__( self ):
         return str( self.team_one ) + " v. " + str( self.team_two )
+
+
+#---------------------------------------------------------------------------------------------
+# Maps the User's supplied questions and answers
+#---------------------------------------------------------------------------------------------
+class ChallengeQuestions( models.Model ):
+    """Maps the user challenge questions to the user"""
+
+    user_id = models.CharField( max_length=25 )
+
+    question_one   = models.CharField( max_length=255 )
+    question_twe   = models.CharField( max_length=255 )
+    question_three = models.CharField( max_length=255 )
+
+    answer_one   = models.CharField( max_length=255 )
+    answer_two   = models.CharField( max_length=255 )
+    answer_three = models.CharField( max_length=255 )
 

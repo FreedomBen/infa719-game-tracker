@@ -29,19 +29,26 @@ def register( request ):
         username = validate.validateName( request.POST['username'] )
         email    = validate.validateEmail( request.POST['emailAddress'] )
         password = validate.validatePassword( request.POST['password'] )
+        q1       = validate.validateName( request.POST[ 'q1' ] )
+        q2       = validate.validateName( request.POST[ 'q2' ] )
+        q3       = validate.validateName( request.POST[ 'q3' ] )
 
         if( request.POST['password'] != request.POST['passwordCheck'] ):
             password = "Passwords must match"
 
         # if any of the validation returned an error, the error 
         # message will be displayed to the user
-        if len( first ) > 0 or len( last ) > 0  or len( username ) > 0 or len( email ) > 0 or len( password ) > 0:
+        if len( first ) > 0 or len( last ) > 0 or len( username ) > 0 or len( email ) > 0 or len( password ) > 0 \
+                len( q1 ) > 0 or len( q2 ) > 0 or len( q3 ):
             return render_to_response( 'register.html', {
                 'firstName'         : first,
                 'lastName'          : last,
                 'username'          : username,
                 'emailAddress'      : email,
                 'password'          : password,
+                'q1'                : q1,
+                'q2'                : q2,
+                'q3'                : q3,
                 'prevFirstName'     : request.POST['firstName'],
                 'prevLastName'      : request.POST['lastName'],
                 'prevUsername'      : request.POST['username'],
@@ -49,6 +56,9 @@ def register( request ):
                 'prevPassword'      : request.POST['password'],
                 'prevPasswordCheck' : request.POST['passwordCheck'],
                 'prevTwitter'       : request.POST['twitter']
+                'prevq1'            : request.POST['q1']
+                'prevq2'            : request.POST['q2']
+                'prevq3'            : request.POST['q3']
             }, context_instance=RequestContext( request ) )
 
         else:
@@ -68,6 +78,9 @@ def register( request ):
                     'prevPassword'      : request.POST['password'],
                     'prevPasswordCheck' : request.POST['passwordCheck'],
                     'prevTwitter'       : request.POST['twitter']
+                    'prevq1'            : request.POST['q1']
+                    'prevq2'            : request.POST['q2']
+                    'prevq3'            : request.POST['q3']
                 }, context_instance=RequestContext( request ) )
             else:
                 new_user.first_name = request.POST['firstName']
@@ -75,6 +88,13 @@ def register( request ):
                 new_user.email      = request.POST['emailAddress']
                 new_user.password   = request.POST['password']
                 # User table does not have a twitter member
+
+                # Save questions in the new table
+                cq              = ChallengeQuestions()
+                cq.user_id      = new_user.pk
+                cq.answer_one   = request.POST['q1']
+                cq.answer_two   = request.POST['q2']
+                cq.answer_three = request.POST['q3']
 
                 return render_to_response( 'register_success.html', {
                     'firstName'    : new_user.first_name,
@@ -139,6 +159,38 @@ def loginView( request ):
         return render_to_response( "login.html", { 
             'error' : 'Your information was invalid.  Please try again' 
         }, context_instance=RequestContext( request ) )
+
+
+# This view is used for resetting a user's password
+def forgotpassword( request ):
+    if request.method == 'GET':
+        return render_to_response( "forgot_password.html", { }, context_instance=RequestContext( request ) )
+    
+
+def resetpassword( request ):
+    if ( request.method == 'GET' ) || ( len( User.objects.get( username__exact=request.POST[ 'username' ] ) ) != 1 ):
+        # GET requeset or invalid username
+        return render_to_response( "forgot_password.html", { 
+            'error'        : 'Please enter a valid username',
+        }, context_instance=RequestContext( request ) )
+
+    else: 
+        user = User.objects.get( username__exact=request.POST[ 'username' ] )
+        for qa in ChallengeQuestions.objects.all():
+            if qa.user_id == user.pk:
+                q = qa
+                break
+
+        if len( request.POST[ 'q1' ] ) < 1 and len( request.POST[ 'q2' ] ) < 1 and len( request.POST[ 'q3' ] ) < 1: 
+            # valid username no question answers, display page for answering questions
+
+        elif ( request.POST[ 'q1' ] == q.answer_one ) and ( request.POST[ 'q2' ] == q.answer_two ) and ( request.POST[ 'q3' ] == q.answer_three ): 
+            # valid username correct question answers, apply the change and return change success
+
+        elif:
+            # valid username wrong question answers
+
+
 
 # This view is used to display the past tournaments
 # that the user has been in 
