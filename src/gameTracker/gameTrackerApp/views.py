@@ -38,8 +38,7 @@ def register( request ):
 
         # if any of the validation returned an error, the error 
         # message will be displayed to the user
-        if len( first ) > 0 or len( last ) > 0 or len( username ) > 0 or len( email ) > 0 or len( password ) > 0 \
-                len( q1 ) > 0 or len( q2 ) > 0 or len( q3 ):
+        if len( first ) > 0 or len( last ) > 0 or len( username ) > 0 or len( email ) > 0 or len( password ) > 0 or len( q1 ) > 0 or len( q2 ) > 0 or len( q ) > 0:
             return render_to_response( 'register.html', {
                 'firstName'         : first,
                 'lastName'          : last,
@@ -55,9 +54,9 @@ def register( request ):
                 'prevEmailAddress'  : request.POST['emailAddress'],
                 'prevPassword'      : request.POST['password'],
                 'prevPasswordCheck' : request.POST['passwordCheck'],
-                'prevTwitter'       : request.POST['twitter']
-                'prevq1'            : request.POST['q1']
-                'prevq2'            : request.POST['q2']
+                'prevTwitter'       : request.POST['twitter'],
+                'prevq1'            : request.POST['q1'],
+                'prevq2'            : request.POST['q2'],
                 'prevq3'            : request.POST['q3']
             }, context_instance=RequestContext( request ) )
 
@@ -77,9 +76,9 @@ def register( request ):
                     'prevEmailAddress'  : request.POST['emailAddress'],
                     'prevPassword'      : request.POST['password'],
                     'prevPasswordCheck' : request.POST['passwordCheck'],
-                    'prevTwitter'       : request.POST['twitter']
-                    'prevq1'            : request.POST['q1']
-                    'prevq2'            : request.POST['q2']
+                    'prevTwitter'       : request.POST['twitter'],
+                    'prevq1'            : request.POST['q1'],
+                    'prevq2'            : request.POST['q2'],
                     'prevq3'            : request.POST['q3']
                 }, context_instance=RequestContext( request ) )
             else:
@@ -168,7 +167,7 @@ def forgotpassword( request ):
     
 
 def resetpassword( request ):
-    if ( request.method == 'GET' ) || ( len( User.objects.get( username__exact=request.POST[ 'username' ] ) ) != 1 ):
+    if ( request.method == 'GET' ) or ( len( User.objects.get( username__exact=request.POST[ 'username' ] ) ) != 1 ):
         # GET requeset or invalid username
         return render_to_response( "forgot_password.html", { 
             'error'        : 'Please enter a valid username',
@@ -183,6 +182,8 @@ def resetpassword( request ):
 
         if len( request.POST[ 'q1' ] ) < 1 and len( request.POST[ 'q2' ] ) < 1 and len( request.POST[ 'q3' ] ) < 1: 
             # valid username no question answers, display page for answering questions
+            return render_to_response( "reset_password.html", { }, context_instance=RequestContext( request ) )
+            ##### TODO pass username to the page
 
         elif ( request.POST[ 'q1' ] == q.answer_one ) and ( request.POST[ 'q2' ] == q.answer_two ) and ( request.POST[ 'q3' ] == q.answer_three ): 
             # valid username correct question answers, apply the change and return change success
