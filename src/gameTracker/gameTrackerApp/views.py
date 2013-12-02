@@ -194,11 +194,12 @@ def resetpassword( request ):
             else:
                 user.set_password( request.POST[ 'newpassword' ] )
                 user.save()
+                ##### TODO RETURN success page
 
-        elif:
+        else:
             # valid username wrong question answers
             return render_to_response( "reset_password.html", {
-                'error' : 'Incorrect Answers.  Try again.' )
+                'error' : 'Incorrect Answers.  Try again.' 
             }, context_instance=RequestContext( request ) )
 
 
