@@ -55,8 +55,21 @@ def getGame(tid, num):
     
     return obj
 
+def getGameWinner(tid):
+    obj = []
+    try:
+        tmp = Game.objects.get(tournament_id=tid, bracket_game=31)
+    except:
+        return [None,None]
+    obj.append(teamAbbrToTeamName(tmp.winningTeam()))
+    obj.append(tmp.winningUser)
+    obj.append(teamAbbrToTeamName(tmp.team_two))
+    obj.append(tmp.team_two_user)
+    
+    return obj
+    
 def getJoinedTournaments(usr):
-    b = TournamentMembers.objects.filter(user_id=usr) 
+    b = TournamentMembers.objects.filter(user_id=usr,tournament__current_round__lte=5) 
     registered=[]
     
     if not b:
@@ -95,6 +108,11 @@ def findTeamInGame(tourny,team,usr):
     return myGame
 
 def nextRound(tourny, start):
+    if tourny.current_round == -1:
+        tourny.current_round = 1
+        tourny.save
+        return
+        
     tourny.tournament_open_datetime = start
     round = tourny.current_round = tourny.current_round + 1
     tourny.save()
@@ -103,7 +121,7 @@ def nextRound(tourny, start):
         if game.winner == None:
             game.simulateGame()
             game.save()
-            
+    
     if round == 2:
         last = 1
         for n in range(17, 25):

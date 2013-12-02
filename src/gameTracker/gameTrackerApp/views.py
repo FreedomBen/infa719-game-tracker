@@ -211,11 +211,26 @@ def prevTourn( request ):
     if 'SESusername' not in request.session:
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
     
-    else:
-        return render_to_response( "prevTourn.html", {
-        'username'      : request.session['SESusername'],
-        },context_instance=RequestContext( request )
-        )
+    if request.method == 'GET':
+            b = Tournament.objects.filter(current_round=6, tournamentmembers__user_id__exact=request.session['SESusername'])
+    if not b:
+            return render_to_response( "join.html", {
+            'username'      : request.session['SESusername'],
+            'message'       : "You have no completed Tournaments",
+            },context_instance=RequestContext( request )
+            )
+    c = ['Tournament','Date Created']
+    d = []
+    d.append(c)
+    for a in b:
+        c = [a.tournament_name.encode('ascii','ignore'), 
+        a.date_created]
+        d.append(c)
+    return render_to_response( "prevTourn.html", {
+    'username'      : request.session['SESusername'],
+    'info'          : d,
+    },context_instance=RequestContext( request )
+    )
 
 # This view is used when a user requests to create a new 
 # tournament.
@@ -539,6 +554,7 @@ def view(request, tourny):
         game29 = functions.getGame(tObject.id,29)
         game30 = functions.getGame(tObject.id,30)
         game31 = functions.getGame(tObject.id,31)
+        winner = functions.getGameWinner(tObject.id)
         return render_to_response( "view.html", {
         'username'      : request.session['SESusername'],
         'message'       : tourny,
@@ -575,6 +591,7 @@ def view(request, tourny):
         'game29'         : game29,
         'game30'         : game30,
         'game31'         : game31,
+        'winner'         : winner,    
         },context_instance=RequestContext( request )
         )
 
