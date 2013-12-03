@@ -178,18 +178,10 @@ def resetpassword( request ):
         try:
             user = User.objects.get( username__exact=request.POST[ 'username' ] )
             q = 'empty'
-            print( 'starting...' )
             for qa in ChallengeQuestions.objects.all():
-                print( 'qa.user_id: ' + str( qa.user_id ) )
-                print( 'user.pk: ' + str( user.pk ) )
-                print( 'type user id:' + str( type( qa.user_id ) ) )
-                print( 'type user.pk:' + str( type( user.pk ) ) )
                 if int( qa.user_id ) == user.pk:
                     q = qa
-                    print( 'q=' + str( q ) )
                     break
-            print( 'done...' )
-            print( 'q=' + str( q ) )
 
             if q == 'empty':
                 return render_to_response( "reset_password.html", {
