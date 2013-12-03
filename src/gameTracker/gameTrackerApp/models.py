@@ -286,7 +286,7 @@ class Game( models.Model ):
 class ChallengeQuestions( models.Model ):
     """Maps the user challenge questions to the user"""
 
-    user_id = models.CharField( max_length=25 )
+    user_id = models.IntegerField()
 
     question_one   = models.CharField( max_length=255 )
     question_twe   = models.CharField( max_length=255 )

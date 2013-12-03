@@ -38,7 +38,7 @@ def register( request ):
 
         # if any of the validation returned an error, the error 
         # message will be displayed to the user
-        if len( first ) > 0 or len( last ) > 0 or len( username ) > 0 or len( email ) > 0 or len( password ) > 0 or len( q1 ) > 0 or len( q2 ) > 0 or len( q ) > 0:
+        if len( first ) > 0 or len( last ) > 0 or len( username ) > 0 or len( email ) > 0 or len( password ) > 0 or len( q1 ) > 0 or len( q2 ) > 0 or len( q3 ) > 0:
             return render_to_response( 'register.html', {
                 'firstName'         : first,
                 'lastName'          : last,
@@ -94,6 +94,7 @@ def register( request ):
                 cq.answer_one   = request.POST['q1']
                 cq.answer_two   = request.POST['q2']
                 cq.answer_three = request.POST['q3']
+                cq.save()
 
                 return render_to_response( 'register_success.html', {
                     'firstName'    : new_user.first_name,
@@ -167,41 +168,66 @@ def forgotpassword( request ):
     
 
 def resetpassword( request ):
-    if ( request.method == 'GET' ) or ( len( User.objects.get( username__exact=request.POST[ 'username' ] ) ) != 1 ):
-        # GET requeset or invalid username
+    if ( request.method == 'GET' ):
+        # GET request or invalid username
         return render_to_response( "forgot_password.html", { 
             'error'        : 'Please enter a valid username',
         }, context_instance=RequestContext( request ) )
 
     else: 
-        user = User.objects.get( username__exact=request.POST[ 'username' ] )
-        for qa in ChallengeQuestions.objects.all():
-            if qa.user_id == user.pk:
-                q = qa
-                break
+        try:
+            user = User.objects.get( username__exact=request.POST[ 'username' ] )
+            q = 'empty'
+            print( 'starting...' )
+            for qa in ChallengeQuestions.objects.all():
+                print( 'qa.user_id: ' + str( qa.user_id ) )
+                print( 'user.pk: ' + str( user.pk ) )
+                print( 'type user id:' + str( type( qa.user_id ) ) )
+                print( 'type user.pk:' + str( type( user.pk ) ) )
+                if int( qa.user_id ) == user.pk:
+                    q = qa
+                    print( 'q=' + str( q ) )
+                    break
+            print( 'done...' )
+            print( 'q=' + str( q ) )
 
-        if len( request.POST[ 'q1' ] ) < 1 and len( request.POST[ 'q2' ] ) < 1 and len( request.POST[ 'q3' ] ) < 1: 
-            # valid username no question answers, display page for answering questions
-            return render_to_response( "reset_password.html", { }, context_instance=RequestContext( request ) )
-            ##### TODO pass username to the page
-
-        elif ( request.POST[ 'q1' ] == q.answer_one ) and ( request.POST[ 'q2' ] == q.answer_two ) and ( request.POST[ 'q3' ] == q.answer_three ): 
-            # valid username correct question answers, apply the change and return change success
-            if len( validatePassword( request.POST[ 'newpassword' ] ) ) > 0:
+            if q == 'empty':
                 return render_to_response( "reset_password.html", {
-                    'error' : validatePassword( request.POST[ 'newpassword' ] )
+                    'error' : 'Could not find the challenge questions in the DB' 
                 }, context_instance=RequestContext( request ) )
+
+
+            if ( 'q1' not in request.POST ) and ( 'q2' not in request.POST ) and ( 'q3' not in request.POST ):
+                # valid username no question answers, display page for answering questions
+                return render_to_response( "reset_password.html", { 
+                    'username' : request.POST[ 'username' ] 
+                }, context_instance=RequestContext( request ) )
+
+            elif ( 'q1' in request.POST and request.POST[ 'q1' ] == q.answer_one ) and ( 'q2' in request.POST and request.POST[ 'q2' ] == q.answer_two ) and ( 'q3' in request.POST and request.POST[ 'q3' ] == q.answer_three ): 
+                if len( validate.validatePassword( request.POST[ 'newpassword' ] ) ) > 0:
+                    return render_to_response( "reset_password.html", {
+                        'error' : validate.validatePassword( request.POST[ 'newpassword' ] ),
+                        'username' : request.POST[ 'username' ]
+                    }, context_instance=RequestContext( request ) )
+                else:
+                    # valid username correct question answers, apply the change and return change success
+                    user.set_password( request.POST[ 'newpassword' ] )
+                    user.save()
+                    return render_to_response( "reset_password_success.html", { 
+                        'username'        : request.POST[ 'username' ]
+                    }, context_instance=RequestContext( request ) )
+
             else:
-                user.set_password( request.POST[ 'newpassword' ] )
-                user.save()
-                ##### TODO RETURN success page
+                # valid username wrong question answers
+                return render_to_response( "reset_password.html", {
+                    'error' : 'Incorrect Answers.  Try again.',
+                    'username' : request.POST[ 'username' ]
+                }, context_instance=RequestContext( request ) )
 
-        else:
-            # valid username wrong question answers
-            return render_to_response( "reset_password.html", {
-                'error' : 'Incorrect Answers.  Try again.' 
+        except User.DoesNotExist:
+            return render_to_response( "forgot_password.html", { 
+                'error'        : 'Please enter a valid username'
             }, context_instance=RequestContext( request ) )
-
 
 
 # This view is used to display the past tournaments
