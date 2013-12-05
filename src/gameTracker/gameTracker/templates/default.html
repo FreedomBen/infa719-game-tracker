@@ -23,6 +23,9 @@
 	
 	{% block user %}
 	<p>Welcome <b>{{username}}</b>, we hope you enjoy your experience!</p>
+    {% if picture != None %}
+        <p><img src="{{picture}}"/></p>
+    {% endif %}
 	{% endblock user %}
 	
 	{% block header %}

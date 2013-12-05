@@ -8,16 +8,16 @@
 		<table id="homeTable">
 			<tr>
 				<td>Tournaments Played</td>
-				<td><input type="label" id="tPlayed" value="xx" disabled /></td>
+				<td><input type="label" id="tPlayed" value="{{played}}" disabled /></td>
 			</tr>
 			<tr>
 				<td>Tournaments Won</td>
-				<td><input type="label" id="tWon" value="xx" disabled /></td>
+				<td><input type="label" id="tWon" value="{{won}}" disabled /></td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>Next Round Starts At</td>
 				<td><input type="label" id="tStart" value="Not currently registered for upcoming tournament" disabled /></td>
-			</tr>
+			</tr>-->
                 {% if reg == None %}
                     <tr>
                         <td></td><td>{{ notreg }}</td>

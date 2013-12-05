@@ -296,3 +296,10 @@ class ChallengeQuestions( models.Model ):
     answer_two   = models.CharField( max_length=255 )
     answer_three = models.CharField( max_length=255 )
 
+
+class UserOptionalInfo(models.Model):
+    
+    user        = models.CharField(max_length=30)
+    photo       = models.ImageField(upload_to='pics')
+    twitter     = models.CharField(max_length=30)
+    

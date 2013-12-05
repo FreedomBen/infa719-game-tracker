@@ -81,6 +81,20 @@ def getJoinedTournaments(usr):
         
     return registered
     
+def getTournamentsPlayed(usr):
+    count = TournamentMembers.objects.filter(user_id = usr)
+    num = count.count()
+    return num
+    
+def getTournamentsWon(usr):
+    count = Game.objects.filter(team_one_user = usr, bracket_game = 31, winner = 0)
+    num = count.count()
+    
+    count = Game.objects.filter(team_two_user = usr, bracket_game = 31, winner = 1)
+    num += count.count()
+    
+    return num
+
 def findTeamInGame(tourny,team,usr):
     try:
         #find the tournament from the tournament table

@@ -95,7 +95,19 @@ def register( request ):
                 cq.answer_two   = request.POST['q2']
                 cq.answer_three = request.POST['q3']
                 cq.save()
-
+                
+                uoi             = UserOptionalInfo()
+                uoiUpdate = 0
+                if request.POST['twitter'] != "":
+                    uoi.twitter = request.POST['twitter']
+                    uoiUpdate = 1
+                if request.POST['picture'] != "":
+                    uoi.photo = request.POST['picture']
+                    uoiUpdate = 1
+                if uoiUpdate:
+                    uoi.user = username
+                    uoi.save()
+                
                 return render_to_response( 'register_success.html', {
                     'firstName'    : new_user.first_name,
                     'lastName'     : new_user.last_name,
@@ -112,11 +124,21 @@ def home( request ):
     else:
         
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         
+#        try:
+#           picture = UserOptionalInfo.objects.get(user = request.session['SESusername']
+#            pic = picture.photo.path
+#        catch:
+#            pic = None
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
         'reg'           : registered,
+ #       'picture'       : pic,
         'notreg'        : ' You are currently not registered for any tournaments',
+        'won'           : won,
+        'played'        : played,
         },context_instance=RequestContext( request )
         )
         
@@ -146,11 +168,15 @@ def loginView( request ):
             # success
             request.session['SESusername']=user.username
             registered = functions.getJoinedTournaments(request.session['SESusername'])
+            won = functions.getTournamentsWon(request.session['SESusername'])
+            played = functions.getTournamentsPlayed(request.session['SESusername'])
         
             return render_to_response( "home.html", {
             'username'      : request.session['SESusername'],
             'reg'           : registered,
             'notreg'        : ' You are currently not registered for any tournaments',
+            'won'           : won,
+            'played'        : played,
             },context_instance=RequestContext( request )
             )
             
@@ -423,21 +449,29 @@ def create( request ):
             except:
                 #user selected team could not be found *error*
                 registered = functions.getJoinedTournaments(request.session['SESusername'])
+                won = functions.getTournamentsWon(request.session['SESusername'])
+                played = functions.getTournamentsPlayed(request.session['SESusername'])
                 return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
                 'message'       : 'error selecting your team, the tournament was created, but you do not have your selected team',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
         myGame.save()
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
         'reg'           : registered,
         'notreg'        : ' You are currently not registered for any tournaments',
         'message'       : 'Tournament Successfully Created',
-        #'message'       : signOpen,           
+        #'message'       : signOpen,       
+        'won'           : won,
+        'played'        : played,        
         },context_instance=RequestContext( request )
         )
 
@@ -535,6 +569,12 @@ def view(request, tourny):
                 (H,M) = length.split(':')
                 roundEnd = start + datetime.timedelta(hours=int(H))
                 
+                if round == -1:
+                    start = start.strftime('%Y-%m-%d %H:%M')
+                    if start < curtime:
+                        tObject.current_round = 1
+                        tObject.save()
+                
                 roundEnd = roundEnd.strftime('%Y-%m-%d %H:%M')
                 
                 if curtime > roundEnd:
@@ -613,37 +653,47 @@ def view(request, tourny):
         },context_instance=RequestContext( request )
         )
 
-    
-        
 def joinack(request, tourny, teamName):
     team = teamNameToAbbreviation(teamName)
     game = functions.findTeamInGame(tourny,team,request.session['SESusername'])
 
     if game == 1:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         return render_to_response( "home.html", {
             'username'      : request.session['SESusername'],
             'reg'           : registered,
             'notreg'        : ' You are currently not registered for any tournaments',
             'message'       : 'error finding the tournament you requested to join',
+            'won'           : won,
+            'played'        : played,
             },context_instance=RequestContext( request )
             )
     if game == 2:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         return render_to_response( "home.html", {
             'username'      : request.session['SESusername'],
             'reg'           : registered,
             'notreg'        : ' You are currently not registered for any tournaments',
             'message'       : 'you are only allowed to be entered in each tournament one time',
+            'won'           : won,
+            'played'        : played,
             },context_instance=RequestContext( request )
             )
     if game == 3:
                 registered = functions.getJoinedTournaments(request.session['SESusername'])
+                won = functions.getTournamentsWon(request.session['SESusername'])
+                played = functions.getTournamentsPlayed(request.session['SESusername'])
                 return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
                 'message'       : 'there was an error selecting your team',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
     
@@ -660,29 +710,41 @@ def joinyes(request, tourny, teamName):
     
     if game == 1:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         return render_to_response( "home.html", {
             'username'      : request.session['SESusername'],
             'reg'           : registered,
             'notreg'        : ' You are currently not registered for any tournaments',
             'message'       : 'error finding the tournament you requested to join',
+            'won'           : won,
+            'played'        : played,
             },context_instance=RequestContext( request )
             )
     if game == 2:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         return render_to_response( "home.html", {
             'username'      : request.session['SESusername'],
             'reg'           : registered,
             'notreg'        : ' You are currently not registered for any tournaments',
             'message'       : 'you are only allowed to be entered in each tournament one time',
+            'won'           : won,
+            'played'        : played,
             },context_instance=RequestContext( request )
             )
     if game == 3:
                 registered = functions.getJoinedTournaments(request.session['SESusername'])
+                won = functions.getTournamentsWon(request.session['SESusername'])
+                played = functions.getTournamentsPlayed(request.session['SESusername'])
                 return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
                 'message'       : 'there was an error selecting your team',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
     
@@ -692,11 +754,15 @@ def joinyes(request, tourny, teamName):
             game.save()
         else:
             registered = functions.getJoinedTournaments(request.session['SESusername'])
+            won = functions.getTournamentsWon(request.session['SESusername'])
+            played = functions.getTournamentsPlayed(request.session['SESusername'])
             return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
                 'message'       : 'another user has already selected this team in this tournament',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
         
@@ -706,11 +772,15 @@ def joinyes(request, tourny, teamName):
             game.save()
         else:
             registered = functions.getJoinedTournaments(request.session['SESusername'])
+            won = functions.getTournamentsWon(request.session['SESusername'])
+            played = functions.getTournamentsPlayed(request.session['SESusername'])
             return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for   any tournaments',
                 'message'       : 'another user has already selected this team in this tournament',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
     try:
@@ -720,20 +790,28 @@ def joinyes(request, tourny, teamName):
             )
     except:
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for   any tournaments',
                 'message'       : 'unable to successfully complete the process of joining you in the tournament, you are registered but this game will be simulated',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
     newM.save()    
     registered = functions.getJoinedTournaments(request.session['SESusername'])
+    won = functions.getTournamentsWon(request.session['SESusername'])
+    played = functions.getTournamentsPlayed(request.session['SESusername'])
     return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
         'reg'           : registered,
         'notreg'        : ' You are currently not registered for any tournaments',
         'message'       : 'You have successfully joined the tournament',
+        'won'           : won,
+            'played'        : played,
         },context_instance=RequestContext( request )
         )
     
@@ -762,6 +840,32 @@ def declareWinner(request, tourny, game):
         tournament = Tournament.objects.get(tournament_name = tourny)
         challenge = Game.objects.get(tournament_id=tournament.id, bracket_game=game)
         
+        registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
+        
+        if request.session['SESusername'] == challenge.team_two_user and challenge.team_one_user != None:
+            #make sure the the user declaring the winner is the top of the bracket unless the top is a computer user
+            return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'Only the user on at the top of the bracket can declare a winner unless the player on the top is a computer',
+                'won'           : won,
+                'played'        : played,
+                },context_instance=RequestContext( request )
+                )
+                
+        if request.session['SESusername'] != challenge.team_one_user and request.session['SESusername'] != challenge.team_two_user:
+            # make sure that the user is actually one of the teams
+            return render_to_response( "home.html", {
+                'username'      : request.session['SESusername'],
+                'reg'           : registered,
+                'notreg'        : ' You are currently not registered for any tournaments',
+                'message'       : 'You are not a player in this game, you cannot update the winner',
+                },context_instance=RequestContext( request )
+                )
+        
         if request.POST['team'] == challenge.team_one:
             challenge.winner = 0
             challenge.was_simulated = False
@@ -769,23 +873,26 @@ def declareWinner(request, tourny, game):
             challenge.winner = 1
             challenge.was_simulated = False
         else:
-            registered = functions.getJoinedTournaments(request.session['SESusername'])
             return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
                 'message'       : 'we could not find your winning team in this matchup',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
         challenge.save()
-        registered = functions.getJoinedTournaments(request.session['SESusername'])
         return render_to_response( "home.html", {
                 'username'      : request.session['SESusername'],
                 'reg'           : registered,
                 'notreg'        : ' You are currently not registered for any tournaments',
                 'message'       : 'your matchup was saved',
+                'won'           : won,
+                'played'        : played,
                 },context_instance=RequestContext( request )
                 )
+
 def joinno(request):
     if 'SESusername' not in request.session:
         return render_to_response( "login.html", { }, context_instance=RequestContext( request ) )
@@ -793,12 +900,16 @@ def joinno(request):
     else:
         
         registered = functions.getJoinedTournaments(request.session['SESusername'])
+        won = functions.getTournamentsWon(request.session['SESusername'])
+        played = functions.getTournamentsPlayed(request.session['SESusername'])
         
         return render_to_response( "home.html", {
         'username'      : request.session['SESusername'],
         'reg'           : registered,
         'notreg'        : ' You are currently not registered for any tournaments',
         'message'       : 'You have not joined the tournament',
+        'won'           : won,
+        'played'        : played,
         },context_instance=RequestContext( request )
         )
     
