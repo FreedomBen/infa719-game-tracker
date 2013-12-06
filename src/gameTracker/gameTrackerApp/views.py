@@ -579,6 +579,15 @@ def view(request, tourny):
                 
                 if curtime > roundEnd:
                     functions.nextRound(tObject,roundEnd)
+        info = []
+        
+        info.append(tourny)
+        if tObject.current_round == 6:
+            info.append("Tournament is over")
+        else:
+            info.append(tObject.tournament_open_datetime)
+        info.append(str(tObject.quarter_length) + " minutes")
+        info.append(tObject.difficulty_level)
         
         round = tObject.current_round
         game1 = functions.getGame(tObject.id,1)
@@ -649,7 +658,8 @@ def view(request, tourny):
         'game29'         : game29,
         'game30'         : game30,
         'game31'         : game31,
-        'winner'         : winner,    
+        'winner'         : winner,  
+        'info'           : info,
         },context_instance=RequestContext( request )
         )
 
