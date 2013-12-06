@@ -81,9 +81,9 @@ TEAMS_TO_CONFERENCES = (
     ( 'DEN', 'AW' ),
     ( 'DET', 'NN' ),
     ( 'GB' , 'NN' ),
-    ( 'HOU', 'NS' ),
-    ( 'IND', 'NS' ),
-    ( 'JAX', 'NS' ),
+    ( 'HOU', 'AS' ),
+    ( 'IND', 'AS' ),
+    ( 'JAX', 'AS' ),
     ( 'KC' , 'AW' ),
     ( 'MIA', 'AE' ),
     ( 'MIN', 'NN' ),
@@ -99,7 +99,7 @@ TEAMS_TO_CONFERENCES = (
     ( 'SF' , 'NW' ),
     ( 'STL', 'NW' ),
     ( 'TB' , 'NS' ),
-    ( 'TEN', 'NS' ),
+    ( 'TEN', 'AS' ),
     ( 'WAS', 'NE' ),
 )
 

@@ -13,26 +13,186 @@ def getBoolean(is_private):
 def getLetter():
     return chr(random.randint(ord('A'), ord('Z'))) + chr(random.randint(ord('A'), ord('Z')))
     
-def createGames(newT, diff):
+def createGames(newT, diff, rnd):
     
     
     rTeams = []
-    for t in NFL_TEAMS:
-        rTeams.append(t[0])
-    random.shuffle(rTeams)
     
-    team = 0
     
-    for game in range(16):
-        newG = Game(
-            tournament      = newT,
-            team_one        = rTeams[team],
-            team_two        = rTeams[team+1],
-            level           = diff,
-            bracket_game    = game + 1,
-        )
-        newG.save()
-        team += 2
+    if rnd == "All":  
+        for t in NFL_TEAMS:
+            rTeams.append(t[0])
+        random.shuffle(rTeams)        
+        team = 0
+        
+        for game in range(16):
+            newG = Game(
+                tournament      = newT,
+                team_one        = rTeams[team],
+                team_two        = rTeams[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+            
+    if rnd == "Conference":
+        afc = []
+        nfc = []
+        for t in TEAMS_TO_CONFERENCES:
+            if t[1] == 'AN' or t[1] == 'AS' or t[1] == 'AE' or t[1] == 'AW':
+                afc.append(t[0])
+            else:
+                nfc.append(t[0])
+        random.shuffle(nfc)
+        random.shuffle(afc)
+        team = 0
+        for game in range(8):
+            newG = Game(
+                tournament      = newT,
+                team_one        = afc[team],
+                team_two        = afc[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(8,16):
+            newG = Game(
+                tournament      = newT,
+                team_one        = nfc[team],
+                team_two        = nfc[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        
+    if rnd == "Division":
+        AW = []
+        AE = []
+        AS = []
+        AN = []
+        NW = []
+        NE = []
+        NS = []
+        NN = []
+        
+        for t in TEAMS_TO_CONFERENCES:
+            if t[1] == 'AW':
+                AW.append(t[0])
+            elif t[1] == 'AE':
+                AE.append(t[0])
+            elif t[1] == 'AS':
+                AS.append(t[0])
+            elif t[1] == 'AN':
+                AN.append(t[0])
+            elif t[1] == 'NW':
+                NW.append(t[0])
+            elif t[1] == 'NE':
+                NE.append(t[0])
+            elif t[1] == 'NS':
+                NS.append(t[0])
+            elif t[1] == 'NN':
+                NN.append(t[0])
+                
+        random.shuffle(AW)
+        random.shuffle(AE)
+        random.shuffle(AS)
+        random.shuffle(AN)
+        random.shuffle(NW)
+        random.shuffle(NE)
+        random.shuffle(NS)
+        random.shuffle(NN)
+        team = 0
+        for game in range(0,2):
+            newG = Game(
+                tournament      = newT,
+                team_one        = AW[team],
+                team_two        = AW[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(2,4):
+            newG = Game(
+                tournament      = newT,
+                team_one        = AE[team],
+                team_two        = AE[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(4,6):
+            newG = Game(
+                tournament      = newT,
+                team_one        = AS[team],
+                team_two        = AS[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(6,8):
+            newG = Game(
+                tournament      = newT,
+                team_one        = AN[team],
+                team_two        = AN[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(8,10):
+            newG = Game(
+                tournament      = newT,
+                team_one        = NE[team],
+                team_two        = NE[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(10,12):
+            newG = Game(
+                tournament      = newT,
+                team_one        = NW[team],
+                team_two        = NW[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(12,14):
+            newG = Game(
+                tournament      = newT,
+                team_one        = NS[team],
+                team_two        = NS[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
+        team = 0
+        for game in range(14,16):
+            newG = Game(
+                tournament      = newT,
+                team_one        = NN[team],
+                team_two        = NN[team+1],
+                level           = diff,
+                bracket_game    = game + 1,
+            )
+            newG.save()
+            team += 2
 
 def convertDate(date, time):
     (H,M) = time.split(':')

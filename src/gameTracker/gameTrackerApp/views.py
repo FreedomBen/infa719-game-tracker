@@ -430,7 +430,7 @@ def create( request ):
         
         tObject = Tournament.objects.get(tournament_name=name)
         
-        functions.createGames(tObject,request.POST['difficulty'])
+        functions.createGames(tObject,request.POST['difficulty'],request.POST['randomBy'])
         
         try:
             #check if user selected team is team 1
